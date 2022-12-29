@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- post.xml과 연동되는 Spring interface "dev.mvc.post.PostDAOInter" 선언 --> 
+<mapper namespace="dev.mvc.post.PostDAOInter">
+
+  <!-- 관광지 데이터 글 등록  -->
+	<insert id="create" parameterType="dev.mvc.post.PostVO">
+	  INSERT INTO post(postno, adminno, cateno, posttitle, postcontent, postword, 
+	                    rdate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1)
+	  VALUES(post_seq.nextval, #{adminno}, #{cateno}, #{posttitle}, #{postcontent}, #{postword}, 
+	                    sysdate, #{poststar}, #{postcnt}, #{postfile1}, #{postfile1saved}, #{postthumb1}, #{postsize1})
+	</insert>
+
+  <!-- 특정 카테고리의 등록된 글목록 -->
+  <select id="list_by_cateno" resultType="dev.mvc.post.PostVO" parameterType="int">
+    SELECT postno, adminno, cateno, posttitle, postcontent, postword, 
+                    rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+    FROM post 
+    WHERE cateno = #{cateno}
+    ORDER BY postno DESC
+  </select>
+
+  <!-- 조회,  id: read, 입력: cateno, 리턴: PostVO -->
+  <select id="read" resultType="dev.mvc.post.PostVO" parameterType="int">
+    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+    FROM post
+    WHERE postno=#{postno}
+  </select>
+  
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_cateno_search" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
+    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+    FROM post
+    <choose>
+      <when test="postword == null or postword == ''"> <!-- 검색하지 않는 경우 -->
+        WHERE cateno=#{cateno}
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE cateno=#{cateno} AND (UPPER(posttitle) LIKE '%' || #{postword} || '%' 
+                                                  OR UPPER(postcontent) LIKE '%' || #{postword} || '%' 
+                                                  OR UPPER(postword) LIKE '%' || #{postword} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY postno ASC   
+  </select>
+
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM post
+    <choose>
+      <when test="word == null or postword == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+        WHERE cateno=#{cateno}
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE cateno=#{cateno} AND (UPPER(posttitle) LIKE '%' || #{postword} || '%' 
+                                                  OR UPPER(postcontent) LIKE '%' || #{postword} || '%' 
+                                                  OR UPPER(postword) LIKE '%' || #{postword} || '%')
+      </otherwise>
+    </choose>
+  </select>
+  
+  <!-- admin + post INNER JOIN 목록 -->
+  <select id="list_all_admin" resultType="dev.mvc.post.AdminPostVO">
+    SELECT a.adminno, a.adminid, a.adminpasswd, a.adminname,
+          p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1
+    FROM admin a, post p
+    WHERE a.adminno = p.adminno
+    ORDER BY p.postno DESC
+  </select>
+  
+  <!-- cate + post INNER JOIN 목록 -->
+  <select id="list_all_cate" resultType="dev.mvc.post.CatePostVO">
+    SELECT c.cateno, c.catename,
+          p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1
+    FROM cate c, post p
+    WHERE c.cateno = p.cateno
+    ORDER BY p.postno DESC
+  </select>
+
+  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_cateno_search_paging" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
+     SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, r
+     FROM (
+                SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, rownum as r
+	              FROM (
+	                        SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+	                        FROM post
+	                        <choose>
+											      <when test="postword == null or postword == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+											        WHERE cateno=#{cateno}
+											      </when>
+											      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+											        WHERE cateno=#{cateno} AND (UPPER(posttitle) LIKE '%' || #{postword} || '%' 
+											                                                  OR UPPER(postcontent) LIKE '%' || #{postword} || '%' 
+											                                                  OR UPPER(postword) LIKE '%' || #{postword} || '%')
+											      </otherwise>
+                          </choose>
+	                        ORDER BY postno DESC
+	               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+  </select>
+  
+  <!-- 글 수정 -->
+  <update id="update_text" parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET postno=#{postno}, adminno=#{adminno}, cateno=#{cateno}, posttitle=#{posttitle}, postcontent=#{postcontent}, postword=#{postword}, udate=sysdate, poststar=#{poststar}, postcnt=#{postcnt}
+    WHERE postno = #{postno}
+  </update>
+  
+  <!-- 파일 수정 -->
+  <update id="update_file" parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET postfile1=#{postfile1}, postfile1saved=#{postfile1saved}, postthumb1=#{postthumb1}, postsize1=#{postsize1}
+    WHERE postno = #{postno}
+  </update>
+  
+  <!-- 조회수 증가 -->
+  <update id="visit_cnt" parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET postcnt = postcnt + 1
+    WHERE postno = #{postno}
+  </update>
+
+  <!-- 글 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM post
+    WHERE postno=#{postno}
+  </delete>
+
+  <!-- 특정 카테고리에 속한 레코드 갯수 산출 -->
+  <select id="count_by_cateno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM post
+    WHERE cateno=#{cateno}
+  </select>
+  
+</mapper>
+
+
+
+

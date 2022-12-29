@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.servicecate.ServiceCateDAOInter">
+  <insert id="create" parameterType="dev.mvc.servicecate.ServiceCateVO">
+		INSERT INTO SERVICECATE (SERVICECATENO, SERVICETYPE_CONTENT, CNT, ORDER_INDEX, VISIBLE) 
+		VALUES (SERVICECATE_seq.nextval, #{servicetype_content}, 0, 0, 'N')
+  </insert>  
+  
+  <select id="list_all" resultType="dev.mvc.servicecate.ServiceCateVO">
+    SELECT SERVICECATENO, SERVICETYPE_CONTENT, CNT, ORDER_INDEX, VISIBLE
+    FROM servicecate
+    ORDER BY order_index ASC
+  </select>
+  
+  <!-- 조회, id: read, 입력: cateno, 리턴: CateVO -->
+  <select id="read" resultType="dev.mvc.servicecate.ServiceCateVO" parameterType="int">
+    SELECT servicecateno, servicetype_content, cnt, order_index, visible
+    FROM servicecate
+    WHERE servicecateno = #{servicecateno}
+  </select>  
+
+  <!-- 수정 처리 -->  
+  <update id="update" parameterType="dev.mvc.servicecate.ServiceCateVO">
+    UPDATE servicecate
+    SET servicetype_content=#{servicetype_content}, order_index=#{order_index}
+    WHERE servicecateno=#{servicecateno}
+  </update>  
+  
+  <!-- 삭제, return: int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM servicecate
+    WHERE servicecateno = #{servicecateno}
+  </delete>   
+  
+  <!-- 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1 -->
+  <update id="update_order_index_up" parameterType="int">
+    UPDATE servicecate
+    SET order_index = order_index - 1
+    WHERE servicecateno = #{servicecateno }
+  </update>
+
+  <!-- 출력 순서 내림(상향, 1 등 -> 10 등), seqno: 1 -> 10 -->
+  <update id="update_order_index_down" parameterType="int">
+    UPDATE servicecate
+    SET order_index = order_index + 1
+    WHERE servicecateno = #{servicecateno }
+  </update>
+
+  <!-- 출력 모드: Y -->
+  <update id="update_visible_y" parameterType="int">
+    UPDATE servicecate
+    SET visible = 'Y'
+    WHERE servicecateno=#{servicecateno }
+  </update>
+
+  <!-- 출력 모드: N -->
+  <update id="update_visible_n" parameterType="int">
+    UPDATE servicecate
+    SET visible = 'N'
+    WHERE servicecateno=#{servicecateno }
+  </update>
+</mapper>
+
+
+
+

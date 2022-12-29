@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.review.ReviewDAOInter">
+
+<!-- 생성 -->
+  <insert id="create" parameterType="dev.mvc.review.ReviewVO">
+INSERT INTO REVIEW( reviewno, memberno, postno, reviewtitle, reviewcontent,
+  reviewstar,goodcnt, replycnt, cnt, reviewword, rdate,
+   udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1)
+VALUES (review_seq.nextval, #{memberno},#{postno},#{reviewtitle},#{reviewcontent},
+0,0,0,0,#{reviewword},sysdate,null,#{reviewfile1},#{reviewfile1saved},#{reviewthumb1},#{reviewsize1})
+  </insert> 
+  
+  
+  
+  <!-- 특정 카테고리의 등록된 글목록 -->
+  <select id="list_by_postno" resultType="dev.mvc.review.ReviewVO" parameterType="int">
+    SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent,
+  reviewstar,goodcnt, replycnt, cnt, reviewword, rdate,
+   udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
+    FROM review
+     WHERE postno = #{postno}
+    ORDER BY review DESC
+  </select>
+  
+  <!-- post + review INNER JOIN 목록 -->
+  <select id="list_all" resultType="dev.mvc.review.PostReviewVO">
+		SELECT c.postno,
+		          t.reviewno, t.memberno, t.postno, t.reviewtitle, t.reviewcontent,
+  t.reviewstar,t.goodcnt, t.replycnt, t.cnt, t.reviewword, t.rdate,
+   t.udate, t.reviewfile1, t.reviewfile1saved, t.reviewthumb1,t.reviewsize1 
+		FROM post c, review t
+		WHERE c.postno = t.postno
+		ORDER BY t.reviewno DESC
+  </select>
+ 
+<!-- 검증필요 ***** -->
+  <select id="list_by_reviewno_search" resultType="dev.mvc.review.ReviewVO" parameterType="HashMap">
+   SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent, reviewgood, replycnt, cnt, reviewword,
+ rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1 
+    FROM review
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+        WHERE postno=#{postno}
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE postno=#{postno} AND (UPPER(reviewtitle) LIKE '%' || #{reviewword} || '%' 
+                                                  OR UPPER(reviewcontent) LIKE '%' || #{reviewword} || '%' 
+                                                  OR UPPER(reviewword) LIKE '%' || #{reviewword} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY reviewno DESC   
+  </select>
+  
+  
+    <!-- 조회, id: read, 입력: reviewno, 리턴: ReviewVO -->
+  <select id="read" resultType="dev.mvc.review.ReviewVO" parameterType="int">
+	   SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent, reviewstar,goodcnt, replycnt, cnt, reviewword,
+ rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
+FROM review
+WHERE reviewno=#{reviewno}
+  </select>  
+   
+<!-- 글 수정 -->
+  <update id="update_text" parameterType="dev.mvc.review.ReviewVO">
+    UPDATE review
+    SET reviewtitle=#{reviewtitle}, reviewcontent=#{reviewcontent},  reviewword=#{reviewword}
+    WHERE reviewno = #{reviewno}
+  </update>
+   
+   <!-- 파일 수정 -->
+  <update id="update_reviewfile" parameterType="dev.mvc.review.ReviewVO">
+    UPDATE review
+    SET reviewfile1=#{reviewfile1}, reviewfile1saved=#{reviewfile1saved},
+    reviewthumb1=#{reviewthumb1}, reviewsize1=#{reviewsize1}
+    WHERE reviewno = #{reviewno}
+  </update>
+  
+  <!--좋아요 수 증가 -->
+  <update id="update_reviewgood_on" parameterType="int">
+	  UPDATE review
+	  SET goodcnt = goodcnt + 1
+	  WHERE reviewno = #{reviewno}
+  </update>
+  
+    <!-- 좋아요 수 감소 -->
+  <update id="update_reviewgood_off" parameterType="int">
+	  UPDATE review
+	  SET goodcnt = goodcnt - 1
+	  WHERE reviewno = #{reviewno }
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM review
+    WHERE reviewno=#{reviewno}
+  </delete>
+  
+</mapper>

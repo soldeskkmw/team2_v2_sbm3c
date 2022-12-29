@@ -1,0 +1,110 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html> 
+<html lang="ko"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+<title>GoingShare</title>
+ 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+</head> 
+ 
+<body>
+<c:import url="/menu/top.do" />
+ 
+<DIV class='title_line'>공지사항</DIV>
+
+<DIV class='content_body'>
+     
+  <TABLE class='table table-hover'>
+    <colgroup>
+      <col style='width: 5%;'/>
+      <col style='width: 25%;'/>
+      <col style='width: 40%;'/>    
+      <col style='width: 20%;'/>
+      <c:if test="${sessionScope.adminid != null }">
+      <col style='width: 10%;'/>
+     </c:if>
+    </colgroup>
+   
+    <thead>  
+    <TR>
+      <TH class="th_bs"></TH>
+      <TH class="th_bs">공지사항</TH>
+      <TH class="th_bs">내용</TH>
+      <TH class="th_bs">등록일</TH>
+      <c:if test="${sessionScope.adminid != null }">
+      <TH class="th_bs">편집</TH>
+      </c:if>
+
+    </TR>
+    </thead>
+    
+   <tbody>
+    <c:forEach var="noticeVO" items="${notice_list }">
+      <c:set var="noticeno" value="${noticeVO.noticeno }" />
+      <c:set var="noticetitle" value="${noticeVO.noticetitle }" />
+      <c:set var="noticecontent" value="${noticeVO.noticecontent }" />
+      <c:set var="rdate" value="${noticeVO.rdate.substring(0, 16) }" />
+      
+      <TR style="height: 40px;">
+        <TD style='vertical-align: middle;'><div>${noticeno }</div></TD>
+        <TD style='vertical-align: middle;'><div><a href="./notice_read.do?noticeno=${noticeno }&noticeword=${param.noticeword }&now_page=${param.now_page}">${noticetitle }</A></div></TD>
+        <TD style='vertical-align: middle;'>
+        <a href="./notice_read.do?noticeno=${noticeno }&noticeword=${param.noticeword }&now_page=${param.now_page}">
+          <strong>
+            <c:choose>
+              <c:when test="${noticecontent.length() > 25 }">
+                  ${noticecontent.substring(0, 25)}.....
+              </c:when>
+              <c:when test="${noticecontent.length() <= 25 }">
+                  ${noticecontent}
+              </c:when>
+            </c:choose>
+          </strong> 
+          </a> 
+        </TD>
+        <TD class="td_bs"><div>${rdate }</div></TD>
+        <c:if test="${sessionScope.adminid != null }">
+        <TD class="td_bs">
+          <A href="./notice_read_update.do?noticeno=${noticeno}" title="수정"><IMG src="/notice/images/edit.png" class="icon"></A>
+          <A href="./notice_read_delete.do?noticeno=${noticeno}" title="삭제"><IMG src="/notice/images/delete.png" class="icon"></A>
+        </TD>   
+        </c:if>
+      </TR> 
+      
+      
+      
+    </c:forEach>
+    </tbody>
+   
+  </TABLE>
+  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
+    
+    <FORM name='frm_create' id='frm_create' method='POST' action='./notice_create.do'>
+      <label></label>
+    <c:if test="${sessionScope.adminid != null }">
+    
+      <button type="button" id='submit' onclick="location.href='./notice_create.do'" class="btn btn-secondary">등록</button>
+      <button type="button" onclick="cancel();" class="btn btn-secondary">취소</button>
+    </c:if>
+    </FORM>
+  </DIV>
+  
+</DIV>
+
+ 
+<jsp:include page="../menu/bottom.jsp" />
+</body>
+ 
+</html>
+ 

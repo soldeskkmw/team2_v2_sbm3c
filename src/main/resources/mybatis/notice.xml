@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- notice.xml과 연동되는 Spring interface "dev.mvc.notice.NoticeDAOInter" 선언 --> 
+<mapper namespace="dev.mvc.notice.NoticeDAOInter">
+  <insert id="notice_create" parameterType="dev.mvc.notice.NoticeVO">
+    INSERT INTO notice(noticeno, adminno, noticetitle, noticecontent, cnt, noticeword, rdate)
+    VALUES (notice_seq.nextval, 1, #{noticetitle}, #{noticecontent}, #{cnt}, #{noticeword}, sysdate)
+  </insert> 
+  
+  <!-- 
+  전체 목록, 출력 순서 반영
+  레코드 갯수 만큼 NoticeVO 객체를 만들어 ArrayList에 저장하여 리턴,
+  ArrayList<NoticeVO> list = new ArrayList<NoticeVO>(); 
+  -->
+  <select id="notice_list" resultType="dev.mvc.notice.NoticeVO">
+		SELECT noticeno, adminno, noticetitle, noticecontent, cnt, noticeword, rdate
+		FROM notice
+		ORDER BY noticeno ASC
+  </select>
+  
+  <!-- 조회, id: read, 입력: noticeno, 리턴: NoticeVO -->
+  <select id="notice_read" resultType="dev.mvc.notice.NoticeVO" parameterType="int">
+		SELECT noticeno, adminno, noticetitle, noticecontent, cnt, noticeword, rdate
+		FROM notice
+		WHERE noticeno = #{noticeno}
+  </select>  
+  
+    <!-- 수정 처리 -->  
+  <update id="notice_read_update" parameterType="dev.mvc.notice.NoticeVO">
+    UPDATE notice
+    SET noticetitle=#{noticetitle}, noticecontent=#{noticecontent}, noticeword=#{noticeword}
+    WHERE noticeno=#{noticeno}
+  </update>  
+  
+  <!-- 삭제, return: int -->
+  <delete id="notice_read_delete" parameterType="int">
+    DELETE FROM notice
+    WHERE noticeno = #{noticeno}
+  </delete>   
+       
+</mapper>
+
+
+
+

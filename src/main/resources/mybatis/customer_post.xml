@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.customer_post.Customer_postDAOInter">
+	<!-- 고객센터 글 -->
+	<!-- 등록: 1건 이상 -->
+	<insert id="create" parameterType="dev.mvc.customer_post.Customer_postVO">
+		INSERT INTO CUSTOMER_POST (serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, RDATE, file1, file1saved, thumb1, size1) 
+    VALUES (CUSTOMER_POST_seq.nextval, #{servicecateno}, #{memberno}, #{servicetitle}, #{servicecontents}, #{servicevisible}, sysdate, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+	</insert>  
+	  
+	<!-- 전체 목록 -->
+	<select id="list_all" resultType="dev.mvc.customer_post.Customer_postVO">
+		SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate
+		FROM CUSTOMER_POST
+		ORDER BY serviceno DESC
+	</select>
+	
+	<!-- 조회 -->
+	<select id="read" resultType="dev.mvc.customer_post.Customer_postVO" parameterType="int">
+	SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate, file1, file1saved, thumb1, size1
+	FROM CUSTOMER_POST
+	WHERE serviceno = #{serviceno}
+	</select>
+	
+	<!-- 파일 등록 or 수정 수정 -->
+	<update id="update" parameterType="dev.mvc.customer_post.Customer_postVO">
+		UPDATE CUSTOMER_POST
+		SET servicetitle = #{servicetitle}, servicecontents=#{servicecontents}, servicecateno=#{servicecateno}, servicevisible=#{servicevisible}, udate=sysdate
+		        ,file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
+		WHERE serviceno = #{serviceno}
+	</update>  
+	 <!-- 파일 삭제 수정 -->
+  <update id="update_file_del" parameterType="dev.mvc.customer_post.Customer_postVO">
+    UPDATE CUSTOMER_POST
+    SET servicetitle = #{servicetitle}, servicecontents=#{servicecontents}, servicecateno=#{servicecateno}, servicevisible=#{servicevisible}, udate=sysdate
+            ,file1=null, file1saved=null, thumb1=null, size1=null
+    WHERE serviceno = #{serviceno}
+  </update> 
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM CUSTOMER_POST
+		WHERE serviceno = #{serviceno}
+	</delete>
+	
+	<!-- 레코드 갯수 -->
+	<select id="count_all" resultType="int">
+		SELECT COUNT(*)
+		FROM CUSTOMER_POST
+	</select> 
+	
+	<!-- FK 컬럼 기준 카운트, 특정 그룹에 속한 레코드 갯수 산출 -->
+	<select id="count_all_by_servicecateno" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM CUSTOMER_POST
+		WHERE servicecateno = #{servicecateno}
+	</select> 
+	
+	<!-- FK 컬럼 기준 삭제, 특정 그룹에 속한 레코드 모두 삭제 -->
+	<delete id="delete_all_by_servicecate" parameterType="int">
+		DELETE FROM CUSTOMER_POST
+		WHERE servicecateno = #{servicecateno}
+	</delete>  
+	
+	<!-- 검색 목록 -->
+	<select id="list_by_servicecateno_search" resultType="dev.mvc.customer_post.Customer_postVO" parameterType="HashMap">		
+		SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate
+    FROM CUSTOMER_POST
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+        WHERE servicecateno=#{servicecateno}
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE servicecateno=#{servicecateno} AND (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
+                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY serviceno DESC   
+	</select>
+	
+	<!-- 문의 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM customer_post
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+        WHERE servicecateno=#{servicecateno}
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE servicecateno=#{servicecateno} AND (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
+                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+      </otherwise>
+    </choose>
+  </select>
+	
+	<!-- 검색 + 페이징 목록 -->
+	<select id="list_by_servicecateno_search_paging" resultType="dev.mvc.customer_post.Customer_postVO" parameterType="HashMap">    	
+		SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate, r
+	   FROM (
+	              SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate, rownum as r
+	              FROM (
+	                        SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate
+	                        FROM CUSTOMER_POST
+	                        <choose>
+											      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+											        WHERE servicecateno=#{servicecateno}
+											      </when>
+											      <otherwise> <!-- 검색하는 경우 -->
+											        WHERE servicecateno=#{servicecateno} AND (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
+	                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+	                          </otherwise>
+	                        </choose>
+	                        ORDER BY serviceno DESC
+	               )
+	    )
+	    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+    </select>
+</mapper>
