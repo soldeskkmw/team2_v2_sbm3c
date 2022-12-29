@@ -1,3 +1,5 @@
+HELP.md
+.gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -5,7 +7,10 @@ build/
 
 ### STS ###
 .apt_generated
+.classpath
 .factorypath
+.project
+.settings
 .springBeans
 .sts4-cache
 bin/
@@ -30,5 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-# 커밋이 된 파일을 수정하여 다시 커밋하기 실습
