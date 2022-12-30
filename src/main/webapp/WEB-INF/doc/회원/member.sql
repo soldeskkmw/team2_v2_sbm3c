@@ -118,7 +118,7 @@ COMMIT;
 7. 로그인
 SELECT COUNT(memberno) as cnt
 FROM member
-WHERE memberid='user1' AND passwd='1234';
+WHERE memberid='user1' AND memberpasswd='1234';
  cnt
  ---
    0

@@ -1,4 +1,4 @@
-    <%@ page language="java" import="java.util.*, java.security.*, java.io.*, java.net.*" %>
+<%@ page language="java" import="java.util.*, java.util.Base64.*, java.security.*, java.io.*, java.net.*" %>
     <%!
     /**==============================================================
       Description        :  사용 함수 선언
@@ -26,29 +26,34 @@
           }
            return ReturnDefault ;
      }
-    
      /**
      * BASE64 Encoder
      * @param str
      * @return
      */
     public static String base64Encode(String str)  throws java.io.IOException {
-        sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
-        byte[] strByte = str.getBytes();
-        String result = encoder.encode(strByte);
-        return result ;
+        // sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
+        // byte[] strByte = str.getBytes();
+        // String result = encoder.encode(strByte);
+        // return result ;
+        
+        String result = Base64.getEncoder().encodeToString(str.getBytes());
+        return result;
     }
-
+  
     /**
      * BASE64 Decoder
      * @param str
      * @return
      */
     public static String base64Decode(String str)  throws java.io.IOException {
-        sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
-        byte[] strByte = decoder.decodeBuffer(str);
-        String result = new String(strByte);
-        return result ;
+        // sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+        // byte[] strByte = decoder.decodeBuffer(str);
+        // String result = new String(strByte);
+        // return result ;
+        
+        byte[] result = Base64.getDecoder().decode(str);
+        return new String(result);
     }
     %>
     <%
@@ -63,28 +68,28 @@
     /**==============================================================
       Description        :  사용자 샘플코드
     ==============================================================**/
-   
     String charsetType = "UTF-8"; //EUC-KR 또는 UTF-8
+ 
     request.setCharacterEncoding(charsetType);
     response.setCharacterEncoding(charsetType);
     String  action     = nullcheck(request.getParameter("action"), "");
-
     if(action.equals("go")) {
+ 
         String sms_url = "";
         sms_url = "https://sslsms.cafe24.com/sms_sender.php"; // SMS 전송요청 URL
         String user_id = base64Encode("itwillsms"); // SMS 아이디
         String secure = base64Encode("2a828056a1882665c31fc8538c56c1bf"); // 인증키
-
+        
         // form.jsp에서 보낸 문자열을 사용
         // String msg = base64Encode(nullcheck(request.getParameter("msg"), ""));
         
         // Spring SMSCont.java 보낸 문자열을 사용
         String msg = (String)request.getAttribute("msg");
         msg = base64Encode(nullcheck(msg, ""));
-        
-        // System.out.println(" -> msg : " + msg);
+                
+        // System.out.println(" ->msg: " + msg);
         String rphone = base64Encode(nullcheck(request.getParameter("rphone"), ""));
-        // System.out.println(" -> rphone : " + rphone);
+        // System.out.println(" ->rphone: " + rphone);
         String sphone1 = base64Encode(nullcheck(request.getParameter("sphone1"), ""));
         String sphone2 = base64Encode(nullcheck(request.getParameter("sphone2"), ""));
         String sphone3 = base64Encode(nullcheck(request.getParameter("sphone3"), ""));
@@ -92,7 +97,6 @@
         String rtime = base64Encode(nullcheck(request.getParameter("rtime"), ""));
         String mode = base64Encode("1");
         String subject = "";
-        
         if(nullcheck(request.getParameter("smsType"), "").equals("L")) {
             subject = base64Encode(nullcheck(request.getParameter("subject"), ""));
         }
@@ -108,7 +112,6 @@
         String[] host_info = sms_url.split("/");
         String host = host_info[2];
         String path = "/" + host_info[3];
- 
         int port = 80;
  
         // 데이터 맵핑 변수 정의
@@ -133,7 +136,7 @@
         valKey[14] = repeatTime;
         valKey[15] = smsType;
         valKey[16] = subject;
-
+ 
         String boundary = "";
         Random rnd = new Random();
         String rndKey = Integer.toString(rnd.nextInt(32000));
@@ -151,7 +154,6 @@
         String data = "";
         String index = "";
         String value = "";
-
         for (int i=0;i<arrKey.length; i++)
         {
             index =  arrKey[i];
@@ -161,19 +163,18 @@
             data += "\r\n"+value+"\r\n";
             data +="--"+boundary+"\r\n";
         }
-
+ 
         //out.println(data);
-
+ 
         InetAddress addr = InetAddress.getByName(host);
         Socket socket = new Socket(host, port);
-
         // 헤더 전송
         BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), charsetType));
         wr.write("POST "+path+" HTTP/1.0\r\n");
         wr.write("Content-Length: "+data.length()+"\r\n");
         wr.write("Content-type: multipart/form-data, boundary="+boundary+"\r\n");
         wr.write("\r\n");
-
+ 
         // 데이터 전송
         wr.write(data);
         wr.flush();
@@ -183,7 +184,6 @@
         String line;
         String alert = "";
         ArrayList tmpArr = new ArrayList();
-
         while ((line = rd.readLine()) != null) {
             tmpArr.add(line);
         }
@@ -194,10 +194,9 @@
         String[] rMsg = tmpMsg.split(",");
         String Result= rMsg[0]; //발송결과
         String Count= ""; //잔여건수
-
         if(rMsg.length>1) {Count= rMsg[1]; }
-        //발송결과 알림       
-
+ 
+                        //발송결과 알림
         if(Result.equals("success")) {
             alert = "성공적으로 발송하였습니다.";
             alert += " 잔여건수는 "+ Count+"건 입니다.";
@@ -221,5 +220,4 @@
            out.println("<script>location.href='"+returnurl+"';</script>");
         }
    }
-
     %>

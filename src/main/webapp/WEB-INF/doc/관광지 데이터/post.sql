@@ -18,8 +18,7 @@ CREATE TABLE POST(
         POSTTHUMB1                          VARCHAR2(200)       NULL ,      -- preview image
         POSTSIZE1                           NUMBER(10)   DEFAULT 0    NULL,        
         FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
-        FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)               -- 파일 사이즈
-
+        FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
 );
 
 COMMENT ON TABLE POST is '관광지 데이터';
