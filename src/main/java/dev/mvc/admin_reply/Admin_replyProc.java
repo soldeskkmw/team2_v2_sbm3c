@@ -1,4 +1,4 @@
-package admin_reply;
+package dev.mvc.admin_reply;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

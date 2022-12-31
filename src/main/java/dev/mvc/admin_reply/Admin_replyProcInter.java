@@ -1,4 +1,4 @@
-package admin_reply;
+package dev.mvc.admin_reply;
 
 public interface Admin_replyProcInter {
   public int create(Admin_replyVO admin_replyVO);

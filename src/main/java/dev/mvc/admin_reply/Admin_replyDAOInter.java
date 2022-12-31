@@ -1,4 +1,4 @@
-package admin_reply;
+package dev.mvc.admin_reply;
 
 public interface Admin_replyDAOInter {
   public int create(Admin_replyVO admin_replyVO);

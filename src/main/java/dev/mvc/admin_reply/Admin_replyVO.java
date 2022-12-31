@@ -1,4 +1,4 @@
-package admin_reply;
+package dev.mvc.admin_reply;
 
 import org.springframework.web.multipart.MultipartFile;
 
