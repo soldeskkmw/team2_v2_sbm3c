@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.admin_reply.Admin_replyDAOInter">
+<!-- 관리자 답글 -->
+<!-- 등록: 1건 이상 -->
+  <insert id="create" parameterType="dev.mvc.admin_reply.Admin_replyVO">
+	  INSERT INTO admin_reply (adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, file1, file1saved, thumb1, size1) 
+    VALUES (ADMINREPLYNO_seq.nextval, #{serviceno}, #{adminno}, #{adminreplytitle}, #{adminreplycontent}, #{adminreplyvisible}, sysdate, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+  </insert>  
+
+<!-- 전체 목록 -->
+<!-- 기본적으로 질문글에 속해있는 데이터들이므로, 답글목록은 불필요할것이라고 여겨짐 -->
+<!-- 일단 쿼리는 구현하였음 -->
+	<select id="list_all" resultType="dev.mvc.admin_reply.Admin_replyVO">
+		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, file1, file1saved, thumb1, size1
+		FROM admin_reply 
+	</select>
+
+<!-- 조회 -->
+	<select id="read" resultType="dev.mvc.admin_reply.Admin_replyVO" parameterType="int">
+		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate
+		FROM admin_reply 
+		WHERE adminreplyno = #{adminreplyno}
+	</select>
+
+
+<!-- 글 수정 -->
+	<update id="update" parameterType="dev.mvc.admin_reply.Admin_replyVO">
+		UPDATE admin_reply
+		SET adminreplytitle = #{adminreplytitle}, adminreplycontent=#{adminreplycontent}, adminreplyvisible=#{adminreplyvisible}, UDATE=sysdate,
+		    file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
+		WHERE adminreplyno = #{adminreplyno}
+	</update>
+
+<!-- 파일 수정 -->
+
+<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM admin_reply
+		WHERE adminreplyno = #{adminreplyno}
+	</delete>
+
+<!-- 레코드 갯수 -->
+
+<!-- *************** FK 자식 테이블일 경우 구현 시작 *************** -->
+<!-- FK 컬럼 기준 카운트, 특정 그룹에 속한 레코드 갯수 산출 -->
+<!-- 1번 문의글에 등록된 답글 갯수는? -->
+  <select id="count_all" resultType="int">
+    SELECT COUNT(*)
+		FROM admin_reply
+		WHERE serviceno = #{serviceno}
+  </select> 
+
+
+<!-- FK 컬럼 기준 삭제, 특정 그룹에 속한 레코드 모두 삭제 -->
+<!-- 1번 문의글에 등록된 답글 삭제 -->
+  <delete id="delete_all_by_post" parameterType="int">
+		DELETE FROM admin_reply
+		WHERE serviceno = #{serviceno}
+  </delete>  
+
+
+<!-- 부모 테이블과의 JOIN -->
+<!-- 	<select id="list_by_servicecateno_search_paging" resultType="dev.mvc.admin_reply.Admin_replyVO" parameterType="HashMap">       -->
+<!-- 		SELECT s.serviceno, s.SERVICECATENO, s.MEMBERNO, s.SERVICETITLE, s.SERVICECONTENTS, s.SERVICEPASSWD, s.SERVICEVISIBLE, s.rdate, s.UDATE, -->
+<!-- 		    a.adminreplyno, a.serviceno, a.adminno, a.adminreplytitle, a.adminreplycontent, a.adminreplyvisible, a.rdate -->
+<!-- 		FROM CUSTOMER_POST s, admin_reply a -->
+<!-- 		WHERE s.SERVICENO = a.SERVICENO -->
+<!-- 	</select> -->
+</mapper>
