@@ -86,10 +86,10 @@
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
                 <%-- /static/contents/storage/ --%>
-                <A href="/contents/storage/${file1saved }"><IMG src="/contents/storage/${file1saved }" style="width: 100%;"></A> 
+                <A href="/service/storage/${file1saved }"><IMG src="/service/storage/${file1saved }" style="width: 100%;"></A> 
               </c:when>
               <c:otherwise> <!-- 기본 이미지 출력 -->
-                <IMG src="/contents/images/none1.png" style="width: 100%;"> 
+                <IMG src="/service/images/none1.png" style="width: 100%;"> 
               </c:otherwise>
             </c:choose>
         </DIV>
@@ -102,8 +102,8 @@
       <li class="li_none">
         <DIV>
           <c:if test="${file1.trim().length() > 0 }">
-            첨부 파일: <A href='/download?dir=/contents/storage&filename=${file1saved}&downname=${file1}'>${file1}</A> (${size1_label}) 
-            <A href='/download?dir=/contents/storage&filename=${file1saved}&downname=${file1}'><IMG SRC="/contents/images/download.png"></A>
+            첨부 파일: <A href='/download?dir=/service/storage&filename=${file1saved}&downname=${file1}'>${file1}</A> (${size1_label}) 
+            <A href='/download?dir=/service/storage&filename=${file1saved}&downname=${file1}'><IMG SRC="/service/images/download.png"></A>
           </c:if>
         </DIV>
       </li>   

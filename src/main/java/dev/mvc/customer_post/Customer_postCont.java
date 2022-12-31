@@ -91,7 +91,7 @@ public class Customer_postCont {
     // 파일 접근임으로 절대 경로 지정, static 폴더 지정
     // 완성된 경로
     // C:/kd/ws_java/resort_v1sbm3c/src/main/resources/static/contents/storage
-    String upDir = user_dir + "/src/main/resources/static/contents/storage/"; // 절대 경로
+    String upDir = user_dir + "/src/main/resources/static/service/storage/"; // 절대 경로
     // System.out.println("-> upDir: " + upDir);
 
     // 전송 파일이 없어도 file1MF 객체가 생성됨.
@@ -278,7 +278,7 @@ public class Customer_postCont {
         boolean sw = false;
             
         // 완성된 경로 C:/kd/ws_java/resort_v1sbm3c/src/main/resources/static/contents/storage/
-        String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/contents/storage/"; // 절대 경로
+        String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/service/storage/"; // 절대 경로
 
         sw = Tool.deleteFile(upDir, file1saved);  // 실제 저장된 파일삭제
         sw = Tool.deleteFile(upDir, thumb1);     // preview 이미지 삭제
@@ -391,7 +391,7 @@ public class Customer_postCont {
     boolean sw = false;
         
     // 완성된 경로 C:/kd/ws_java/resort_v1sbm3c/src/main/resources/static/contents/storage/
-    String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/contents/storage/"; // 절대 경로
+    String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/service/storage/"; // 절대 경로
 
     sw = Tool.deleteFile(upDir, file1saved);  // 실제 저장된 파일삭제
     sw = Tool.deleteFile(upDir, thumb1);     // preview 이미지 삭제
