@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 등록: 1건 이상 -->
   <insert id="create" parameterType="dev.mvc.admin_reply.Admin_replyVO">
 	  INSERT INTO admin_reply (adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, file1, file1saved, thumb1, size1) 
-    VALUES (ADMINREPLYNO_seq.nextval, #{serviceno}, #{adminno}, #{adminreplytitle}, #{adminreplycontent}, #{adminreplyvisible}, sysdate, #{file1}, #{file1saved}, #{thumb1}, #{size1})
+    VALUES (ADMIN_REPLY_seq.nextval, #{serviceno}, #{adminno}, #{adminreplytitle}, #{adminreplycontent}, #{adminreplyvisible}, sysdate, #{file1}, #{file1saved}, #{thumb1}, #{size1})
   </insert>  
 
 <!-- 전체 목록 -->
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="read" resultType="dev.mvc.admin_reply.Admin_replyVO" parameterType="int">
 		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate
 		FROM admin_reply 
-		WHERE adminreplyno = #{adminreplyno}
+		WHERE serviceno = #{serviceno}
 	</select>
 
 
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE admin_reply
 		SET adminreplytitle = #{adminreplytitle}, adminreplycontent=#{adminreplycontent}, adminreplyvisible=#{adminreplyvisible}, UDATE=sysdate,
 		    file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
-		WHERE adminreplyno = #{adminreplyno}
+		WHERE serviceno = #{serviceno}
 	</update>
 
 <!-- 파일 수정 -->
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 삭제 -->
 	<delete id="delete" parameterType="int">
 		DELETE FROM admin_reply
-		WHERE adminreplyno = #{adminreplyno}
+		WHERE serviceno = #{serviceno}
 	</delete>
 
 <!-- 레코드 갯수 -->
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- FK 컬럼 기준 삭제, 특정 그룹에 속한 레코드 모두 삭제 -->
 <!-- 1번 문의글에 등록된 답글 삭제 -->
-  <delete id="delete_all_by_post" parameterType="int">
+  <delete id="delete_by_serviceno" parameterType="int">
 		DELETE FROM admin_reply
 		WHERE serviceno = #{serviceno}
   </delete>  

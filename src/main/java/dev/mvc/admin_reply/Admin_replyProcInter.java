@@ -9,5 +9,5 @@ public interface Admin_replyProcInter {
   
   public int delete(int adminreplyno);
   
-  public int delete_all_by_post(int serviceno);
+  public int delete_by_serviceno(int serviceno);
 }

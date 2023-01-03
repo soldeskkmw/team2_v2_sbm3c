@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.admin_reply.Admin_replyProc;
+import dev.mvc.admin_reply.Admin_replyVO;
 import dev.mvc.cate.CateVO;
 import dev.mvc.servicecate.ServiceCateProcInter;
 import dev.mvc.servicecate.ServiceCateVO;
@@ -24,6 +26,9 @@ import dev.mvc.tool.Upload;
 
 @Controller
 public class Customer_postCont {
+  @Autowired
+  @Qualifier("dev.mvc.admin_reply.Admin_replyProc")
+  private Admin_replyProc admin_replyProc = null;
   @Autowired
   @Qualifier("dev.mvc.customer_post.Customer_postProc")
   private Customer_postProc customer_postProc = null;
@@ -219,11 +224,14 @@ public class Customer_postCont {
     mav.addObject("servicecateVO", servicecateVO);
 
     Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
-
-    long size1 = customer_postVO.getSize1();
-    customer_postVO.setSize1_label(Tool.unit(size1)); // 93848 -> 92 KB
-
+    customer_postVO.setSize1_label(Tool.unit(customer_postVO.getSize1())); // 93848 -> 92 KB
     mav.addObject("customer_postVO", customer_postVO);
+    
+    Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
+    if(admin_replyVO != null) {
+      admin_replyVO.setSize1_label(Tool.unit(admin_replyVO.getSize1())); // 93848 -> 92 KB
+      mav.addObject("admin_replyVO", admin_replyVO);
+    }
 
     mav.setViewName("/service/customer_post/read");
 

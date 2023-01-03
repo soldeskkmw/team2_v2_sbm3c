@@ -35,8 +35,8 @@ public class Admin_replyProc implements Admin_replyProcInter{
   }
 
   @Override
-  public int delete_all_by_post(int serviceno) {
-    int cnt = this.admin_replyDAOInter.delete_all_by_post(serviceno);
+  public int delete_by_serviceno(int serviceno) {
+    int cnt = this.admin_replyDAOInter.delete_by_serviceno(serviceno);
     return cnt;
   }
 
