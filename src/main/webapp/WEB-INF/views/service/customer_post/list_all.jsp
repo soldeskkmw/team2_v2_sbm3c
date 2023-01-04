@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -64,6 +65,7 @@
     <tbody>
       <c:forEach var="customer_postVO" items="${list }">
         <c:set var="serviceno" value="${customer_postVO.serviceno }" />
+        <c:set var="memberno" value="${customer_postVO.memberno }" />
         <c:set var="servicecateno" value="${customer_postVO.servicecateno }" />
         <c:set var="servicetitle" value="${customer_postVO.servicetitle }" />
         <c:set var="servicecontents" value="${customer_postVO.servicecontents }" />        
@@ -72,18 +74,29 @@
         
         <tr style="height: 132px;">
           <td style='vertical-align: middle; text-align: center;'>
-            ${servicetitle }
-          </td>
-          <td style='vertical-align: middle;'>
-            <a href="./read.do?serviceno=${serviceno}&servicecateno=${servicecateno}"><strong>${title}</strong> 
+          
             <c:choose>
-              <c:when test="${servicecontents.length() > 160 }">
-                  ${servicecontents.substring(0, 160)}.....
+              <c:when test="${fn:contains(servicevisible, 'T') || sessionScope.adminno != null || sessionScope.memberno == memberno}">
+                ${servicetitle }
+                </td>
+                <td style='vertical-align: middle;'>
+                <a href="./read.do?serviceno=${serviceno}&servicecateno=${servicecateno}"><strong>${title}</strong> 
+                  <c:choose>
+                    <c:when test="${servicecontents.length() > 160 }">
+                        ${servicecontents.substring(0, 160)}.....
+                    </c:when>
+                    <c:when test="${servicecontents.length() <= 160 }">
+                        ${servicecontents}
+                    </c:when>
+                  </c:choose>
               </c:when>
-              <c:when test="${servicecontents.length() <= 160 }">
-                  ${servicecontents}
-              </c:when>
-            </c:choose>
+              <c:otherwise>
+                비공개글
+                </td>
+                <td style='vertical-align: middle;'>
+                해당 글에 대한 권한이 없습니다.
+              </c:otherwise>
+            </c:choose>            
             
             </a> 
           </td> 

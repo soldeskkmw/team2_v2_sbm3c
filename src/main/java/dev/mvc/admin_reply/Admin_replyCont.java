@@ -45,11 +45,11 @@ public class Admin_replyCont {
     ModelAndView mav = new ModelAndView();
 
     // 로그인 여부 확인 후 처리 필요
-    if (session.getAttribute("id") == null || session.getAttribute("id") == "") {
-      System.out.println("로그인되지 않은 회원");
-//      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-//      mav.setViewName("/service/msg");
-//      return mav;
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("/service/msg");
+      return mav;
     }
 
     ArrayList<Customer_postVO> list = this.customer_postProc.list_all();
@@ -74,14 +74,15 @@ public class Admin_replyCont {
   public ModelAndView create(HttpSession session, HttpServletRequest request, Admin_replyVO admin_replyVO) {
     ModelAndView mav = new ModelAndView();
 
-//  로그인 여부 확인
-    if (session.getAttribute("id") == null || session.getAttribute("id").equals("")) {
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-//      mav.setViewName("/service/msg");
-//      return mav;
-      // ***임시 코드***
-      admin_replyVO.setAdminno(1);
+    // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("/service/msg");
+      return mav;
     }
+    
+    admin_replyVO.setAdminno((int)session.getAttribute("adminno"));
 
     // ------------------------------------------------------------------------------
     // 파일 전송 코드 시작
@@ -158,8 +159,16 @@ public class Admin_replyCont {
    * @return
    */
   @RequestMapping(value = "/service/admin_reply/update.do", method = RequestMethod.GET)
-  public ModelAndView update(int serviceno) {
+  public ModelAndView update(HttpSession session, int serviceno) {
     ModelAndView mav = new ModelAndView();
+    
+    // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("/service/msg");
+      return mav;
+    }
     
     ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
     mav.addObject("serviceCateList", serviceCateList);
@@ -182,12 +191,11 @@ public class Admin_replyCont {
   public ModelAndView update_file(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Admin_replyVO admin_replyVO) {
     ModelAndView mav = new ModelAndView();
     
-  //memberno도 확인, 관리자 여부 검사할때 본인인지도 확인할 수 있도록
-//    if (this.adminProc.isAdmin(session)) {    
-    if(true) {
-      admin_replyVO.setAdminno(1);
-      // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
-      Admin_replyVO admin_replyVO_old = admin_replyProc.read(admin_replyVO.getServiceno());
+    // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
+    Admin_replyVO admin_replyVO_old = admin_replyProc.read(admin_replyVO.getServiceno());
+    
+    if(session.getAttribute("adminno") != null && session.getAttribute("adminno") != "") {
+      admin_replyVO.setAdminno((int)session.getAttribute("adminno"));      
       
       int cnt = 0;
 
@@ -264,8 +272,9 @@ public class Admin_replyCont {
       mav.setViewName("redirect:/service/customer_post/list_all.do"); // request -> param으로 접근 전환
                 
     } else {
-      mav.addObject("url", "/admin/login_need"); // login_need.jsp, redirect parameter 적용
-      mav.setViewName("redirect:/contents/msg.do"); // GET
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("redirect:/service/msg");
     }
 
     return mav; // forward
@@ -277,8 +286,16 @@ public class Admin_replyCont {
    * @return
    */
   @RequestMapping(value="/service/admin_reply/delete.do", method=RequestMethod.GET )
-  public ModelAndView delete(int serviceno) { 
+  public ModelAndView delete(HttpSession session, int serviceno) { 
     ModelAndView mav = new  ModelAndView();
+    
+ // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.setViewName("/service/msg");
+      return mav;
+    }
     
     // 삭제할 정보를 조회하여 확인
     Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
@@ -301,9 +318,17 @@ public class Admin_replyCont {
    * @return
    */
   @RequestMapping(value = "/service/admin_reply/delete.do", method = RequestMethod.POST)
-  public ModelAndView delete(int serviceno, String word,
+  public ModelAndView delete(HttpSession session, int serviceno, String word,
                                         @RequestParam(value="now_page", defaultValue="1") int now_page) {
     ModelAndView mav = new ModelAndView();
+    
+ // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.setViewName("redirect:/service/msg");
+      return mav;
+    }
     
     int cnt = 0;
     // -------------------------------------------------------------------

@@ -47,11 +47,11 @@ public class Customer_postCont {
     ModelAndView mav = new ModelAndView();
 
     // 로그인 여부 확인 후 처리 필요
-    if (session.getAttribute("id") == null || session.getAttribute("id") == "") {
-      System.out.println("로그인되지 않은 회원");
-//      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-//      mav.setViewName("/service/msg");
-//      return mav;
+    if (session.getAttribute("memberno") == null || session.getAttribute("memberno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.setViewName("/service/msg");
+      return mav;
     }
 
     ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
@@ -73,12 +73,12 @@ public class Customer_postCont {
     ModelAndView mav = new ModelAndView();
 
 //  로그인 여부 확인
-    if (session.getAttribute("id") == null || session.getAttribute("id").equals("")) {
+    if (session.getAttribute("memberno") == null || session.getAttribute("memberno") == "") {
+      mav.addObject("type", "권한 오류");
       mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-//      mav.setViewName("/service/msg");
-//      return mav;
-      // ***임시 코드***
-      customer_postVO.setMemberno(1);
+      mav.setViewName("/service/msg");
+      customer_postVO.setMemberno((int)session.getAttribute("memberno"));
+      return mav;
     }
 
     // ------------------------------------------------------------------------------
@@ -214,7 +214,7 @@ public class Customer_postCont {
    * @return
    */
   @RequestMapping(value = "/service/customer_post/read.do", method = RequestMethod.GET)
-  public ModelAndView read(int servicecateno, int serviceno) {
+  public ModelAndView read(HttpSession session, int servicecateno, int serviceno) {
     ModelAndView mav = new ModelAndView();
 
     // 글쓰기 권한 확인해서 권한 없으면 메세지 창으로 보내는 단계 필요
@@ -226,6 +226,14 @@ public class Customer_postCont {
     Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
     customer_postVO.setSize1_label(Tool.unit(customer_postVO.getSize1())); // 93848 -> 92 KB
     mav.addObject("customer_postVO", customer_postVO);
+    
+    //  로그인 여부 확인
+    if (customer_postVO.getServicevisible() == "F" && (int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "작성자와 관리자만 조회할 수 있는 글입니다.");
+      mav.setViewName("/service/msg");
+      return mav;
+    }
     
     Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
     if(admin_replyVO != null) {
@@ -245,7 +253,7 @@ public class Customer_postCont {
    * @return
    */
   @RequestMapping(value = "/service/customer_post/update.do", method = RequestMethod.GET)
-  public ModelAndView update(int serviceno) {
+  public ModelAndView update(HttpSession session, int serviceno) {
     ModelAndView mav = new ModelAndView();
     
     ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
@@ -253,6 +261,14 @@ public class Customer_postCont {
     
     Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
     mav.addObject("customer_postVO", customer_postVO);
+    
+    //  로그인 여부 확인
+    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno()) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "작성자 본인만 수정이 가능합니다.");
+      mav.setViewName("/service/msg");
+      return mav;
+    }
     
     mav.setViewName("/service/customer_post/update");
 
@@ -266,13 +282,12 @@ public class Customer_postCont {
   public ModelAndView update_file(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Customer_postVO customer_postVO) {
     ModelAndView mav = new ModelAndView();
     
-  //memberno도 확인, 관리자 여부 검사할때 본인인지도 확인할 수 있도록
-//    if (this.adminProc.isAdmin(session)) {    
-    if(true) {
-      customer_postVO.setMemberno(1);
-      // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
-      Customer_postVO customer_postVO_old = customer_postProc.read(customer_postVO.getServiceno());
+    Customer_postVO customer_postVO_old = customer_postProc.read(customer_postVO.getServiceno());  
+    
+    if(customer_postVO_old.getMemberno() == (int)session.getAttribute("memberno")) {
+      customer_postVO.setMemberno((int)session.getAttribute("memberno"));
       
+      // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
       int cnt = 0;
 
       // 파일 수정 여부를 검사하여 true라면 작동
@@ -348,8 +363,9 @@ public class Customer_postCont {
       mav.setViewName("redirect:/service/customer_post/list_all.do"); // request -> param으로 접근 전환
                 
     } else {
-      mav.addObject("url", "/admin/login_need"); // login_need.jsp, redirect parameter 적용
-      mav.setViewName("redirect:/contents/msg.do"); // GET
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "작성자 본인만 수정이 가능합니다.");
+      mav.setViewName("redirect:/service/msg.do"); // GET
     }
 
     return mav; // forward
@@ -361,12 +377,20 @@ public class Customer_postCont {
    * @return
    */
   @RequestMapping(value="/service/customer_post/delete.do", method=RequestMethod.GET )
-  public ModelAndView delete(int serviceno) { 
+  public ModelAndView delete(HttpSession session, int serviceno) { 
     ModelAndView mav = new  ModelAndView();
     
     // 삭제할 정보를 조회하여 확인
     Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
     mav.addObject("customer_postVO", customer_postVO);
+    
+    //  로그인 여부 확인
+    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
+      mav.setViewName("redirect:/service/msg");
+      return mav;
+    }
     
     ServiceCateVO servicecateVO = this.servicecateProc.read(customer_postVO.getServicecateno());
     mav.addObject("servicecateVO", servicecateVO);
@@ -382,7 +406,7 @@ public class Customer_postCont {
    * @return
    */
   @RequestMapping(value = "/service/customer_post/delete.do", method = RequestMethod.POST)
-  public ModelAndView delete(int serviceno, String word,
+  public ModelAndView delete(HttpSession session, int serviceno, String word,
                                         @RequestParam(value="now_page", defaultValue="1") int now_page) {
     ModelAndView mav = new ModelAndView();
     
@@ -392,6 +416,14 @@ public class Customer_postCont {
     // -------------------------------------------------------------------
     // 삭제할 파일 정보를 읽어옴.
     Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
+    
+    //  로그인 여부 확인
+    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
+      mav.setViewName("redirect:/service/msg");
+      return mav;
+    }
         
     String file1saved = customer_postVO.getFile1saved();
     String thumb1 = customer_postVO.getThumb1();
