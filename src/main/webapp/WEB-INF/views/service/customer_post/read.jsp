@@ -10,9 +10,7 @@
 <title>GoingShare</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
@@ -21,30 +19,39 @@
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.name }</A></DIV>
+<DIV class='title_line'><A href="./list_all.do?servicecateno=${param.servicecateno }" class='title_link'>${servicecateVO.servicetype_content }</A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_search_paging.do?cateno=${cateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_grid.do?cateno=${cateno }">갤러리형</A>
+    <A href="./list_all.do?servicecateno=${param.servicecateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>
 
-    <c:if test="${sessionScope.admin_id != null }">
+    <c:if test="${sessionScope.memberno != null }">
       <span class='menu_divide' >│</span>
-      <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
-      <span class='menu_divide' >│</span>
-	    <A href="./update_text.do?contentsno=${contentsno}&now_page=${param.now_page}">글 수정</A>
-	    <span class='menu_divide' >│</span>
-	    <A href="./delete.do?contentsno=${contentsno}&now_page=${param.now_page}&cateno=${cateno}">삭제</A>  
+      <A href="./create.do?servicecateno=${servicecateVO.servicecateno }">등록</A>
+      
+      <c:if test="${sessionScope.memberno == customer_postVO.memberno }">
+	      <span class='menu_divide' >│</span>
+		    <A href="./update.do?serviceno=${customer_postVO.serviceno }&now_page=${param.now_page}">글 수정</A>
+	    </c:if>
+	    
+	    <c:if test="${sessionScope.adminno != null }">
+        <span class='menu_divide' >│</span>
+        <A href="../admin_reply/create.do?serviceno=${customer_postVO.serviceno }&now_page=${param.now_page}">답글 등록</A>
+	    </c:if>
+	    
+	    <c:if test="${sessionScope.adminno != null or sessionScope.memberno == customer_postVO.memberno }">
+        <span class='menu_divide' >│</span>
+        <A href="./delete.do?serviceno=${customer_postVO.serviceno }&now_page=${param.now_page}&servicecateno=${param.servicecateno}">삭제</A>  
+      </c:if>
     </c:if>
     
   </ASIDE> 
   
   <%-- 검색 --%>
   <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do'>
+    <form name='frm' id='frm' method='get' action='./list_all.do'>
       <input type='hidden' name='cateno' value='${param.cateno }'>
       <c:choose>
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
@@ -108,10 +115,13 @@
         </DIV>
       </li>   
     </ul>
+    
+      <c:if test="${sessionScope.memberno == customer_postVO.memberno }">
+		    <button onclick="location.href='/service/customer_post/update.do?serviceno=${serviceno}'">수정하기</button>
+		    <button onclick="location.href='/service/customer_post/delete.do?serviceno=${serviceno}'">삭제하기</button>
+		  </c:if>
   </fieldset>
-
-  <button onclick="location.href='/service/customer_post/update.do?serviceno=${serviceno}'">수정하기</button>
-  <button onclick="location.href='/service/customer_post/delete.do?serviceno=${serviceno}'">삭제하기</button>
+  
   
   <%-------------------------------------------------------------------------------------------------------------------------------------------------------------------- --%>
 	<c:if test="${admin_replyVO ne null }">
@@ -161,10 +171,13 @@
 	        </DIV>
 	      </li>   
 	    </ul>
-	  </fieldset>
-	
-	  <button onclick="location.href='/service/customer_post/update.do?serviceno=${serviceno}'">수정하기</button>
-	  <button onclick="location.href='/service/customer_post/delete.do?serviceno=${serviceno}'">삭제하기</button>
+	    
+	    <c:if test="${sessionScope.adminno == admin_replyVO.adminno }">
+	      <button onclick="location.href='/service/admin_reply/update.do?serviceno=${serviceno}'">수정하기</button>
+	      <button onclick="location.href='/service/admin_reply/delete.do?serviceno=${serviceno}'">삭제하기</button>
+	    </c:if>
+	  </fieldset>	  
+	  
   </c:if>
 </DIV>
  

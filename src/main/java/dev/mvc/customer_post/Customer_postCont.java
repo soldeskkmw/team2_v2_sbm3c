@@ -76,10 +76,10 @@ public class Customer_postCont {
     if (session.getAttribute("memberno") == null || session.getAttribute("memberno") == "") {
       mav.addObject("type", "권한 오류");
       mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-      mav.setViewName("/service/msg");
-      customer_postVO.setMemberno((int)session.getAttribute("memberno"));
+      mav.setViewName("/service/msg");      
       return mav;
     }
+    customer_postVO.setMemberno((int)session.getAttribute("memberno"));
 
     // ------------------------------------------------------------------------------
     // 파일 전송 코드 시작
@@ -153,7 +153,7 @@ public class Customer_postCont {
 //http://localhost:9093/service/customer_post/list_all.do
   @RequestMapping(value = "/service/customer_post/list_all.do", method = RequestMethod.GET)
   public ModelAndView list_by_cateno_search_paging(HttpServletRequest request,
-      @RequestParam(value = "servicecateno", defaultValue = "1") int servicecateno,
+      @RequestParam(value = "servicecateno", defaultValue = "-1") int servicecateno,
       @RequestParam(value = "word", defaultValue = "") String word,
       @RequestParam(value = "now_page", defaultValue = "1") int now_page) {
     // System.out.println("--> now_page: " + now_page);
@@ -164,41 +164,35 @@ public class Customer_postCont {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("servicecateno", servicecateno);
     map.put("word", word); // #{word}
-
-    // 검색된 레코드 갯수
-    int search_count = customer_postProc.search_count(map);
-    mav.addObject("search_count", search_count);
-
-    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
-    mav.addObject("serviceCateList", serviceCateList);
-    
-//    ServiceCateVO servicecateVO = servicecateProc.read(servicecateno);
-//    mav.addObject("servicecateVO", servicecateVO);
-
-    // map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-    // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-    int start_num = search_count - (now_page) * 10;
-    int end_num = search_count - (now_page - 1) * 10;
-    map.put("start_num", start_num);
-    map.put("end_num", end_num);
+    map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
 
     // 검색 목록
     ArrayList<Customer_postVO> list = customer_postProc.list_by_servicecateno_search_paging(map);
     mav.addObject("list", list);
+    
+    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
+    mav.addObject("serviceCateList", serviceCateList);
+    
+    // 검색된 레코드 갯수
+    int search_count = customer_postProc.search_count(map);
+    mav.addObject("search_count", search_count);
+    
+    ServiceCateVO servicecateVO = servicecateProc.read(servicecateno);
+    mav.addObject("servicecateVO", servicecateVO);
 
-//    /*
-//     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
-//     * 18 19 20 [다음]
-//     * @param cateno 카테고리번호
-//     * @param search_count 검색(전체) 레코드수
-//     * @param now_page 현재 페이지
-//     * @param word 검색어
-//     * @return 페이징용으로 생성된 HTML/CSS tag 문자열
-//     */
-//    String paging = customer_postProc.pagingBox(servicecateno, search_count, now_page, word);
-//    mav.addObject("paging", paging);
-
-    // mav.addObject("now_page", now_page);
+    /*
+     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+     * 18 19 20 [다음]
+     * @param cateno 카테고리번호
+     * @param search_count 검색(전체) 레코드수
+     * @param now_page 현재 페이지
+     * @param word 검색어
+     * @return 페이징용으로 생성된 HTML/CSS tag 문자열
+     */
+    String paging = customer_postProc.pagingBox(servicecateno, search_count, now_page, word);
+    mav.addObject("paging", paging);
+    
+    mav.addObject("now_page", now_page);
 
     // 로그인 Cookie + 쇼핑카트 + CKEditor
     mav.setViewName("/service/customer_post/list_all");
