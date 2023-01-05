@@ -87,10 +87,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT COUNT(*) as cnt
     FROM customer_post
     <choose>
-      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+      <when test="word == null or word == '' and servicecateno == -1"> <!-- 카테고리 지정 안하고 검색안함 -->
+        WHERE 1=1
+      </when> 
+      <when test="servicecateno == -1"> <!-- 카테고리 지정 안하고 검색함 -->
+        WHERE (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
+                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+      </when>       
+      <when test="word == null or word == '' and servicecateno != -1"> <!-- 카테고리 지정 하고 검색안함 -->
         WHERE servicecateno=#{servicecateno}
       </when>
-      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+      <otherwise> <!-- 카테고리 지정 하고 검색함 -->
         WHERE servicecateno=#{servicecateno} AND (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
                                                   OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
       </otherwise>
@@ -105,15 +112,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	              FROM (
 	                        SELECT serviceno, servicecateno, memberno, servicetitle, servicecontents, servicevisible, rdate, udate
 	                        FROM CUSTOMER_POST
-	                        <choose>
-											      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+											    <choose>
+											      <when test="word == null or word == '' and servicecateno == -1"> <!-- 카테고리 지정 안하고 검색안함 -->
+											      </when> 
+											      <when test="servicecateno == -1"> <!-- 카테고리 지정 안하고 검색함 -->
+											        WHERE (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
+											                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+											      </when>       
+											      <when test="word == null or word == '' and servicecateno != -1"> <!-- 카테고리 지정 하고 검색안함 -->
 											        WHERE servicecateno=#{servicecateno}
 											      </when>
-											      <otherwise> <!-- 검색하는 경우 -->
+											      <otherwise> <!-- 카테고리 지정 하고 검색함 -->
 											        WHERE servicecateno=#{servicecateno} AND (UPPER(servicetitle) LIKE '%' || #{word} || '%' 
-	                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
-	                          </otherwise>
-	                        </choose>
+											                                                  OR UPPER(servicecontents) LIKE '%' || #{word} || '%')
+											      </otherwise>
+											    </choose>
 	                        ORDER BY serviceno DESC
 	               )
 	    )

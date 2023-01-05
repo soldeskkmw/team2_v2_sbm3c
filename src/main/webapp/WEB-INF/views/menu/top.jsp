@@ -17,7 +17,7 @@
                <a class="dropdown-item" href="/post/list_by_cateno_search_paging.do?cateno=6">Cafe</a>
                <a class="dropdown-item" href="/notice/notice_list.do">공지사항</a>
                <a class="dropdown-item" href="/survey/survey_list.do">설문조사</a>
-               <a class="dropdown-item" href="/service/servicecate/list_all.do">고객센터</a>
+               <a class="dropdown-item" href="/service/customer_post/list_all.do">고객센터</a>
               </div>
           </li>
           <a class="navbar-brand" href="/">Going Share</a>

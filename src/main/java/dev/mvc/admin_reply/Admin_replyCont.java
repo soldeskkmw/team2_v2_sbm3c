@@ -1,9 +1,8 @@
-package dev.mvc.customer_post;
+package dev.mvc.admin_reply;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,16 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import dev.mvc.admin_reply.Admin_replyProc;
-import dev.mvc.admin_reply.Admin_replyVO;
-import dev.mvc.cate.CateVO;
+import dev.mvc.customer_post.Customer_postProc;
+import dev.mvc.customer_post.Customer_postVO;
 import dev.mvc.servicecate.ServiceCateProcInter;
 import dev.mvc.servicecate.ServiceCateVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
 @Controller
-public class Customer_postCont {
+public class Admin_replyCont {
   @Autowired
   @Qualifier("dev.mvc.admin_reply.Admin_replyProc")
   private Admin_replyProc admin_replyProc = null;
@@ -36,50 +34,55 @@ public class Customer_postCont {
   @Qualifier("dev.mvc.servicecate.ServiceCateProc")
   private ServiceCateProcInter servicecateProc = null;
 
-  public Customer_postCont() {
-    System.out.println("-> Customer_postCont created.");
+  public Admin_replyCont() {
+    System.out.println("-> Admin_replyCont created.");
   }
-
+  
   // 등록 폼
-  // http://localhost:9093/service/customer_post/create.do
-  @RequestMapping(value = "/service/customer_post/create.do", method = RequestMethod.GET)
-  public ModelAndView create(HttpSession session) {
+  // http://localhost:9093/service/admin_reply/create.do?serviceno=1
+  @RequestMapping(value = "/service/admin_reply/create.do", method = RequestMethod.GET)
+  public ModelAndView create(HttpSession session, int serviceno) {
     ModelAndView mav = new ModelAndView();
 
     // 로그인 여부 확인 후 처리 필요
-    if (session.getAttribute("memberno") == null || session.getAttribute("memberno") == "") {
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
       mav.setViewName("/service/msg");
       return mav;
     }
 
-    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
-    mav.addObject("serviceCateList", serviceCateList);
-
     ArrayList<Customer_postVO> list = this.customer_postProc.list_all();
     mav.addObject("list", list);
+    
+    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
 
-    mav.setViewName("/service/customer_post/create");
+    long size1 = customer_postVO.getSize1();
+    customer_postVO.setSize1_label(Tool.unit(size1)); // 93848 -> 92 KB
+    mav.addObject("customer_postVO", customer_postVO);
+
+    mav.setViewName("/service/admin_reply/create");
 
     return mav;
   }
+  
 
   // 등록 처리
-  // <FORM name='frm' method='POST' action='/service/customer_post/create.do'>
-  // http://localhost:9093/service/customer_post/create.do
-  @RequestMapping(value = "/service/customer_post/create.do", method = RequestMethod.POST)
-  public ModelAndView create(HttpSession session, HttpServletRequest request, Customer_postVO customer_postVO) {
+  // <FORM name='frm' method='POST' action='/service/admin_reply/create.do'>
+  // http://localhost:9093/service/admin_reply/create.do
+  @RequestMapping(value = "/service/admin_reply/create.do", method = RequestMethod.POST)
+  public ModelAndView create(HttpSession session, HttpServletRequest request, Admin_replyVO admin_replyVO) {
     ModelAndView mav = new ModelAndView();
 
-//  로그인 여부 확인
-    if (session.getAttribute("memberno") == null || session.getAttribute("memberno") == "") {
+    // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-      mav.setViewName("/service/msg");      
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("/service/msg");
       return mav;
     }
-    customer_postVO.setMemberno((int)session.getAttribute("memberno"));
+    
+    admin_replyVO.setAdminno((int)session.getAttribute("adminno"));
 
     // ------------------------------------------------------------------------------
     // 파일 전송 코드 시작
@@ -102,7 +105,7 @@ public class Customer_postCont {
     // 전송 파일이 없어도 file1MF 객체가 생성됨.
     // <input type='file' class="form-control" name='file1MF' id='file1MF'
     // value='' placeholder="파일 선택">
-    MultipartFile mf = customer_postVO.getFile1MF();
+    MultipartFile mf = admin_replyVO.getFile1MF();
 
     file1 = Tool.getFname(mf.getOriginalFilename()); // 원본 순수 파일명 산출
     System.out.println("-> file1: " + file1);
@@ -120,15 +123,15 @@ public class Customer_postCont {
 
     }
 
-    customer_postVO.setFile1(file1); // 순수 원본 파일명
-    customer_postVO.setFile1saved(file1saved); // 저장된 파일명(파일명 중복 처리)
-    customer_postVO.setThumb1(thumb1); // 원본이미지 축소판
-    customer_postVO.setSize1(size1); // 파일 크기
+    admin_replyVO.setFile1(file1); // 순수 원본 파일명
+    admin_replyVO.setFile1saved(file1saved); // 저장된 파일명(파일명 중복 처리)
+    admin_replyVO.setThumb1(thumb1); // 원본이미지 축소판
+    admin_replyVO.setSize1(size1); // 파일 크기
     // ------------------------------------------------------------------------------
     // 파일 전송 코드 종료
     // ------------------------------------------------------------------------------
 
-    int cnt = this.customer_postProc.create(customer_postVO);
+    int cnt = this.admin_replyProc.create(admin_replyVO);
 
     if (cnt == 1) {
       mav.addObject("code", "create_success");
@@ -148,123 +151,35 @@ public class Customer_postCont {
 
     return mav;
   }
-
-  // 고객 문의글 목록
-//http://localhost:9093/service/customer_post/list_all.do
-  @RequestMapping(value = "/service/customer_post/list_all.do", method = RequestMethod.GET)
-  public ModelAndView list_by_cateno_search_paging(HttpServletRequest request,
-      @RequestParam(value = "servicecateno", defaultValue = "-1") int servicecateno,
-      @RequestParam(value = "word", defaultValue = "") String word,
-      @RequestParam(value = "now_page", defaultValue = "1") int now_page) {
-    // System.out.println("--> now_page: " + now_page);
-
-    ModelAndView mav = new ModelAndView();
-
-    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
-    HashMap<String, Object> map = new HashMap<String, Object>();
-    map.put("servicecateno", servicecateno);
-    map.put("word", word); // #{word}
-    map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-
-    // 검색 목록
-    ArrayList<Customer_postVO> list = customer_postProc.list_by_servicecateno_search_paging(map);
-    mav.addObject("list", list);
-    
-    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
-    mav.addObject("serviceCateList", serviceCateList);
-    
-    // 검색된 레코드 갯수
-    int search_count = customer_postProc.search_count(map);
-    mav.addObject("search_count", search_count);
-    
-    ServiceCateVO servicecateVO = servicecateProc.read(servicecateno);
-    mav.addObject("servicecateVO", servicecateVO);
-
-    /*
-     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
-     * 18 19 20 [다음]
-     * @param cateno 카테고리번호
-     * @param search_count 검색(전체) 레코드수
-     * @param now_page 현재 페이지
-     * @param word 검색어
-     * @return 페이징용으로 생성된 HTML/CSS tag 문자열
-     */
-    String paging = customer_postProc.pagingBox(servicecateno, search_count, now_page, word);
-    mav.addObject("paging", paging);
-    
-    mav.addObject("now_page", now_page);
-
-    // 로그인 Cookie + 쇼핑카트 + CKEditor
-    mav.setViewName("/service/customer_post/list_all");
-    // -------------------------------------------------------------------------------
-
-    return mav;
-  }
-
-  /**
-   * 조회,
-   * http://localhost:9093/service/customer_post/read.do?servicecateno=1&serviceno=1
-   * 
-   * @return
-   */
-  @RequestMapping(value = "/service/customer_post/read.do", method = RequestMethod.GET)
-  public ModelAndView read(HttpSession session, int servicecateno, int serviceno) {
-    ModelAndView mav = new ModelAndView();
-
-    // 글쓰기 권한 확인해서 권한 없으면 메세지 창으로 보내는 단계 필요
-    // 관리자이거나 글쓴 본인인지 확인하면 될 것으로 보임
-
-    ServiceCateVO servicecateVO = this.servicecateProc.read(servicecateno);
-    mav.addObject("servicecateVO", servicecateVO);
-
-    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
-    customer_postVO.setSize1_label(Tool.unit(customer_postVO.getSize1())); // 93848 -> 92 KB
-    mav.addObject("customer_postVO", customer_postVO);
-    
-    //  로그인 여부 확인
-    if (customer_postVO.getServicevisible() == "F" && (int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
-      mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "작성자와 관리자만 조회할 수 있는 글입니다.");
-      mav.setViewName("/service/msg");
-      return mav;
-    }
-    
-    Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
-    if(admin_replyVO != null) {
-      admin_replyVO.setSize1_label(Tool.unit(admin_replyVO.getSize1())); // 93848 -> 92 KB
-      mav.addObject("admin_replyVO", admin_replyVO);
-    }
-
-    mav.setViewName("/service/customer_post/read");
-
-    return mav;
-  }
   
   /**
    * 수정 폼
-   * http://localhost:9091/contents/update_text.do?contentsno=1
+   * http://localhost:9093/service/admin_reply/update.do?serviceno=1
    * 
    * @return
    */
-  @RequestMapping(value = "/service/customer_post/update.do", method = RequestMethod.GET)
+  @RequestMapping(value = "/service/admin_reply/update.do", method = RequestMethod.GET)
   public ModelAndView update(HttpSession session, int serviceno) {
     ModelAndView mav = new ModelAndView();
     
-    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
-    mav.addObject("serviceCateList", serviceCateList);
-    
-    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
-    mav.addObject("customer_postVO", customer_postVO);
-    
-    //  로그인 여부 확인
-    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno()) {
+    // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "작성자 본인만 수정이 가능합니다.");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
       mav.setViewName("/service/msg");
       return mav;
     }
     
-    mav.setViewName("/service/customer_post/update");
+    ArrayList<ServiceCateVO> serviceCateList = this.servicecateProc.list_all();
+    mav.addObject("serviceCateList", serviceCateList);
+    
+    Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
+    mav.addObject("admin_replyVO", admin_replyVO);
+    
+    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
+    mav.addObject("customer_postVO", customer_postVO);
+    
+    mav.setViewName("/service/admin_reply/update");
 
     return mav; // forward
   }
@@ -272,16 +187,16 @@ public class Customer_postCont {
   /**
    * 수정 처리
    */
-  @RequestMapping(value = "/service/customer_post/update.do", method = RequestMethod.POST)
-  public ModelAndView update_file(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Customer_postVO customer_postVO) {
+  @RequestMapping(value = "/service/admin_reply/update.do", method = RequestMethod.POST)
+  public ModelAndView update_file(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Admin_replyVO admin_replyVO) {
     ModelAndView mav = new ModelAndView();
     
-    Customer_postVO customer_postVO_old = customer_postProc.read(customer_postVO.getServiceno());  
+    // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
+    Admin_replyVO admin_replyVO_old = admin_replyProc.read(admin_replyVO.getServiceno());
     
-    if(customer_postVO_old.getMemberno() == (int)session.getAttribute("memberno")) {
-      customer_postVO.setMemberno((int)session.getAttribute("memberno"));
+    if(session.getAttribute("adminno") != null && session.getAttribute("adminno") != "") {
+      admin_replyVO.setAdminno((int)session.getAttribute("adminno"));      
       
-      // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
       int cnt = 0;
 
       // 파일 수정 여부를 검사하여 true라면 작동
@@ -289,8 +204,8 @@ public class Customer_postCont {
         // -------------------------------------------------------------------
         // 파일 삭제 코드 시작
         // -------------------------------------------------------------------
-        String file1saved = customer_postVO_old.getFile1saved();  // 실제 저장된 파일명
-        String thumb1 = customer_postVO_old.getThumb1();       // 실제 저장된 preview 이미지 파일명
+        String file1saved = admin_replyVO_old.getFile1saved();  // 실제 저장된 파일명
+        String thumb1 = admin_replyVO_old.getThumb1();       // 실제 저장된 preview 이미지 파일명
         long size1 = 0;
         boolean sw = false;
             
@@ -314,7 +229,7 @@ public class Customer_postCont {
         // 전송 파일이 없어도 file1MF 객체가 생성됨.
         // <input type='file' class="form-control" name='file1MF' id='file1MF' 
         //           value='' placeholder="파일 선택">
-        MultipartFile mf = customer_postVO.getFile1MF();
+        MultipartFile mf = admin_replyVO.getFile1MF();
             
         file1 = mf.getOriginalFilename(); // 원본 파일명
         size1 = mf.getSize();  // 파일 크기
@@ -335,31 +250,31 @@ public class Customer_postCont {
           size1=0;
         }
             
-        customer_postVO.setFile1(file1);
-        customer_postVO.setFile1saved(file1saved);
-        customer_postVO.setThumb1(thumb1);
-        customer_postVO.setSize1(size1);
+        admin_replyVO.setFile1(file1);
+        admin_replyVO.setFile1saved(file1saved);
+        admin_replyVO.setThumb1(thumb1);
+        admin_replyVO.setSize1(size1);
         // -------------------------------------------------------------------
         // 파일 전송 코드 종료
         // -------------------------------------------------------------------
       } else {  // 파일을 삭제하지 않을 경우
         // 기존의 값을 그대로 들고와서 덮어씌움
-        customer_postVO.setFile1(customer_postVO_old.getFile1());
-        customer_postVO.setFile1saved(customer_postVO_old.getFile1saved());
-        customer_postVO.setThumb1(customer_postVO_old.getThumb1());
-        customer_postVO.setSize1(customer_postVO_old.getSize1());
+        admin_replyVO.setFile1(admin_replyVO_old.getFile1());
+        admin_replyVO.setFile1saved(admin_replyVO_old.getFile1saved());
+        admin_replyVO.setThumb1(admin_replyVO_old.getThumb1());
+        admin_replyVO.setSize1(admin_replyVO_old.getSize1());
       }      
           
-      cnt = this.customer_postProc.update(customer_postVO); // Oracle 처리
+      cnt = this.admin_replyProc.update(admin_replyVO); // Oracle 처리
 
-      mav.addObject("serviceno", customer_postVO.getServiceno());
-      mav.addObject("servicecateno", customer_postVO.getServicecateno());
+      mav.addObject("serviceno", admin_replyVO.getServiceno());
+      mav.addObject("adminreplyno", admin_replyVO.getAdminreplyno());
       mav.setViewName("redirect:/service/customer_post/list_all.do"); // request -> param으로 접근 전환
                 
     } else {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "작성자 본인만 수정이 가능합니다.");
-      mav.setViewName("redirect:/service/msg.do"); // GET
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
+      mav.setViewName("redirect:/service/msg");
     }
 
     return mav; // forward
@@ -370,57 +285,60 @@ public class Customer_postCont {
    * @param contentsno
    * @return
    */
-  @RequestMapping(value="/service/customer_post/delete.do", method=RequestMethod.GET )
+  @RequestMapping(value="/service/admin_reply/delete.do", method=RequestMethod.GET )
   public ModelAndView delete(HttpSession session, int serviceno) { 
     ModelAndView mav = new  ModelAndView();
     
-    // 삭제할 정보를 조회하여 확인
-    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
-    mav.addObject("customer_postVO", customer_postVO);
-    
-    //  로그인 여부 확인
-    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+ // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
-      mav.setViewName("redirect:/service/msg");
+      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.setViewName("/service/msg");
       return mav;
     }
+    
+    // 삭제할 정보를 조회하여 확인
+    Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
+    mav.addObject("admin_replyVO", admin_replyVO);
+    
+    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
+    mav.addObject("customer_postVO", customer_postVO);
     
     ServiceCateVO servicecateVO = this.servicecateProc.read(customer_postVO.getServicecateno());
     mav.addObject("servicecateVO", servicecateVO);
     
-    mav.setViewName("/service/customer_post/delete");  // /webapp/WEB-INF/views/contents/delete.jsp
+    mav.setViewName("/service/admin_reply/delete");  // /webapp/WEB-INF/views/contents/delete.jsp
     
     return mav; 
   }
   
   /**
-   * 삭제 처리 http://localhost:9091/service/customer_post/delete.do
+   * 삭제 처리 http://localhost:9093/service/admin_reply/delete.do
    * 
    * @return
    */
-  @RequestMapping(value = "/service/customer_post/delete.do", method = RequestMethod.POST)
+  @RequestMapping(value = "/service/admin_reply/delete.do", method = RequestMethod.POST)
   public ModelAndView delete(HttpSession session, int serviceno, String word,
                                         @RequestParam(value="now_page", defaultValue="1") int now_page) {
     ModelAndView mav = new ModelAndView();
+    
+ // 로그인 여부 확인 후 처리 필요
+    if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.setViewName("redirect:/service/msg");
+      return mav;
+    }
     
     int cnt = 0;
     // -------------------------------------------------------------------
     // 파일 삭제 코드 시작
     // -------------------------------------------------------------------
     // 삭제할 파일 정보를 읽어옴.
-    Customer_postVO customer_postVO = this.customer_postProc.read(serviceno);
-    
-    //  로그인 여부 확인
-    if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
-      mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
-      mav.setViewName("redirect:/service/msg");
-      return mav;
-    }
+    Admin_replyVO admin_replyVO = this.admin_replyProc.read(serviceno);
         
-    String file1saved = customer_postVO.getFile1saved();
-    String thumb1 = customer_postVO.getThumb1();
+    String file1saved = admin_replyVO.getFile1saved();
+    String thumb1 = admin_replyVO.getThumb1();
     long size1 = 0;
     boolean sw = false;
         
@@ -433,13 +351,13 @@ public class Customer_postCont {
     // 파일 삭제 종료 시작
     // -------------------------------------------------------------------
         
-    cnt = this.customer_postProc.delete(serviceno); // DBMS 삭제
+    cnt = this.admin_replyProc.delete_by_serviceno(serviceno); // DBMS 삭제
         
     // -------------------------------------------------------------------------------------
     // 마지막 페이지의 마지막 레코드 삭제시의 페이지 번호 -1 처리
     // -------------------------------------------------------------------------------------    
     HashMap<String, Object> page_map = new HashMap<String, Object>();
-    page_map.put("servicecateno", customer_postVO.getServicecateno());
+    page_map.put("serviceno", admin_replyVO.getServiceno());
     page_map.put("word", word);
     /*
      * 페이징을 아직 제대로 적용하지 않았으므로...
@@ -455,7 +373,7 @@ public class Customer_postCont {
     */
     // -------------------------------------------------------------------------------------
 
-    mav.addObject("servicecateno", customer_postVO.getServicecateno());
+    mav.addObject("serviceno", admin_replyVO.getServiceno());
     mav.addObject("now_page", now_page);
     mav.setViewName("redirect:/service/customer_post/list_all.do"); 
     

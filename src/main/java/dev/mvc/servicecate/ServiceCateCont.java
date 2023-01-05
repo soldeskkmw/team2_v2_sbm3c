@@ -31,8 +31,16 @@ public class ServiceCateCont {
   // 등록 폼
   // http://localhost:9093/service/servicecate/list_all.do
   @RequestMapping(value="/service/servicecate/list_all.do", method = RequestMethod.GET)
-  public ModelAndView create() {    
+  public ModelAndView create(HttpSession session) {    
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 페이지입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
+    
     ArrayList<ServiceCateVO> list = this.servicecateProc.list_all();
     mav.addObject("list", list);
     
@@ -45,9 +53,15 @@ public class ServiceCateCont {
   // <FORM name='frm' method='POST' action='./create.do'>
   // http://localhost:9093/service/servicecate/create.do
   @RequestMapping(value="/service/servicecate/create.do", method = RequestMethod.POST)
-  public ModelAndView create(ServiceCateVO servicecateVO) {
-    
+  public ModelAndView create(HttpSession session, ServiceCateVO servicecateVO) {    
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
     
     int cnt = this.servicecateProc.create(servicecateVO);
     
@@ -76,13 +90,7 @@ public class ServiceCateCont {
    */
   @ResponseBody
   @RequestMapping(value="/service/servicecate/read_ajax_json.do", method=RequestMethod.GET)
-  public String read_ajax_json(int servicecateno) {
-    
-//    try {
-//      Thread.sleep(500);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
+  public String read_ajax_json(HttpSession session,  int servicecateno) {
     
     ServiceCateVO servicecateVO = this.servicecateProc.read(servicecateno);
     
@@ -103,7 +111,7 @@ public class ServiceCateCont {
    */
   @ResponseBody
   @RequestMapping(value="/service/servicecate/read_ajax_json_fk.do", method=RequestMethod.GET)
-  public String read_ajax_json_fk(int servicecateno) {
+  public String read_ajax_json_fk(HttpSession session, int servicecateno) {
     
 //    try {
 //      Thread.sleep(2000);
@@ -132,9 +140,15 @@ public class ServiceCateCont {
   // <FORM name='frm' method='POST' action='./read_update.do'>
   // http://localhost:9093/servicecate/read_update.do
   @RequestMapping(value="/service/servicecate/read_update.do", method = RequestMethod.POST)
-  public ModelAndView read_update(ServiceCateVO servicecateVO) {
-    
+  public ModelAndView read_update(HttpSession session, ServiceCateVO servicecateVO) {    
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
     
     int cnt = this.servicecateProc.update(servicecateVO);
     
@@ -157,8 +171,15 @@ public class ServiceCateCont {
   // <FORM name='frm' method='POST' action='./read_delete.do'>
   // http://localhost:9091/cate/read_delete.do
   @RequestMapping(value="/service/servicecate/read_delete.do", method = RequestMethod.POST)
-  public ModelAndView delete(int servicecateno) {
+  public ModelAndView delete(HttpSession session, int servicecateno) {
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
     
     int cnt = this.servicecateProc.delete(servicecateno);
     
@@ -180,8 +201,15 @@ public class ServiceCateCont {
   // 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1
   // http://localhost:9093/service/servicecate/update_order_index_up.do?servicecateno=1
   @RequestMapping(value="/service/servicecate/update_order_index_up.do", method = RequestMethod.GET)
-  public ModelAndView update_seqno_up(int servicecateno) {
+  public ModelAndView update_seqno_up(HttpSession session, int servicecateno) {
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
 
     System.out.println("-> update_order_index_up: " + servicecateno);
     int cnt = this.servicecateProc.update_order_index_up(servicecateno);
@@ -195,8 +223,15 @@ public class ServiceCateCont {
   // 출력 순서 내림(상향, 1 등 -> 10 등), seqno: 1 -> 10
   // http://localhost:9093/service/servicecate/update_order_index_down.do?servicecateno=1
   @RequestMapping(value="/service/servicecate/update_order_index_down.do", method = RequestMethod.GET)
-  public ModelAndView update_seqno_down(int servicecateno) {
+  public ModelAndView update_seqno_down(HttpSession session, int servicecateno) {
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
 
     System.out.println("-> update_order_index_down: " + servicecateno);
     int cnt = this.servicecateProc.update_order_index_down(servicecateno);
@@ -210,8 +245,15 @@ public class ServiceCateCont {
   // 출력 모드 Y로 변경
   // http://localhost:9093/service/servicecate/update_visible_y.do?cateno=1
   @RequestMapping(value="/service/servicecate/update_visible_y.do", method = RequestMethod.GET)
-  public ModelAndView update_visible_y(int servicecateno) {
+  public ModelAndView update_visible_y(HttpSession session, int servicecateno) {
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
 
 //    System.out.println("-> update_visible_y: " + cateno);
     int cnt = this.servicecateProc.update_visible_y(servicecateno);
@@ -224,8 +266,15 @@ public class ServiceCateCont {
   // 출력 모드 N로 변경
   // http://localhost:9093/service/servicecate/update_visible_n.do?cateno=1
   @RequestMapping(value="/service/servicecate/update_visible_n.do", method = RequestMethod.GET)
-  public ModelAndView update_visible_n(int servicecateno) {
+  public ModelAndView update_visible_n(HttpSession session, int servicecateno) {
     ModelAndView mav = new ModelAndView();
+    
+    if(session.getAttribute("adminno") == null) {
+      mav.addObject("type", "권한 오류");
+      mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");      
+      mav.setViewName("/service/msg");      
+      return mav;
+    }
 
     int cnt = this.servicecateProc.update_visible_n(servicecateno);
     
