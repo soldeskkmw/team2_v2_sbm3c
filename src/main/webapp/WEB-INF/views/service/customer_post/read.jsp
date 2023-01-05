@@ -117,8 +117,8 @@
     </ul>
     
       <c:if test="${sessionScope.memberno == customer_postVO.memberno }">
-		    <button onclick="location.href='/service/customer_post/update.do?serviceno=${serviceno}'">수정하기</button>
-		    <button onclick="location.href='/service/customer_post/delete.do?serviceno=${serviceno}'">삭제하기</button>
+		    <button class='btn btn-danger ml-sm-2' onclick="location.href='/service/customer_post/update.do?serviceno=${serviceno}'">수정하기</button>
+		    <button class='btn btn-danger ml-sm-2' onclick="location.href='/service/customer_post/delete.do?serviceno=${serviceno}'">삭제하기</button>
 		  </c:if>
   </fieldset>
   
@@ -173,8 +173,8 @@
 	    </ul>
 	    
 	    <c:if test="${sessionScope.adminno == admin_replyVO.adminno }">
-	      <button onclick="location.href='/service/admin_reply/update.do?serviceno=${serviceno}'">수정하기</button>
-	      <button onclick="location.href='/service/admin_reply/delete.do?serviceno=${serviceno}'">삭제하기</button>
+	      <button class='btn btn-danger ml-sm-2' onclick="location.href='/service/admin_reply/update.do?serviceno=${serviceno}'">수정하기</button>
+	      <button class='btn btn-danger ml-sm-2' onclick="location.href='/service/admin_reply/delete.do?serviceno=${serviceno}'">삭제하기</button>
 	    </c:if>
 	  </fieldset>	  
 	  

@@ -18,8 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.customer_post.Customer_postProc;
+
 @Controller
 public class ServiceCateCont {
+  @Autowired
+  @Qualifier("dev.mvc.customer_post.Customer_postProc")
+  private Customer_postProc customer_postProc = null;
+  
   @Autowired
   @Qualifier("dev.mvc.servicecate.ServiceCateProc")
   private ServiceCateProcInter servicecateProc = null;
@@ -77,7 +83,7 @@ public class ServiceCateCont {
     if (cnt > 0) { // 정상 등록
       mav.setViewName("redirect:/service/servicecate/list_all.do"); // 콘트롤러의 주소 요청, 자동 이동
     } else { // 등록 실패
-      mav.setViewName("/service/servicecate/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
+      mav.setViewName("/service/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
     }
     
     return mav;
@@ -126,12 +132,13 @@ public class ServiceCateCont {
     json.put("servicecateno", servicecateVO.getServicecateno());
     json.put("servicetype_content", servicecateVO.getServicetype_content());
     json.put("cnt", servicecateVO.getCnt());
+//    json.put("cnt", this.customer_postProc.count_all_by_servicecateno(servicecateno));
     json.put("order_index", servicecateVO.getOrder_index());
     json.put("visible", servicecateVO.getVisible());
     
 //    int count_by_cateno = this.contentsProc.count_by_cateno(cateno); // cateno가 사용되는 레코드 갯수 파악
-//    json.put("count_by_cateno", count_by_cateno);
-    json.put("count_by_servicecateno", servicecateVO.getCnt());
+//    json.put("count_by_servicecateno", servicecateVO.getCnt());
+    json.put("count_by_servicecateno", this.customer_postProc.count_all_by_servicecateno(servicecateno));
     
     return json.toString();
   }
@@ -161,7 +168,7 @@ public class ServiceCateCont {
     if (cnt > 0) { // 정상 등록
       mav.setViewName("redirect:/service/servicecate/list_all.do"); // 콘트롤러의 주소 요청, 자동 이동
     } else { // 등록 실패
-      mav.setViewName("/service/servicecate/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
+      mav.setViewName("/service/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
     }
     
     return mav;
@@ -192,7 +199,7 @@ public class ServiceCateCont {
     if (cnt > 0) { // 정상 등록
       mav.setViewName("redirect:/service/servicecate/list_all.do"); // 콘트롤러의 주소 요청, 자동 이동
     } else { // 등록 실패
-      mav.setViewName("/service/servicecate/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
+      mav.setViewName("/service/msg"); // /webapp/WEB-INF/views/cate/msg.jsp      
     }
     
     return mav;
