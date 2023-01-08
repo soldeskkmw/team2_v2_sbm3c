@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.reply.ReplyProcInter;
+import dev.mvc.reply.ReplyVO;
+import dev.mvc.reply.ReviewReplyVO;
 import dev.mvc.review.PostReviewVO;
 import dev.mvc.review.ReviewProcInter;
 import dev.mvc.review.ReviewVO;
@@ -29,6 +32,10 @@ public class ReviewCont {
   @Autowired
   @Qualifier("dev.mvc.review.ReviewProc") 
   private ReviewProcInter reviewProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.reply.ReplyProc") 
+  private ReplyProcInter replyProc;
   
   public ReviewCont () {
     System.out.println("-> ReviewCont created.");
@@ -119,14 +126,13 @@ public class ReviewCont {
    ModelAndView mav = new ModelAndView();
 
    ReviewVO reviewVO = this.reviewProc.read(reviewno);
-   mav.addObject("reviewVO", reviewVO); // request.setAttribute("reviewVO", reviewVO);
 
-//   PostVO postVO = this.postProc.read(reviewVO.getPostno());
-//   mav.addObject("postVO", postVO); 
-//
-//   PostgrpVO postgrpVO = this.postgrpProc.read(postVO.getPostgrpno());
-//   mav.addObject("postgrpVO", postgrpVO); 
-//   내가 주석함
+   mav.addObject("reviewVO", reviewVO); // request.setAttribute("reviewVO", reviewVO);
+  
+//   ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
+   ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
+   mav.addObject("replylist", replylist);
+
    mav.setViewName("/review/read"); // /WEB-INF/views/contents/read.jsp
        
    return mav;

@@ -1,8 +1,8 @@
-package dev.mvc.review;
+package dev.mvc.reply;
 
 import java.io.File;
 
-public class Review {
+public class Reply {
     /** 페이지당 출력할 레코드 갯수 */
     public static int RECORD_PER_PAGE = 3;
 

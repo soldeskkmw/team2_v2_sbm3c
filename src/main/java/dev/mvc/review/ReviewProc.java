@@ -49,7 +49,7 @@ public class ReviewProc implements ReviewProcInter {
   }
   
   /**
-   * ì¡°íšŒ
+   * Á¶È¸
    */
   @Override
   public ReviewVO read(int reviewno) {
@@ -58,7 +58,7 @@ public class ReviewProc implements ReviewProcInter {
     String reviewtitle = reviewVO.getReviewtitle();
     String reviewcontent = reviewVO.getReviewcontent();
     
-    reviewtitle = Tool.convertChar(reviewtitle);  // íŠ¹ìˆ˜ ë¬¸ì ì²˜ë¦¬
+    reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯¼ö ¹®ÀÚ Ã³¸®
     reviewcontent = Tool.convertChar(reviewcontent); 
     
     reviewVO.setReviewtitle(reviewtitle);
