@@ -22,7 +22,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>GoingShare</title>
+<title>Resort world</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
@@ -30,13 +30,12 @@
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
- 
-<link href="/css/style.css" rel="Stylesheet" type="text/css">
     
 </head> 
  
 <body>
-<c:import url="/menu/top.do" />
+<%-- <c:import url="/menu/top.do" /> 신형 top --%>
+ <jsp:include page="../menu/top.jsp" flush='false' />
  
 <DIV class='title_line'><A href="./list_by_postno_search_paging.do?postno=1<%--${postno } --%>" class='title_link'>포스트메뉴1<%--${postVO.name }--%></A></DIV>
 
@@ -129,6 +128,42 @@
   </fieldset>
 
 </DIV>
+ 
+ <DIV class='title_line'><A  class='title_link' style="font-size:30px">댓글</A></DIV>
+ 
+ 
+ <c:forEach var="ReplyVO" items="${replylist }">
+        <c:set var="reviewno1" value="${ReplyVO.reviewno }" />      
+  			<c:set var="replycontent1" value="${ReplyVO.replycontent }" />
+        <c:set var="replyno1" value="${ReplyVO.replyno }" />
+        <c:set var="memberno1" value="${ReplyVO.memberno }" />     
+        회원번호 = ${memberno1 } 댓글번호 =${replyno1 }
+         <A href="./replydelete.do?now_page=${param.now_page}&replyno=${replyno1}"><strong class="aside_right">댓글삭제</strong></A>  
+        <input type='text' name='replycontent' readonly value='${replycontent1}' required="required" 
+                  class="form-control" style='width: 100%;'>               
+        <br>
+</c:forEach>         
+ 
+ 
+  <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
+  <FORM name='frm' method='POST' action='./replycreate.do' enctype="multipart/form-data">
+    <input type="hidden" name="postno" value="1">
+    <input type="hidden" name="memberno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
+  	<input type="hidden" name="reviewno" value="${reviewno }">
+    <div>
+       <label>댓글 작성</label>
+       <textarea name='replycontent' required="required" class="form-control" rows="1" style='width: 100%;'></textarea>
+    </div>
+      
+    <div class="content_body_bottom">
+      <button type="submit" class="btn btn-primary">댓글 등록</button>
+    </div>
+  
+  </FORM>
+ 
+ 
+
+  	
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
