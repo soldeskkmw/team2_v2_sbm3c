@@ -17,7 +17,7 @@ package dev.mvc.team2;
  import com.zaxxer.hikari.HikariDataSource;
 
  @Configuration
- @PropertySource("classpath:/application.properties")  // 설정 파일 위치
+ @PropertySource("classpath:/application.properties")  // �꽕�젙 �뙆�씪 �쐞移�
 @MapperScan(basePackages= {  "dev.mvc.cate",
                                            "dev.mvc.member", 
                                            "dev.mvc.admin",
@@ -28,14 +28,15 @@ package dev.mvc.team2;
                                            "dev.mvc.servicecate",
                                            "dev.mvc.customer_post",
                                            "dev.mvc.review",
-                                           "dev.mvc.admin_reply"}) // DAO interface를 찾는 위치
+                                           "dev.mvc.admin_reply",
+                                           "dev.mvc.reply"}) // DAO interface瑜� 李얜뒗 �쐞移�
 public class DatabaseConfiguration {
      
      @Autowired
      private ApplicationContext applicationContext;
      
      @Bean
-     @ConfigurationProperties(prefix="spring.datasource.hikari")  // 설정 파일의 접두사 선언 spring.datasource.hikari....
+     @ConfigurationProperties(prefix="spring.datasource.hikari")  // �꽕�젙 �뙆�씪�쓽 �젒�몢�궗 �꽑�뼵 spring.datasource.hikari....
      public HikariConfig hikariConfig() {
          return new HikariConfig();
      }
@@ -43,7 +44,7 @@ public class DatabaseConfiguration {
      @Bean
      public DataSource dataSource() throws Exception{
          DataSource dataSource = new HikariDataSource(hikariConfig());
-         System.out.println(dataSource.toString());  // 정상적으로 연결 되었는지 해시코드로 확인
+         System.out.println(dataSource.toString());  // �젙�긽�쟻�쑝濡� �뿰寃� �릺�뿀�뒗吏� �빐�떆肄붾뱶濡� �솗�씤
         return dataSource;
      }
      
@@ -51,7 +52,7 @@ public class DatabaseConfiguration {
      public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
          SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
          sqlSessionFactoryBean.setDataSource(dataSource);
-         // "/src/main/resources/mybatis" 폴더의 파일명이 "xml"로 끝나는 파일 매핑
+         // "/src/main/resources/mybatis" �뤃�뜑�쓽 �뙆�씪紐낆씠 "xml"濡� �걹�굹�뒗 �뙆�씪 留ㅽ븨
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mybatis/**/*.xml"));
          
          return sqlSessionFactoryBean.getObject();
