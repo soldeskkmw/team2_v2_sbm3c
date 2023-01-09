@@ -16,11 +16,9 @@
  
 <body>
 
-<!-- 신형 top 적용 시 풀 코드 이다 postVO를 받아올때쯤 풀듯
-<c:import url="/menu/top.do" />
- -->
- <jsp:include page="../menu/top.jsp" flush='false' />
 
+<c:import url="/menu/top.do" />
+ 
   
   <DIV class='menu_line'></DIV>
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>

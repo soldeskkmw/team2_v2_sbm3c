@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- 
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dev.mvc.cate.CateVO" %>
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -16,16 +18,24 @@
 </head> 
  
 <body>
-<%--<c:import url="/menu/top.do" /> 신형 top --%>
- <jsp:include page="../menu/top.jsp" flush='false' />
+<c:import url="/menu/top.do" />
+    
 <DIV class='title_line'>
   <A href="./list_all.do" class='title_link'>전체 글 목록</A>
 </DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-     	<A href="./create.do?postno=1">등록</A>
-     	<span class='menu_divide' >│</span>
+  <c:choose>
+              <c:when test="${sessionScope.memberid == null}">
+                              
+               </c:when>
+                <c:otherwise>
+                    <A href="./create.do?postno=1">등록</A>
+     	<span class='menu_divide' >│</span>          
+               </c:otherwise>
+</c:choose>
+     	
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
 

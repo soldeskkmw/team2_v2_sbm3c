@@ -22,6 +22,8 @@ public class ReplyVO {
   private int reviewno;
  /**회원 번호*/
   private int memberno;
+  /** 회원 아이디 */
+  private String memberid = "";
   /**댓글 번호*/
   private int replyno;
   /**댓글 내용*/
@@ -74,6 +76,12 @@ public class ReplyVO {
   }
   public void setReviewgood(String reviewgood) {
     this.reviewgood = reviewgood;
+  }
+  public String getMemberid() {
+    return memberid;
+  }
+  public void setMemberid(String memberid) {
+    this.memberid = memberid;
   }
 
   

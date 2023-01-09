@@ -43,7 +43,7 @@ public class ReplyCont {
   
   
   /**
-   * µî·Ï Ã³¸® http://localhost:9093/reply/replycreate.do
+   * ë“±ë¡ ì²˜ë¦¬ http://localhost:9093/reply/replycreate.do
    * 
    * @return
    */
@@ -52,19 +52,19 @@ public class ReplyCont {
     ModelAndView mav = new ModelAndView();
     
     
-    // Call By Reference: ¸Ş¸ğ¸® °øÀ¯, Hashcode Àü´Ş
+    // Call By Reference: ë©”ëª¨ë¦¬ ê³µìœ , Hashcode ì „ë‹¬
     int cnt = this.replyProc.replycreate(replyVO); 
     
     // ------------------------------------------------------------------------------
-    // PKÀÇ return
+    // PKì˜ return
     // ------------------------------------------------------------------------------
     // System.out.println("--> reviewno: " + contentsVO.getreviewno());
-    // mav.addObject("reviewno", contentsVO.getreviewno()); // redirect parameter Àû¿ë
+    // mav.addObject("reviewno", contentsVO.getreviewno()); // redirect parameter ì ìš©
     // ------------------------------------------------------------------------------
     
     if (cnt == 1) {
         mav.addObject("code", "create_success");
-        // cateProc.increaseCnt(contentsVO.getCateno()); // ±Û¼ö Áõ°¡
+        // cateProc.increaseCnt(contentsVO.getCateno()); // ê¸€ìˆ˜ ì¦ê°€
     } else {
         mav.addObject("code", "create_fail");
     }
@@ -80,18 +80,19 @@ public class ReplyCont {
     ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno1);
     mav.addObject("replylist", replylist);
     // System.out.println("--> cateno: " + contentsVO.getCateno());
-    // redirect½Ã¿¡ hidden tag·Î º¸³½°ÍµéÀÌ Àü´ŞÀÌ ¾ÈµÊÀ¸·Î request¿¡ ´Ù½Ã ÀúÀå
-    // mav.addObject("cateno", contentsVO.getCateno()); // redirect parameter Àû¿ë
-    // mav.addObject("url", "/contents/msg"); // msg.jsp, redirect parameter Àû¿ë
+    // redirectì‹œì— hidden tagë¡œ ë³´ë‚¸ê²ƒë“¤ì´ ì „ë‹¬ì´ ì•ˆë¨ìœ¼ë¡œ requestì— ë‹¤ì‹œ ì €ì¥
+    // mav.addObject("cateno", contentsVO.getCateno()); // redirect parameter ì ìš©
+    // mav.addObject("url", "/contents/msg"); // msg.jsp, redirect parameter ì ìš©
     //mav.setViewName("redirect:/contents/msg.do"); 
-    mav.setViewName("/review/read"); // msg.jsp
+    String link= "redirect:/review/read.do?reviewno="+reviewno1;
+    mav.setViewName(link); // msg.jsp
     
     return mav; // forward
   }
   
   
   /**
-   * »èÁ¦ Æû
+   * ì‚­ì œ í¼
    * @param reviewno
    * @return
    */
@@ -99,7 +100,7 @@ public class ReplyCont {
   public ModelAndView replydelete(int replyno) { 
     ModelAndView mav = new  ModelAndView();
     
-    // »èÁ¦ÇÒ Á¤º¸¸¦ Á¶È¸ÇÏ¿© È®ÀÎ
+    // ì‚­ì œí•  ì •ë³´ë¥¼ ì¡°íšŒí•˜ì—¬ í™•ì¸
     ReplyVO replyVO = this.replyProc.replyread(replyno);
     mav.addObject("replyVO", replyVO);
     
@@ -113,7 +114,7 @@ public class ReplyCont {
   
   
   /**
-   * »èÁ¦ Ã³¸® http://localhost:9093/review/delete.do
+   * ì‚­ì œ ì²˜ë¦¬ http://localhost:9093/review/delete.do
    * 
    * @return
    */
@@ -124,29 +125,29 @@ public class ReplyCont {
     
     int cnt = 0;
     // -------------------------------------------------------------------
-    // ÆÄÀÏ »èÁ¦ ÄÚµå ½ÃÀÛ
+    // íŒŒì¼ ì‚­ì œ ì½”ë“œ ì‹œì‘
     // -------------------------------------------------------------------
-    // »èÁ¦ÇÒ ÆÄÀÏ Á¤º¸¸¦ ÀĞ¾î¿È.
+    // ì‚­ì œí•  íŒŒì¼ ì •ë³´ë¥¼ ì½ì–´ì˜´.
     ReplyVO replyVO = replyProc.replyread(replyno);
         
 
  
         
-    cnt = this.replyProc.replydelete(replyno); // DBMS »èÁ¦
+    cnt = this.replyProc.replydelete(replyno); // DBMS ì‚­ì œ
         
     // -------------------------------------------------------------------------------------
-    // ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· ·¹ÄÚµå »èÁ¦½ÃÀÇ ÆäÀÌÁö ¹øÈ£ -1 Ã³¸®
+    // ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ ë ˆì½”ë“œ ì‚­ì œì‹œì˜ í˜ì´ì§€ ë²ˆí˜¸ -1 ì²˜ë¦¬
     // -------------------------------------------------------------------------------------    
     HashMap<String, Object> page_map = new HashMap<String, Object>();
     page_map.put("reviewno", replyVO.getReviewno());
     page_map.put("word", word);
-    // ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· 10¹øÂ° ·¹ÄÚµå¸¦ »èÁ¦ÈÄ
-    // ÇÏ³ªÀÇ ÆäÀÌÁö°¡ 3°³ÀÇ ·¹ÄÚµå·Î ±¸¼ºµÇ´Â °æ¿ì ÇöÀç 9°³ÀÇ ·¹ÄÚµå°¡ ³²¾Æ ÀÖÀ¸¸é
-    // ÆäÀÌÁö¼ö¸¦ 4 -> 3À¸·Î °¨¼Ò ½ÃÄÑ¾ßÇÔ, ¸¶Áö¸· ÆäÀÌÁöÀÇ ¸¶Áö¸· ·¹ÄÚµå »èÁ¦½Ã ³ª¸ÓÁö´Â 0 ¹ß»ı
+    // ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ 10ë²ˆì§¸ ë ˆì½”ë“œë¥¼ ì‚­ì œí›„
+    // í•˜ë‚˜ì˜ í˜ì´ì§€ê°€ 3ê°œì˜ ë ˆì½”ë“œë¡œ êµ¬ì„±ë˜ëŠ” ê²½ìš° í˜„ì¬ 9ê°œì˜ ë ˆì½”ë“œê°€ ë‚¨ì•„ ìˆìœ¼ë©´
+    // í˜ì´ì§€ìˆ˜ë¥¼ 4 -> 3ìœ¼ë¡œ ê°ì†Œ ì‹œì¼œì•¼í•¨, ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ë§ˆì§€ë§‰ ë ˆì½”ë“œ ì‚­ì œì‹œ ë‚˜ë¨¸ì§€ëŠ” 0 ë°œìƒ
 //    if (reviewProc.search_count(page_map) % Review.RECORD_PER_PAGE == 0) {
 //      now_page = now_page - 1;
 //      if (now_page < 1) {
-//        now_page = 1; // ½ÃÀÛ ÆäÀÌÁö
+//        now_page = 1; // ì‹œì‘ í˜ì´ì§€
 //      }
 //    }
     // -------------------------------------------------------------------------------------

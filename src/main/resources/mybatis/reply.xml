@@ -7,14 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 생성 -->
   <insert id="replycreate" parameterType="dev.mvc.reply.ReplyVO">
-INSERT INTO REPLY( replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood)
+INSERT INTO REPLY( replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid)
     
-VALUES (reply_seq.nextval, #{memberno},#{reviewno},#{replycontent},sysdate,null,#{reviewgood})
+VALUES (reply_seq.nextval, #{memberno},#{reviewno},#{replycontent},sysdate,null,#{reviewgood},#{memberid})
   </insert> 
   
     <!-- 조회, id: read, 입력: reviewno, 리턴: ReviewVO -->
   <select id="replyread" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
-	   SELECT replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood
+	   SELECT replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid
 FROM reply
 WHERE replyno=#{replyno}
   </select>  
@@ -22,7 +22,7 @@ WHERE replyno=#{replyno}
   
   <!-- 특정 카테고리의 등록된 글목록 -->
   <select id="replylist_by_reviewno" resultType="dev.mvc.reply.ReplyVO" parameterType="int">   
-    SELECT  replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood
+    SELECT  replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid
     
 		FROM reply
 		WHERE reviewno = #{reviewno}
@@ -33,7 +33,7 @@ WHERE replyno=#{replyno}
   <select id="replylist_all" resultType="dev.mvc.reply.ReviewReplyVO">
 		SELECT c.reviewno,
 		          t.reviewno, t.memberno, t.replyno, t.replycontent,
-   t.rdate, t.udate,t.reviewgood 
+   t.rdate, t.udate,t.reviewgood,t.memberid 
 		FROM review c, reply t
 		WHERE c.reviewno = #{t.reviewno}
 		ORDER BY t.replyno DESC

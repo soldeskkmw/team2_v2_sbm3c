@@ -95,7 +95,7 @@ public class ReviewCont {
     // mav.addObject("cateno", contentsVO.getCateno()); // redirect parameter 적용
     // mav.addObject("url", "/contents/msg"); // msg.jsp, redirect parameter 적용
     //mav.setViewName("redirect:/contents/msg.do"); 
-    mav.setViewName("/review/list_all"); // msg.jsp
+    mav.setViewName("redirect:/review/list_all.do"); // msg.jsp
     
     return mav; // forward
   }
@@ -107,6 +107,8 @@ public class ReviewCont {
   @RequestMapping(value="/review/list_all.do", method=RequestMethod.GET)
   public ModelAndView list_all() {
     ModelAndView mav = new ModelAndView();
+    
+    
     
     ArrayList<PostReviewVO> list = this.reviewProc.list_all();
     mav.addObject("list", list);

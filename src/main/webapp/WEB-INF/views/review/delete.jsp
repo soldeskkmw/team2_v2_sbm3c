@@ -31,8 +31,8 @@
 </head> 
  
 <body>
-<%-- <c:import url="/menu/top.do" /> 신형 top --%>
- <jsp:include page="../menu/top.jsp" flush='false' />
+<c:import url="/menu/top.do" /> 
+
  
 <DIV class='title_line'> ${reviewtitle } 삭제</DIV>
 
