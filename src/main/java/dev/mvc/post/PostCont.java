@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import dev.mvc.admin.AdminProcInter;
 import dev.mvc.cate.CateProcInter;
 import dev.mvc.cate.CateVO;
+import dev.mvc.review.ReviewProcInter;
+import dev.mvc.review.ReviewVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -37,6 +39,11 @@ public class PostCont {
   @Autowired
   @Qualifier("dev.mvc.admin.AdminProc")
   private AdminProcInter adminProc = null;
+  
+  @Autowired
+  @Qualifier("dev.mvc.review.ReviewProc") 
+  private ReviewProcInter reviewProc;
+  
   
   public PostCont() {
     System.out.println("-> PostCont created");
@@ -150,6 +157,11 @@ public class PostCont {
     
     ModelAndView mav = new ModelAndView();
     
+    
+ 
+    
+    
+    
     CateVO cateVO = this.cateProc.read(cateno);
     mav.addObject("cateVO", cateVO);
     
@@ -186,6 +198,13 @@ public class PostCont {
     
     mav.addObject("postVO", postVO);
     
+   
+    //리뷰목록 
+//  ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
+  ArrayList<ReviewVO> reviewlist = this.reviewProc.list_by_postno(postno);
+  mav.addObject("reviewlist", reviewlist);
+  
+    //리뷰목록 
     mav.setViewName("/post/read"); // /webapp/WEB-INF/views/post/read.jsp
     
     return mav;

@@ -3,7 +3,7 @@ package dev.mvc.review;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+import dev.mvc.post.PostVO;
 
 public interface ReviewProcInter {
   
@@ -12,30 +12,30 @@ public interface ReviewProcInter {
   public ArrayList<ReviewVO> list_by_postno(int postno);
  
   /**
-   * post + review INNER JOIN ¸ñ·Ï
+   * post + review INNER JOIN ï¿½ï¿½ï¿½
    * @return
    */
   public ArrayList<PostReviewVO> list_all(); 
   
   
   /**
-   * Á¶È¸
+   * ï¿½ï¿½È¸
    * @param reviewno
    * @return
    */
   public ReviewVO read(int reviewno);
   
   /**
-   * ±Û Á¤º¸ ¼öÁ¤
+   * ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    * @param contentsVO
-   * @return Ã³¸®µÈ ·¹ÄÚµå °¹¼ö
+   * @return Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
    */
   public int update_text(ReviewVO reviewVO);
   
   /**
-   * »èÁ¦
+   * ï¿½ï¿½ï¿½ï¿½
    * @param contentsno
-   * @return »èÁ¦µÈ ·¹ÄÚµå °¹¼ö
+   * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
    */
   public int delete(int reviewno);
 }

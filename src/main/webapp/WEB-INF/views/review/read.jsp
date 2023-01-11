@@ -17,7 +17,7 @@
 <c:set var="goodcnt" value="${reviewVO.goodcnt }" />
 <c:set var="cnt" value="${reviewVO.cnt }" />
 <c:set var="replycnt" value="${reviewVO.replycnt }" />
- 
+<c:set var="memberno" value="${reviewVO.memberno }" />
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -38,7 +38,7 @@
 <c:import url="/menu/top.do" /> 
 
  
-<DIV class='title_line'><A href="./list_by_postno_search_paging.do?postno=1<%--${postno } --%>" class='title_link'>포스트메뉴1<%--${postVO.name }--%></A></DIV>
+<DIV class='title_line'><A href="../post/read.do?postno=${postno}cateno=${cateno}" class='title_link'><span style="font-size: 1.5em; font-weight: bold;">리뷰</span></A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
@@ -68,7 +68,19 @@
                 									<span class='menu_divide' >│</span>
                     										<A href="./create.do?postno=1">등록</A>
      															<span class='menu_divide' >│</span>     
-     																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>   
+     																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>  
+     																		
+     												
+                              <c:choose>
+                              	<c:when test="${sessionScope.memberno == memberno}">
+                              	<span class='menu_divide' >│</span>  
+                              	<A href="./delete.do?reviewno=${reviewno}&now_page=${param.now_page}&postno=1<%--${postno } --%>">삭제</A>  
+               									</c:when>
+                              </c:choose>
+               								
+     																		
+     																		
+     																		 
                							</c:otherwise>
 														</c:choose>                                                                                                             
                </c:when>
@@ -86,28 +98,6 @@
     	  
                </c:otherwise>
 		</c:choose>
-		
-		
-    	 
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
   </ASIDE> 
   
   <%-- 검색 --%>
@@ -185,8 +175,7 @@
         <c:set var="replyno1" value="${ReplyVO.replyno }" />
         <c:set var="memberno1" value="${ReplyVO.memberno }" />     
         <c:set var="memberid1" value="${ReplyVO.memberid }" />
-        [ ${memberid1} ]
-        
+        [ ${memberid1} ]      
         
 <c:choose>
 					<c:when test="${sessionScope.memberid ==memberid1 }">
@@ -214,7 +203,8 @@
  
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
   <FORM name='frm' method='POST' action='./replycreate.do' enctype="multipart/form-data">
-    <input type="hidden" name="postno" value="1">
+    <input type="hidden" name="postno" value=${postno }>
+    <input type="hidden" name="cateno" value=${cateno }>
     <input type="hidden" name="memberno" value="${sessionScope.memberno }"> <%-- 관리자 개발후 변경 필요 --%>
   	<input type="hidden" name="reviewno" value="${reviewno }">
   	<input type="hidden" name="memberid" value="${sessionScope.memberid }">

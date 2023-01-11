@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.post.PostProcInter;
 import dev.mvc.member.MemberVO;
+import dev.mvc.post.PostVO;
 import dev.mvc.reply.ReplyProcInter;
 import dev.mvc.reply.ReplyVO;
 import dev.mvc.reply.ReviewReplyVO;
@@ -38,8 +40,15 @@ public class ReviewCont {
   @Qualifier("dev.mvc.reply.ReplyProc") 
   private ReplyProcInter replyProc;
   
+  @Autowired
+  @Qualifier("dev.mvc.post.PostProc") 
+  private PostProcInter postProc;
+  
+  
   public ReviewCont () {
     System.out.println("-> ReviewCont created.");
+    
+    
   }
   
   
@@ -48,11 +57,13 @@ public class ReviewCont {
   // 등록 폼
   // http://localhost:9093/review/create.do?postno=1
   @RequestMapping(value="/review/create.do", method = RequestMethod.GET)
-  public ModelAndView create() {
+  public ModelAndView create(@RequestParam(value = "postno", defaultValue = "1")int postno,
+                                        @RequestParam(value = "cateno", defaultValue = "1")int cateno){
     System.out.println("-> create()");
 //  public ModelAndView create(HttpServletRequest request,  int cateno) {
     ModelAndView mav = new ModelAndView();
-
+    mav.addObject("cateno", cateno);   
+    mav.addObject("postno", postno);   
     mav.setViewName("/review/create"); // /webapp/WEB-INF/views/contents/create.jsp
     
     return mav;
@@ -66,7 +77,9 @@ public class ReviewCont {
    * @return
    */
   @RequestMapping(value = "/review/create.do", method = RequestMethod.POST)
-  public ModelAndView create( ReviewVO reviewVO) {
+  public ModelAndView create( ReviewVO reviewVO,
+      @RequestParam(value = "postno", defaultValue = "1")int postno,
+      @RequestParam(value = "cateno", defaultValue = "1")int cateno) {
     ModelAndView mav = new ModelAndView();
     
     
@@ -96,7 +109,7 @@ public class ReviewCont {
     // mav.addObject("cateno", contentsVO.getCateno()); // redirect parameter 적용
     // mav.addObject("url", "/contents/msg"); // msg.jsp, redirect parameter 적용
     //mav.setViewName("redirect:/contents/msg.do"); 
-    mav.setViewName("redirect:/review/list_all.do"); // msg.jsp
+    mav.setViewName("redirect:/post/read.do?postno="+postno+"&cateno="+cateno); // msg.jsp
     
     return mav; // forward
   }
@@ -125,18 +138,21 @@ public class ReviewCont {
   * @return
   */
  @RequestMapping(value="/review/read.do", method=RequestMethod.GET )
- public ModelAndView read(int reviewno) {
+ public ModelAndView read(int reviewno,
+     @RequestParam(value = "postno", defaultValue = "0")int postno,
+     @RequestParam(value = "cateno", defaultValue = "0")int cateno) {
    ModelAndView mav = new ModelAndView();
 
    ReviewVO reviewVO = this.reviewProc.read(reviewno);
-
+   
    mav.addObject("reviewVO", reviewVO); // request.setAttribute("reviewVO", reviewVO);
   
 //   ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
    ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
+  System.out.print(replylist);
    mav.addObject("replylist", replylist);
-   
- 
+   mav.addObject("cateno", cateno);   
+   mav.addObject("postno", postno);  
    mav.setViewName("/review/read"); // /WEB-INF/views/contents/read.jsp
        
    return mav;
@@ -203,13 +219,16 @@ public class ReviewCont {
   * @return
   */
  @RequestMapping(value="/review/delete.do", method=RequestMethod.GET )
- public ModelAndView delete(int reviewno) { 
+ public ModelAndView delete(int reviewno,
+     @RequestParam(value = "postno", defaultValue = "1")int postno,
+     @RequestParam(value = "cateno", defaultValue = "1")int cateno) { 
    ModelAndView mav = new  ModelAndView();
    
    // 삭제할 정보를 조회하여 확인
    ReviewVO reviewVO = this.reviewProc.read(reviewno);
    mav.addObject("reviewVO", reviewVO);
-   
+   mav.addObject("cateno", cateno);   
+   mav.addObject("postno", postno);   
 //   PostVO postVO = this.postProc.read(reviewVO.getPostno());
 //   mav.addObject("postVO", postVO);
 //   
@@ -225,9 +244,12 @@ public class ReviewCont {
   */
  @RequestMapping(value = "/review/delete.do", method = RequestMethod.POST)
  public ModelAndView delete(int reviewno, String word,
-                                       @RequestParam(value="now_page", defaultValue="1") int now_page) {
+                                       @RequestParam(value="now_page", defaultValue="1") int now_page,
+                                       @RequestParam(value = "postno", defaultValue = "1")int postno,
+                                       @RequestParam(value = "cateno", defaultValue = "1")int cateno){
    ModelAndView mav = new ModelAndView();
-   
+   System.out.println(postno);
+   System.out.println(cateno);
    int cnt = 0;
    // -------------------------------------------------------------------
    // 파일 삭제 코드 시작
@@ -255,7 +277,6 @@ public class ReviewCont {
    // 마지막 페이지의 마지막 레코드 삭제시의 페이지 번호 -1 처리
    // -------------------------------------------------------------------------------------    
    HashMap<String, Object> page_map = new HashMap<String, Object>();
-   page_map.put("postno", reviewVO.getPostno());
    page_map.put("word", word);
    // 마지막 페이지의 마지막 10번째 레코드를 삭제후
    // 하나의 페이지가 3개의 레코드로 구성되는 경우 현재 9개의 레코드가 남아 있으면
@@ -267,10 +288,12 @@ public class ReviewCont {
 //     }
 //   }
    // -------------------------------------------------------------------------------------
-
-   mav.addObject("postno", reviewVO.getPostno());
+   mav.addObject("cateno", cateno);   
+   mav.addObject("postno", postno);   
    mav.addObject("now_page", now_page);
-   mav.setViewName("redirect:/review/list_all.do"); 
+   System.out.println(postno);
+   System.out.println(cateno);
+   mav.setViewName("redirect:/post/read.do?postno="+postno+"&cateno="+cateno); 
    
    return mav;
  }   

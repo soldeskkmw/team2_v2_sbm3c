@@ -77,7 +77,7 @@
           <br>
           <FORM name='frm' method='POST' action='./delete.do'>
               <input type='hidden' name='reviewno' value='${reviewno}'>
-              <input type='hidden' name='postno' value='1'>
+              <input type='hidden' name='postno' value='${postno}'>
               <input type='hidden' name='now_page' value='${param.now_page}'>
               <br><br>
               <div style='text-align: center; margin: 10px auto;'>

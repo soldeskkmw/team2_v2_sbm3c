@@ -18,14 +18,14 @@ VALUES (review_seq.nextval, #{memberno},#{postno},#{reviewtitle},#{reviewcontent
   
   <!-- 특정 카테고리의 등록된 글목록 -->
   <select id="list_by_postno" resultType="dev.mvc.review.ReviewVO" parameterType="int">
-    SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent,
-  reviewstar,goodcnt, replycnt, cnt, reviewword, rdate,
-   udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
-    FROM review
-     WHERE postno = #{postno}
-    ORDER BY review DESC
+  SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent, reviewstar,goodcnt, replycnt, cnt, reviewword,
+ rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
+    
+FROM review
+WHERE postno = #{postno}
+ORDER BY reviewno DESC
   </select>
-  
+      
   <!-- post + review INNER JOIN 목록 -->
   <select id="list_all" resultType="dev.mvc.review.PostReviewVO">
 		SELECT c.postno,
