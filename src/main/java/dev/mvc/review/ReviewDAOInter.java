@@ -14,14 +14,14 @@ public interface ReviewDAOInter {
   public ArrayList<ReviewVO> list_by_postno(int postno);
   
   /**
-   * post + review INNER JOIN ëª©ë¡
+   * post + review INNER JOIN ¸ñ·Ï
    * @return
    */
   public ArrayList<PostReviewVO> list_all(); 
   
   
   /**
-   * ì¡°íšŒ
+   * Á¶È¸
    * @param reviewno
    * @return
    */
@@ -29,19 +29,22 @@ public interface ReviewDAOInter {
   
   
   /**
-   * ê¸€ ì •ë³´ ìˆ˜ì •
+   * ±Û Á¤º¸ ¼öÁ¤
    * @param contentsVO
-   * @return ì²˜ë¦¬ëœ ë ˆì½”ë“œ ê°¯ìˆ˜
+   * @return Ã³¸®µÈ ·¹ÄÚµå °¹¼ö
    */
   public int update_text(ReviewVO reviewVO);
   
   /**
-   * ì‚­ì œ
+   * »èÁ¦
    * @param contentsno
-   * @return ì‚­ì œëœ ë ˆì½”ë“œ ê°¯ìˆ˜
+   * @return »èÁ¦µÈ ·¹ÄÚµå °¹¼ö
    */
   public int delete(int reviewno);
  
+  
+
+  
 }
 
 

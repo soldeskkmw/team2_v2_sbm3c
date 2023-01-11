@@ -28,7 +28,8 @@ package dev.mvc.team2;
                                            "dev.mvc.servicecate",
                                            "dev.mvc.customer_post",
                                            "dev.mvc.review",
-                                           "dev.mvc.admin_reply"}) // DAO interface를 찾는 위치
+                                           "dev.mvc.admin_reply",
+                                           "dev.mvc.reply"}) // DAO interface를 찾는 위치
 public class DatabaseConfiguration {
      
      @Autowired
