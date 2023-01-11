@@ -45,8 +45,6 @@
     
   <%--<c:if test="${sessionScope.admin_id != null }">--%>
     <%--<A href="./create.do?postno=${postVO.postno  }">등록</A> --%>
-    	<A href="./create.do?postno=1">새 등록</A>
-    <span class='menu_divide' >│</span>
     <%--</c:if> --%>
     
     <A href="javascript:location.reload();">새로고침</A>
@@ -78,8 +76,8 @@
   <%--수정 폼 --%>
   <FORM name='frm' method='POST' action='./update_text.do'>
     <input type="hidden" name="reviewno" value="${reviewno}">
-    <input type="hidden" name="postno" value="1"> <%-- 포스트 연결후 변경 필요 --%>
-    <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
+     <%-- 포스트 연결후 변경 필요 --%>
+     <%-- 관리자 개발후 변경 필요 --%>
     
     <div>
        <label>제목</label>
@@ -99,7 +97,6 @@
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>
       <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
-      <button type="button" onclick="location.href='./list_all.do?postno=1'" class="btn btn-primary">목록</button>
     </div>
   
   </FORM>
