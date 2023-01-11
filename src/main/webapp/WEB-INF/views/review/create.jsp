@@ -6,21 +6,19 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>GoingShare</title>
- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>Resort world</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
 </head> 
  
 <body>
 
-<c:import url="/menu/top.do" />
 
+<c:import url="/menu/top.do" />
+ 
   
   <DIV class='menu_line'></DIV>
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
@@ -46,11 +44,10 @@
    <!-- 패스워드 안써서 삭제 -->
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button type="button" onclick="location.href='./list.do'" class="btn btn-primary">목록</button>
+      <button type="button" onclick="location.href='./list_all.do'" class="btn btn-primary">목록</button>
     </div>
   
   </FORM>
-</DIV>
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

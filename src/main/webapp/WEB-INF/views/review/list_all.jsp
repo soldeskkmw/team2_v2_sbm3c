@@ -1,34 +1,41 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- 
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dev.mvc.cate.CateVO" %>
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>GoingShare</title>
- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>Resort world</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
-
+    
 <DIV class='title_line'>
   <A href="./list_all.do" class='title_link'>전체 글 목록</A>
 </DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-     	<A href="./create.do?postno=1">등록</A>
-     	<span class='menu_divide' >│</span>
+  <c:choose>
+              <c:when test="${sessionScope.memberid == null}">
+                              
+               </c:when>
+                <c:otherwise>
+                    <A href="./create.do?postno=1">등록</A>
+     	<span class='menu_divide' >│</span>          
+               </c:otherwise>
+</c:choose>
+     	
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
 
