@@ -72,7 +72,7 @@ WHERE reviewno=#{reviewno}
   </update>
    
    <!-- 파일 수정 -->
-  <update id="update_reviewfile" parameterType="dev.mvc.review.ReviewVO">
+  <update id="update_file" parameterType="dev.mvc.review.ReviewVO">
     UPDATE review
     SET reviewfile1=#{reviewfile1}, reviewfile1saved=#{reviewfile1saved},
     reviewthumb1=#{reviewthumb1}, reviewsize1=#{reviewsize1}

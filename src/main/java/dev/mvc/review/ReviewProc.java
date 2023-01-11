@@ -58,6 +58,14 @@ public class ReviewProc implements ReviewProcInter {
     return list;
   }
   
+  
+  @Override
+  public int update_file(ReviewVO reviewVO) {
+      int cnt = this.reviewDAO.update_file(reviewVO);
+      return cnt;
+  }
+  
+  
   /**
    * ��ȸ
    */

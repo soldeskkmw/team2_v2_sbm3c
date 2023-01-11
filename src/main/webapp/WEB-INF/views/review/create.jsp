@@ -39,7 +39,12 @@
        <label>검색어</label>
        <input type='text' name='reviewword' value='월터,벤 스틸러,크리스튼위그,휴먼,도전' required="required" 
                  class="form-control" style='width: 100%;'>
-    </div>   
+    </div>  
+    <div>
+       <label>이미지</label>
+       <input type='file' class="form-control" name='reviewfile1MF' id='reviewfile1MF' 
+                 value='' placeholder="파일 선택">
+    </div> 
    <!-- 파일 부분 삭제함 추가요망  -->   
    <!-- 패스워드 안써서 삭제 -->
     <div class="content_body_bottom">

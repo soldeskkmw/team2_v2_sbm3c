@@ -42,7 +42,12 @@ public interface ReviewDAOInter {
    */
   public int delete(int reviewno);
  
-  
+  /**
+   * 파일 정보 수정
+   * @param contentsVO
+   * @return 처리된 레코드 갯수
+   */
+  public int update_file(ReviewVO reviewVO);
 
   
 }

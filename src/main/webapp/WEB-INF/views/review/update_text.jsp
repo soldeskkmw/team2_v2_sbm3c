@@ -94,6 +94,7 @@
        <input type='text' name='reviewword' value='${reviewword }' required="required" 
                  class="form-control" style='width: 100%;'>
     </div>   
+    
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>
       <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>

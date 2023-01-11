@@ -38,7 +38,7 @@
 <c:import url="/menu/top.do" /> 
 
  
-<DIV class='title_line'><A href="../post/read.do?postno=${postno}cateno=${cateno}" class='title_link'><span style="font-size: 1.5em; font-weight: bold;">리뷰</span></A></DIV>
+<DIV class='title_line'><span style="font-size: 1.5em; font-weight: bold;">리뷰</span></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
@@ -46,8 +46,8 @@
 
     
     <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_all.do?postno=1<%--${postno } --%>">기본 목록형</A>    
+  
+ 
   
     
     <%--<c:if test="${sessionScope.admin_id != null }"> --%>
@@ -69,6 +69,8 @@
                     										<A href="./create.do?postno=1">등록</A>
      															<span class='menu_divide' >│</span>     
      																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>  
+     																			<span class='menu_divide' >│</span>
+    																<A href="./update_file.do?reviewno=${reviewno}&now_page=${param.now_page}">파일 수정</A>
      																		
      												
                               <c:choose>
@@ -100,25 +102,6 @@
 		</c:choose>
   </ASIDE> 
   
-  <%-- 검색 --%>
-  <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do'>
-      <input type='hidden' name='cateno' value='${param.cateno }'>
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list_by_postno_search_paging.do?postno=1<%--${postVO.postno}--%>&word='">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
   
   <DIV class='menu_line'></DIV>
 
