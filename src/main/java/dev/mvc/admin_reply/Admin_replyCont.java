@@ -300,7 +300,7 @@ public class Admin_replyCont {
  // 로그인 여부 확인 후 처리 필요
     if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.addObject("msg", "관리자만 이용하실 수 있습니다.");
       mav.setViewName("/service/msg");
       return mav;
     }
@@ -333,7 +333,7 @@ public class Admin_replyCont {
  // 로그인 여부 확인 후 처리 필요
     if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.addObject("msg", "관리자만 이용하실 수 있습니다.");
       mav.setViewName("/service/msg"); 
       return mav;
     }

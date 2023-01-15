@@ -2,6 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dev.mvc.cate.CateVO" %>
+
+<script type="text/javascript">
+  function chatbot() {
+//     var url = 'http://127.0.0.1:8000/chatbot/chatting';
+    var url = 'http://whwjdrb1009.asuscomm.com:8000/chatbot/chatting';
+    var win = window.open(url, 'AI 서비스', 'width=800px, height=700px');
+
+    var x = (screen.width - 800) / 2;
+    var y = (screen.height - 660) / 2;
+
+    win.moveTo(x, y); // 화면 중앙으로 이동
+  }
+</script>
+
 <DIV class='container_main'> 
   <!-- 헤더 -->
   <div class="header">
@@ -91,6 +105,11 @@
                           </li>
                       </c:when>
                   </c:choose>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="javascript:chatbot()">챗봇</a>
+                  </li>
+                  
               </ul> <!-- navbar-nav mr-auto -->
           </div>  <!-- collapse navbar-collapse -->
           <!-- 검색창 -->
