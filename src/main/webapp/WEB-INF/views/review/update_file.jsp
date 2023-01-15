@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="reviewno" value="${reviewVO.reviewno }" />
 <c:set var="postno" value="${reviewVO.postno }" />
@@ -16,7 +15,8 @@
 <c:set var="goodcnt" value="${reviewVO.goodcnt }" />
 <c:set var="cnt" value="${reviewVO.cnt }" />
 <c:set var="replycnt" value="${reviewVO.replycnt }" />
-           
+ 
+
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
@@ -31,26 +31,14 @@
 </head> 
  
 <body>
-<c:import url="/menu/top.do" /> 
-
+<c:import url="/menu/top.do" />
  
-<DIV class='title_line'> ${reviewtitle } 삭제</DIV>
+<DIV class='title_line'>파일 수정</DIV>
+
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-      
-  <%--<c:if test="${sessionScope.admin_id != null }"> --%>
-    <A href="./create.do?postno=1">새 등록</A>
-    <span class='menu_divide' >│</span>
-   <%-- </c:if> --%>
-    
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_all.do?postno=1">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./update_text.do?revoewno=${reviewno}">수정</A>
-      
-  </ASIDE> 
+
   
   <DIV class='menu_line'></DIV>
 
@@ -58,38 +46,37 @@
     <ul>
       <li class="li_none">
         <DIV style='text-align: center; width: 50%; float: left;'>
-
           <c:choose>
-            <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
+            <c:when test="${reviewthumb1.endsWith('jpg') || reviewthumb1.endsWith('png') || reviewthumb1.endsWith('gif')}">
               <IMG src="/review/storage/${reviewfile1saved }" style='width: 90%;'> 
             </c:when>
-            <c:otherwise> <!-- 이미지가 없는 경우 -->
-              상품 관련 이미지가 없습니다.
+            <c:otherwise> <!-- 이미지가 없음 -->
+               <IMG src="/review/images/none1.png" style="width: 90%;"> 
             </c:otherwise>
           </c:choose>
+          
         </DIV>
 
         <DIV style='text-align: left; width: 47%; float: left;'>
           <span style='font-size: 1.5em;'>${reviewtitle}</span>
-          <c:if test="${reviewsize1 > 0 }">
-            <br>삭제되는 파일: ${reviewfile1 }
-          </c:if>
           <br>
-          <FORM name='frm' method='POST' action='./delete.do'>
-              <input type='hidden' name='reviewno' value='${reviewno}'>
-              <input type='hidden' name='postno' value='${postno}'>
-              <input type='hidden' name='now_page' value='${param.now_page}'>
-              <br><br>
-              <div style='text-align: center; margin: 10px auto;'>
-                <span style="color: #FF0000; font-weight: bold;">삭제를 진행 하시겠습니까? 삭제하시면 복구 할 수 없습니다.</span><br><br>
-                <br><br>
-                <button type = "submit" class="btn btn-primary">삭제 진행</button>
-                <button type = "button" onclick = "history.back()" class="btn btn-primary">취소</button>
-              </div>   
+          <FORM name='frm' method='POST' action='../review/update_file.do' enctype="multipart/form-data">
+            <input type="hidden" name="reviewno" value="${reviewno }">
+            <input type="hidden" name="now_page" value="${param.now_page }">
+                
+            <br><br> 
+            변경 이미지 선택<br>  
+            <input type='file' name='reviewfile1MF' id='reviewfile1MF' value='' placeholder="파일 선택"><br>
+            <br>
+            <div style='margin-top: 20px; clear: both;'>  
+              <button type="submit" class="btn btn-primary">파일 변경 처리</button>
+              
+              <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
+            </div>  
           </FORM>
         </DIV>
       </li>
-     </ul>
+    </ul>
   </fieldset>
 
 </DIV>
@@ -98,4 +85,3 @@
 </body>
  
 </html>
-

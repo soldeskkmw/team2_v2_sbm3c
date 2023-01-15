@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+import dev.mvc.post.PostVO;
 import dev.mvc.review.PostReviewVO;
 import dev.mvc.review.ReviewVO;
 import dev.mvc.tool.Tool;
@@ -24,22 +24,32 @@ public class ReviewProc implements ReviewProcInter {
 
   @Override
   public ArrayList<ReviewVO> list_by_postno(int postno) {
-    ArrayList<ReviewVO> list = this.reviewDAO.list_by_postno(postno);
+    ArrayList<ReviewVO> reviewlist = this.reviewDAO.list_by_postno(postno);
     
-    for (int i=0; i<list.size(); i++) {
-      ReviewVO reviewVO = list.get(i);
+    for (int i=0; i<reviewlist.size(); i++) {
+      ReviewVO reviewVO = reviewlist.get(i);
       
       String title = reviewVO.getReviewtitle();
       String review = reviewVO.getReviewcontent();
       
       title = Tool.convertChar(title);
       review = Tool.convertChar(review);
-      
+      if(review.length()>20) {
+        
+        String[] array_word;
+        array_word = review.split("");
+        review="";
+        for(int k=0;k<20;k++) { //ì¶œë ¥
+//          System.out.println(array_word[k]);
+          review=review+array_word[k];
+        }
+        review=review+"......";
+      }
       reviewVO.setReviewtitle(title);
       reviewVO.setReviewcontent(review);
     }
-    
-    return list;
+
+    return reviewlist;
   }
   
   @Override
@@ -48,8 +58,16 @@ public class ReviewProc implements ReviewProcInter {
     return list;
   }
   
+  
+  @Override
+  public int update_file(ReviewVO reviewVO) {
+      int cnt = this.reviewDAO.update_file(reviewVO);
+      return cnt;
+  }
+  
+  
   /**
-   * Á¶È¸
+   * ï¿½ï¿½È¸
    */
   @Override
   public ReviewVO read(int reviewno) {
@@ -58,7 +76,7 @@ public class ReviewProc implements ReviewProcInter {
     String reviewtitle = reviewVO.getReviewtitle();
     String reviewcontent = reviewVO.getReviewcontent();
     
-    reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯¼ö ¹®ÀÚ Ã³¸®
+    reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     reviewcontent = Tool.convertChar(reviewcontent); 
     
     reviewVO.setReviewtitle(reviewtitle);
