@@ -17,14 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
 import dev.mvc.member.MemberVO;
-=======
 import dev.mvc.post.PostProcInter;
 import dev.mvc.admin.AdminProcInter;
-import dev.mvc.member.MemberVO;
 import dev.mvc.post.PostVO;
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
 import dev.mvc.reply.ReplyProcInter;
 import dev.mvc.reply.ReplyVO;
 import dev.mvc.reply.ReviewReplyVO;
@@ -45,8 +41,6 @@ public class ReviewCont {
   @Qualifier("dev.mvc.reply.ReplyProc") 
   private ReplyProcInter replyProc;
   
-<<<<<<< HEAD
-=======
   @Autowired
   @Qualifier("dev.mvc.post.PostProc") 
   private PostProcInter postProc;
@@ -55,7 +49,6 @@ public class ReviewCont {
   @Qualifier("dev.mvc.admin.AdminProc") 
   private AdminProcInter adminProc;
   
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
   public ReviewCont () {
     System.out.println("-> ReviewCont created.");
     
@@ -175,12 +168,8 @@ public class ReviewCont {
     // mav.addObject("cateno", contentsVO.getCateno()); // redirect parameter 적용
     // mav.addObject("url", "/contents/msg"); // msg.jsp, redirect parameter 적용
     //mav.setViewName("redirect:/contents/msg.do"); 
-<<<<<<< HEAD
     mav.setViewName("redirect:/review/list_all.do"); // msg.jsp
-=======
     mav.setViewName("redirect:/post/read.do?postno="+postno+"&cateno="+cateno); // msg.jsp
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
-    
     return mav; // forward
   }
   
@@ -214,25 +203,16 @@ public class ReviewCont {
    ModelAndView mav = new ModelAndView();
 
    ReviewVO reviewVO = this.reviewProc.read(reviewno);
-<<<<<<< HEAD
-
-=======
-   
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
    mav.addObject("reviewVO", reviewVO); // request.setAttribute("reviewVO", reviewVO);
   
 //   ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
    ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
-<<<<<<< HEAD
    mav.addObject("replylist", replylist);
-   
  
-=======
   System.out.print(replylist);
    mav.addObject("replylist", replylist);
    mav.addObject("cateno", cateno);   
    mav.addObject("postno", postno);  
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
    mav.setViewName("/review/read"); // /WEB-INF/views/contents/read.jsp
        
    return mav;
@@ -398,15 +378,6 @@ public class ReviewCont {
    }
    return mav; // forward
  }   
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  /**
   * 삭제 폼

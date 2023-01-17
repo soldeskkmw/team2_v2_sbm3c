@@ -24,13 +24,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY postno DESC
   </select>
 
-  <!-- 조회,  id: read, 입력: cateno, 리턴: PostVO -->
+  <!-- 조회,  id: read, 입력: postno, 리턴: PostVO -->
   <select id="read" resultType="dev.mvc.post.PostVO" parameterType="int">
-    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
-    FROM post
-    WHERE postno=#{postno}
+		SELECT a.adminid, a.adminname,
+		        p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1,
+		        r.ratings
+		FROM admin a, post p, post_ratings r
+    WHERE p.postno=#{postno} AND a.adminno=p.adminno AND p.postno=r.postno
   </select>
-  
+
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_cateno_search" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
     SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
@@ -72,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE a.adminno = p.adminno
     ORDER BY p.postno DESC
   </select>
-  
+
   <!-- cate + post INNER JOIN 목록 -->
   <select id="list_all_cate" resultType="dev.mvc.post.CatePostVO">
     SELECT c.cateno, c.catename,
@@ -138,6 +140,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT COUNT(*) as cnt
     FROM post
     WHERE cateno=#{cateno}
+  </select>
+   
+  <!-- post테이블의 평점(poststar) 컬럼 수정 -->
+  <update id="update_poststar" parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET poststar = (SELECT AVG(ratings) FROM post_ratings WHERE postno=#{postno})
+    WHERE postno = #{postno}
+  </update>
+  
+  <!-- 추천 목록, WHERE postno IN -->
+  <select id="mf_post_member" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
+    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+    FROM post
+    WHERE postno IN <foreach collection="postno_list" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+    ORDER BY postno ASC
   </select>
   
 </mapper>

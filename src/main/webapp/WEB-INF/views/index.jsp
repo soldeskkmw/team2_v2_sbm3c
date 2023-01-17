@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>GoingShare</title>
+<title>Going Share</title>
 <!-- /static 기준 -->
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -18,11 +18,18 @@
 </head>
 <body>
 <c:import url="/menu/top.do" />
-  
-  <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
-    <%-- /static/images/resort01.jpg --%>
-    <IMG src='/images/resort01.jpg' style='width: 50%;'>
-  </DIV>
+
+  <c:choose>
+      <c:when test="${sessionScope.memberid != null}">
+        <c:import url="/post/mf_post_member_grid_index.do" />
+      </c:when>
+      <c:otherwise>
+        <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
+          <%-- /static/images/resort01.jpg --%>
+          <IMG src='/images/resort01.jpg' style='width: 50%;'>
+        </DIV>
+      </c:otherwise>
+  </c:choose>
   
   <DIV style='margin: 0px auto; width: 90%;'>
     <DIV style='float: left; width: 50%;'>

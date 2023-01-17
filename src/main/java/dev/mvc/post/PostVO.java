@@ -12,7 +12,7 @@ CREATE TABLE POST(
     POSTWORD                            VARCHAR2(400)       NULL ,
     RDATE                               DATE       NOT NULL,
     UDATE                               DATE       NULL ,
-    POSTSTAR                            NUMBER(2,1)       NOT NULL,         -- 별점
+    POSTSTAR                          NUMBER(3,2)    DEFAULT 1     NOT NULL,
     POSTCNT                             NUMBER(30)       DEFAULT 0    NOT NULL,       -- 게시글 조회수
     POSTFILE1                           VARCHAR2(200)       NULL ,          -- 원본 파일명 image
     POSTFILE1SAVED                      VARCHAR2(400)       NULL ,      -- 저장된 파일명, image
@@ -21,6 +21,9 @@ CREATE TABLE POST(
 FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
 FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
 );
+SELECT a.adminid, a.adminname,
+          p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.udate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1
+FROM admin a, post p
 */
 public class PostVO {
   /** 관광지 데이터 번호 */
@@ -28,6 +31,14 @@ public class PostVO {
   
   /** 관리자 번호 */
   private int adminno;
+  /** 아이디 */
+  private String adminid = "";
+  /** 관리자 성명 */
+  private String adminname = "";
+  
+  /** 평점 */
+  private float ratings;
+  
   /** 카테고리 번호 */
   private int cateno;  
   
@@ -41,7 +52,7 @@ public class PostVO {
   private String rdate;
   /** 수정일 */
   private String udate;
-  /** 별점 */
+  /** 평점 */
   private int poststar;
   /** 게시글 조회수 */
   private int postcnt;
@@ -73,6 +84,24 @@ public class PostVO {
     }
     public void setAdminno(int adminno) {
       this.adminno = adminno;
+    }
+    public String getAdminid() {
+      return adminid;
+    }
+    public void setAdminid(String adminid) {
+      this.adminid = adminid;
+    }
+    public String getAdminname() {
+      return adminname;
+    }
+    public void setAdminname(String adminname) {
+      this.adminname = adminname;
+    }
+    public float getRatings() {
+      return ratings;
+    }
+    public void setRatings(float ratings) {
+      this.ratings = ratings;
     }
     public int getCateno() {
       return cateno;

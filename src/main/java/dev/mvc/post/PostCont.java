@@ -1,5 +1,11 @@
 package dev.mvc.post;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,10 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.admin.AdminVO;
 import dev.mvc.cate.CateProcInter;
 import dev.mvc.cate.CateVO;
-import dev.mvc.review.ReviewProcInter;
-import dev.mvc.review.ReviewVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -40,10 +47,8 @@ public class PostCont {
   @Qualifier("dev.mvc.admin.AdminProc")
   private AdminProcInter adminProc = null;
   
-  @Autowired
-  @Qualifier("dev.mvc.review.ReviewProc") 
-  private ReviewProcInter reviewProc;
-  
+  /** 업로드 파일 절대 경로 */
+  private String uploadDir = Tool.getOSPath() + "/post/storage";
   
   public PostCont() {
     System.out.println("-> PostCont created");
@@ -113,7 +118,7 @@ public class PostCont {
         
         if (Tool.isImage(postfile1saved)) { // 이미지인지 검사
           // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150
-          postthumb1 = Tool.preview(upDir, postfile1saved, 200, 150); 
+          postthumb1 = Tool.preview(upDir, postfile1saved, 300, 200); 
         }
       }    
       
@@ -136,7 +141,7 @@ public class PostCont {
       mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
       
       mav.addObject("cateno", postVO.getCateno()); // redirect parameter 적용
-
+      
       mav.addObject("url", "/post/msg"); // msg.jsp, redirect parameter 적용
       mav.setViewName("redirect:/post/msg.do"); // GET
     } else {
@@ -156,11 +161,11 @@ public class PostCont {
                                          HttpServletRequest request, HttpServletResponse response) {
     
     ModelAndView mav = new ModelAndView();
-    
-    
- 
-    
-    
+
+//    int adminno = (int)session.getAttribute("adminno");
+//    
+//    AdminVO adminVO = this.adminProc.read(adminno);
+//    mav.addObject("adminVO", adminVO);
     
     CateVO cateVO = this.cateProc.read(cateno);
     mav.addObject("cateVO", cateVO);
@@ -197,16 +202,7 @@ public class PostCont {
     }
     
     mav.addObject("postVO", postVO);
-    
-   
-    //리뷰목록 
-//  ArrayList<ReplyVO> replylist = this.replyProc.replylist_by_reviewno(reviewno);
-  ArrayList<ReviewVO> reviewlist = this.reviewProc.list_by_postno(postno);
-  mav.addObject("reviewlist", reviewlist);
-  
-    //리뷰목록 
     mav.setViewName("/post/read"); // /webapp/WEB-INF/views/post/read.jsp
-    
     return mav;
   }
   
@@ -277,11 +273,11 @@ public class PostCont {
     String paging = postProc.pagingBox(cateno, search_count, now_page, postword);
     mav.addObject("paging", paging);
     
-    // 로그인 Cookie + 쇼핑카트 + CKEditor
+    // 로그인 Cookie + CKEditor
     mav.setViewName("/post/list_by_cateno_search_paging_cookie_ck");  // /post/list_by_cateno_search_paging_cookie_ck.jsp ★
     
     // -------------------------------------------------------------------------------
-    // 쇼핑 카트 장바구니에 상품 등록전 로그인 폼 출력 관련 쿠기  
+    // 로그인 폼 출력 관련 쿠기  
     // -------------------------------------------------------------------------------
     Cookie[] cookies = request.getCookies();
     Cookie cookie = null;
@@ -549,6 +545,128 @@ public class PostCont {
     return mav;
   }
   
+  // GET 요청
+  public String mf_recommend(String django_url) throws MalformedURLException, IOException {
+    System.out.println("-> django_url: " + django_url);
+    
+    URL url = new URL(django_url);
+    HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+    
+    int statusCode = httpConn.getResponseCode();        
+    System.out.println((statusCode == 200) ? "success" : "fail");
+    System.out.println("Response code: " + statusCode);
+    
+    BufferedReader br = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
+    String line=br.readLine();
+    br.close();
+    
+    return line;
+  }
+  
+  /**
+   * 추천 목록, http://localhost:9093/post/mf_post_member.do
+   * @return
+   */
+  @RequestMapping(value="/post/mf_post_member.do", method=RequestMethod.GET)
+  public ModelAndView mf_post_member(HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+    
+    // Spring boot -> Django로 요청을 보냄 -> JSON 문자열 수신
+    int memberno = (int)session.getAttribute("memberno");
+    
+    String source = "";
+    try {
+      source = mf_recommend("http://127.0.0.1:8000/recommend_post/mf_post?memberno=" + memberno);
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    System.out.println("-> source: " + source);
+
+    // 포스트 번호를 추출
+    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+    
+    JSONArray json = new JSONArray(source); // String -> JSON
+    ArrayList<String> postno_list = new ArrayList<String>();
+    
+    for (int index=0; index < json.length(); index++) {
+      JSONObject obj = (JSONObject)json.opt(index);
+      String post_no = obj.optString("post_no"); // 포스트 번호만 추출
+      System.out.println("-> movie_id: " + post_no);
+      postno_list.add(post_no);
+    }
+    
+    hashMap.put("postno_list", postno_list);
+    
+    // 추천 상품 목록 읽기
+    ArrayList<PostVO> list = this.postProc.mf_post_member(hashMap);
+    mav.addObject("list", list);
+    
+    // 유형 1: 테이블
+    // /webapp/WEB-INF/views/post/mf_post_member.jsp
+    // mav.setViewName("/post/mf_post_member"); 
+
+    // 유형 2: 그리드
+    // /webapp/WEB-INF/views/post/mf_post_member_grid.jsp
+    mav.setViewName("/post/mf_post_member_grid"); 
+    
+    return mav;
+  }
+  
+  /**
+   * 시작 페이지 추천 목록, http://localhost:9093/post/mf_post_member_grid_index.do
+   * @return
+   */
+  @RequestMapping(value="/post/mf_post_member_grid_index.do", method=RequestMethod.GET)
+  public ModelAndView mf_post_member_index(HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+    
+    
+    // Spring boot -> Django로 요청을 보냄 -> JSON 문자열 수신
+    int memberno = (int)session.getAttribute("memberno");
+    
+    String source = "";
+    try {
+      source = mf_recommend("http://127.0.0.1:8000/recommend_post/mf_post?memberno=" + memberno);
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    System.out.println("-> source: " + source);
+
+    // 포스트 번호를 추출
+    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+    
+    JSONArray json = new JSONArray(source); // String -> JSON
+    ArrayList<String> postno_list = new ArrayList<String>();
+    
+    for (int index=0; index < json.length(); index++) {
+      JSONObject obj = (JSONObject)json.opt(index);
+      String post_no = obj.optString("post_no"); // 포스트 번호만 추출
+      System.out.println("-> post_no: " + post_no);
+      postno_list.add(post_no);
+    }
+    
+    hashMap.put("postno_list", postno_list);
+    
+    // 추천 상품 목록 읽기
+    ArrayList<PostVO> list = this.postProc.mf_post_member(hashMap);
+    mav.addObject("list", list);
+    
+    // 유형 1: 테이블
+    // /webapp/WEB-INF/views/post/mf_post_member.jsp
+    // mav.setViewName("/post/mf_post_member"); 
+
+    // 유형 2: 그리드
+    // /webapp/WEB-INF/views/post/mf_post_member_grid_index.jsp
+    mav.setViewName("/post/mf_post_member_grid_index"); 
+    
+    return mav;
+  }
   
   
 }

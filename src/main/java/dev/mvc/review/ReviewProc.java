@@ -67,11 +67,8 @@ public class ReviewProc implements ReviewProcInter {
   
   
   /**
-<<<<<<< HEAD
-   * Á¶È¸
-=======
    * ï¿½ï¿½È¸
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+   * ï¿½ï¿½È¸
    */
   @Override
   public ReviewVO read(int reviewno) {
@@ -80,11 +77,8 @@ public class ReviewProc implements ReviewProcInter {
     String reviewtitle = reviewVO.getReviewtitle();
     String reviewcontent = reviewVO.getReviewcontent();
     
-<<<<<<< HEAD
-    reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯¼ö ¹®ÀÚ Ã³¸®
-=======
     reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
->>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+    reviewtitle = Tool.convertChar(reviewtitle);  // Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     reviewcontent = Tool.convertChar(reviewcontent); 
     
     reviewVO.setReviewtitle(reviewtitle);
