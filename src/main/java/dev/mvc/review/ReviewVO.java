@@ -1,5 +1,7 @@
 package dev.mvc.review;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /*
    REVIEWNO                            NUMBER(10)       NOT NULL       PRIMARY KEY,
       MEMBERNO                            NUMBER(10)       NULL ,
@@ -49,8 +51,10 @@ public class ReviewVO {
   /***/
   private String reviewthumb1="";
   /***/
-  private int reviewsize1;
+  private long reviewsize1;
   private String reviewsize1_label = "";
+  
+  private MultipartFile reviewfile1MF;
   
   public int getReviewno() {
     return reviewno;
@@ -131,10 +135,10 @@ public class ReviewVO {
   public void setReviewthumb1(String reviewthumb1) {
     this.reviewthumb1 = reviewthumb1;
   }
-  public int getReviewsize1() {
+  public long getReviewsize1() {
     return reviewsize1;
   }
-  public void setReviewsize1(int reviewsize1) {
+  public void setReviewsize1(long reviewsize1) {
     this.reviewsize1 = reviewsize1;
   }
   public int getGoodcnt() {
@@ -154,6 +158,12 @@ public class ReviewVO {
   }
   public void setReviewsize1_label(String reviewsize1_label) {
     this.reviewsize1_label = reviewsize1_label;
+  }
+  public MultipartFile getReviewfile1MF() {
+    return reviewfile1MF;
+  }
+  public void setReviewfile1MF(MultipartFile reviewfile1mf) {
+    reviewfile1MF = reviewfile1mf;
   }
   
 

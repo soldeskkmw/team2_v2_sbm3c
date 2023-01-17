@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ page import="java.util.ArrayList" %>
 <c:set var="postno" value="${postVO.postno }" />
 <c:set var="adminno" value="${postVO.adminno }" />
 <c:set var="cateno" value="${postVO.cateno }" />
@@ -17,6 +17,7 @@
 <c:set var="postthumb1" value="${postVO.postthumb1 }" />
 <c:set var="postsize1" value="${postVO.postsize1 }" />
 <c:set var="postsize1_label" value="${postVO.postsize1_label }" />
+
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -130,6 +131,43 @@
   </fieldset>
 
 </DIV>
+
+<DIV class='title_line'><A  class='title_link' style="font-size:30px">리뷰</A><A href="../review/create.do?postno=${postno}&cateno=${cateno}">등록</A></DIV>
+
+ 
+<%-- 리뷰 목록  --%>
+<c:forEach var="ReviewVO" items="${reviewlist}">
+        <c:set var="postno1" value="${ReviewVO.postno }" />      
+  			<c:set var="reviewcontent1" value="${ReviewVO.reviewcontent }" />
+        <c:set var="reviewno1" value="${ReviewVO.reviewno }" />
+        <c:set var="memberno1" value="${ReviewVO.memberno }" />     
+       <c:set var="reviewtitle1" value="${ReviewVO.reviewtitle }" /> 
+          
+    <A  class='title_link' style="font-size:20px"> 제목 : [${reviewtitle1 } ]</A>
+    
+    
+    <c:choose>
+					<c:when test="${sessionScope.memberno ==memberno1 }">
+                    <A href="../review/delete.do?now_page=${param.now_page}&reviewno=${reviewno1}&postno=${postno}&cateno=${cateno}"><strong class="aside_right">리뷰삭제</strong></A>     
+           </c:when>
+           <c:otherwise>
+               	  <c:choose>
+              						<c:when test="${sessionScope.adminid == null}">
+                              
+               						</c:when>
+                					<c:otherwise>
+               									<A href="../review/delete.do?now_page=${param.now_page}&reviewno=${reviewno1}&postno=${postno}&cateno=${cateno}"><strong class="aside_right">리뷰삭제</strong></A>   	  
+               						</c:otherwise>
+									</c:choose> 
+           </c:otherwise>
+</c:choose>
+    
+    
+     <br>
+     <a href="../review/read.do?reviewno=${reviewno1}&now_page=${param.now_page }&postno=${postno}&cateno=${cateno}"><input type='text' name='replycontent' readonly value='${reviewcontent1}' required="required" 
+                  class="form-control" style='width: 100%;'></a>                  	
+		<br>
+ </c:forEach>   
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

@@ -29,7 +29,11 @@ package dev.mvc.team2;
                                            "dev.mvc.customer_post",
                                            "dev.mvc.review",
                                            "dev.mvc.admin_reply",
+<<<<<<< HEAD
                                            "dev.mvc.reply"}) // DAO interface瑜� 李얜뒗 �쐞移�
+=======
+                                           "dev.mvc.reply"}) // DAO interface를 찾는 위치
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
 public class DatabaseConfiguration {
      
      @Autowired

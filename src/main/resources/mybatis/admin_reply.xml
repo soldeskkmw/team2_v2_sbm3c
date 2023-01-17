@@ -16,13 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 기본적으로 질문글에 속해있는 데이터들이므로, 답글목록은 불필요할것이라고 여겨짐 -->
 <!-- 일단 쿼리는 구현하였음 -->
 	<select id="list_all" resultType="dev.mvc.admin_reply.Admin_replyVO">
-		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, file1, file1saved, thumb1, size1
+		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, udate, file1, file1saved, thumb1, size1
 		FROM admin_reply 
 	</select>
 
 <!-- 조회 -->
 	<select id="read" resultType="dev.mvc.admin_reply.Admin_replyVO" parameterType="int">
-		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate
+		SELECT adminreplyno, serviceno, adminno, adminreplytitle, adminreplycontent, adminreplyvisible, rdate, udate, file1, file1saved, thumb1, size1
 		FROM admin_reply 
 		WHERE serviceno = #{serviceno}
 	</select>
