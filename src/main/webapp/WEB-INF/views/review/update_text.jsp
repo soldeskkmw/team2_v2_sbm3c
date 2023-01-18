@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="reviewno" value="${reviewVO.reviewno }" />
 <c:set var="postno" value="${reviewVO.postno }" />
@@ -23,15 +24,21 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>GoingShare</title>
  
-<link href="/css/style.css" rel="Stylesheet" type="text/css">
- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
+
+<script type="text/JavaScript"
+          src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/JavaScript">
+
+</script>
     
+<link rel="icon" href="/images/travel.png">   
 </head> 
  
 <body>
@@ -45,8 +52,6 @@
     
   <%--<c:if test="${sessionScope.admin_id != null }">--%>
     <%--<A href="./create.do?postno=${postVO.postno  }">등록</A> --%>
-    	<A href="./create.do?postno=1">새 등록</A>
-    <span class='menu_divide' >│</span>
     <%--</c:if> --%>
     
     <A href="javascript:location.reload();">새로고침</A>
@@ -78,8 +83,8 @@
   <%--수정 폼 --%>
   <FORM name='frm' method='POST' action='./update_text.do'>
     <input type="hidden" name="reviewno" value="${reviewno}">
-    <input type="hidden" name="postno" value="1"> <%-- 포스트 연결후 변경 필요 --%>
-    <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
+     <%-- 포스트 연결후 변경 필요 --%>
+     <%-- 관리자 개발후 변경 필요 --%>
     
     <div>
        <label>제목</label>
@@ -96,10 +101,10 @@
        <input type='text' name='reviewword' value='${reviewword }' required="required" 
                  class="form-control" style='width: 100%;'>
     </div>   
+    
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>
       <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
-      <button type="button" onclick="location.href='./list_all.do?postno=1'" class="btn btn-primary">목록</button>
     </div>
   
   </FORM>

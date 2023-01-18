@@ -34,16 +34,13 @@
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename }</A> > 파일 수정</DIV>
-
-
-<DIV class='content_body'>
+<DIV style='margin-top: 60px; '>
+<A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename } > 파일 수정</A>
   <ASIDE class="aside_right">
     <c:if test="${sessionScope.admin_id != null }">
       <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
       <span class='menu_divide' >│</span>
     </c:if>
-    
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
     <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }">기본 목록형</A>    
@@ -52,6 +49,8 @@
     <span class='menu_divide' >│</span>
     <A href="./update_text.do?postno=${postno}">글 수정</A>
   </ASIDE> 
+</DIV>
+<DIV class='title_line'></DIV>
   
   <%-- 검색 폼 --%>
   <DIV style="text-align: right; clear: both;">
@@ -75,7 +74,7 @@
    </nav>
   </DIV>
   
-  <DIV class='menu_line'></DIV>
+<DIV class='content_body'>
 
   <fieldset class="fieldset_basic">
     <ul>

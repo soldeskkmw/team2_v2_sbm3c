@@ -45,9 +45,8 @@
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename }</A> > 글 수정</DIV>
-
-<DIV class='content_body'>
+<DIV style='margin-top: 60px; '>
+<A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename } > 글 수정</A>
   <ASIDE class="aside_right">
     <c:if test="${sessionScope.admin_id != null }">
       <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
@@ -58,7 +57,9 @@
     <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }">기본 목록형</A>    
     <span class='menu_divide' >│</span>
     <A href="./list_by_cateno_grid.do?cateno=${cateVO.cateno }">갤러리형</A>
-  </ASIDE> 
+  </ASIDE>
+</DIV>
+<DIV class='title_line'></DIV>
   
   <%-- 검색 폼 --%>
   <DIV style="text-align: right; clear: both;">
@@ -82,24 +83,21 @@
    </nav>
   </DIV>
   
-  <DIV class='menu_line'></DIV>
+<DIV class='content_body'>
   <%--수정 폼 --%>
   <FORM name='frm' method='POST' action='./update_text.do'>
     <input type="hidden" name="postno" value="${postno }">
     <input type="hidden" name="cateno" value="${cateno }">
-    <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
-    
-    <div>
-       <label>Title</label>
+    <input type="hidden" name="adminno" value="${adminno }">
+    <div style="margin: 40px 0;">
        <input type='text' name='posttitle' value='${posttitle }'  required="required" placeholder="제목을 입력하세요." autofocus="autofocus" class="form-control" style='width: 100%;'>
     </div>
     <div>
        <label>Contents</label>
        <textarea class="form-control" name='postcontent' id='postcontent' rows='10' placeholder="내용을 입력하세요." style='width: 100%;'>${postcontent }</textarea>
     </div>
-    <div>
-       <label>Tag</label>
-       <input type='text' name='postword' value='${postword }' placeholder="검색어를 입력하세요." required="required" class="form-control" style='width: 100%;'>
+    <div style="margin: 40px 0;">
+       <input type='text' name='postword' value='${postword }' placeholder="검색어를 입력하세요." required="required" maxlength="400" class="form-control" style='width: 100%;'>
     </div>   
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>

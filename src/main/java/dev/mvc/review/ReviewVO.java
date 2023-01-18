@@ -1,14 +1,15 @@
 package dev.mvc.review;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /*
-   REVIEWNO                            NUMBER(10)       NOT NULL       PRIMARY KEY,
-      MEMBERNO                            NUMBER(10)       NULL ,
-      POSTNO                              NUMBER(10)       NULL ,
+CREATE TABLE REVIEW(
+      REVIEWNO                            NUMBER(10)       NOT NULL       PRIMARY KEY,
+      MEMBERNO                            NUMBER(10)       NOT NULL ,
+      CATENO                              NUMBER(10)       NOT NULL ,
       REVIEWTITLE                         VARCHAR2(400)       NOT NULL,
       REVIEWCONTENT                       CLOB       NOT NULL,
-      REVIEWGOOD                          CHAR(1)       DEFAULT 'N'       NOT NULL,
-      REPLYCNT                            NUMBER(10)       NOT NULL,
-      CNT                                 NUMBER(30)       NOT NULL,
+      REVIEWCNT                           NUMBER(30)    DEFAULT 0   NOT NULL,
       REVIEWWORD                          VARCHAR2(400)       NULL ,
       RDATE                               DATE       NOT NULL,
       UDATE                               DATE       NULL ,
@@ -16,41 +17,46 @@ package dev.mvc.review;
       REVIEWFILE1SAVED                    VARCHAR2(400)       NULL ,
       REVIEWTHUMB1                        VARCHAR2(200)       NULL ,
       REVIEWSIZE1                         NUMBER(10)       NULL ,
+  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
+  FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
+);
  */
 public class ReviewVO {
  /**리뷰 번호 */
   private int reviewno;
  /**회원 번호*/
   private int memberno;
-  /**관광지 데이터 번호*/
-  private int postno;
+  /**관광지 카테고리 번호*/
+  private int cateno;
   /**리뷰 제목*/
   private String reviewtitle="";
   /**리뷰 내용*/
   private String reviewcontent="";
-  /**별점*/
-  private int reviewstar;
-  /**좋아요수*/
-  private int goodcnt;
   /**댓글수*/
-  private int replycnt;
-  /**리뷰 조회수*/
-  private int cnt;
+  private int reviewcnt;
   /**리뷰 검색어*/
-  private String reviewword;
+  private String reviewword = "";
   /**등록일*/
-  private String rdate="";
+  private String rdate;
   /**수정일*/
-  private String udate="";
+  private String udate;
   /**리뷰 메인 이미지*/
   private String reviewfile1="";
-  /***/
+  /**리뷰 실제 저장된 메인 이미지*/
   private String reviewfile1saved="";
-  /***/
+  /**리뷰 메인 이미지 Preview */
   private String reviewthumb1="";
-  /***/
-  private int reviewsize1;
+  /**리뷰 메인 이미지 크기*/
+  private long reviewsize1;
+  /**
+  이미지 파일
+  <input type='file' class="form-control" name='postfile1MF' id='postfile1MF' 
+             value='' placeholder="파일 선택">
+  */
+  private MultipartFile reviewfile1MF;
+  /** 메인 이미지 크기 단위, 파일 크기 */
   private String reviewsize1_label = "";
+  
   
   public int getReviewno() {
     return reviewno;
@@ -64,11 +70,11 @@ public class ReviewVO {
   public void setMemberno(int memberno) {
     this.memberno = memberno;
   }
-  public int getPostno() {
-    return postno;
+  public int getCateno() {
+    return cateno;
   }
-  public void setPostno(int postno) {
-    this.postno = postno;
+  public void setCateno(int cateno) {
+    this.cateno = cateno;
   }
   public String getReviewtitle() {
     return reviewtitle;
@@ -82,18 +88,11 @@ public class ReviewVO {
   public void setReviewcontent(String reviewcontent) {
     this.reviewcontent = reviewcontent;
   }
-
-  public int getReplycnt() {
-    return replycnt;
+  public int getReviewcnt() {
+    return reviewcnt;
   }
-  public void setReplycnt(int replycnt) {
-    this.replycnt = replycnt;
-  }
-  public int getCnt() {
-    return cnt;
-  }
-  public void setCnt(int cnt) {
-    this.cnt = cnt;
+  public void setReviewcnt(int reviewcnt) {
+    this.reviewcnt = reviewcnt;
   }
   public String getReviewword() {
     return reviewword;
@@ -131,23 +130,17 @@ public class ReviewVO {
   public void setReviewthumb1(String reviewthumb1) {
     this.reviewthumb1 = reviewthumb1;
   }
-  public int getReviewsize1() {
+  public long getReviewsize1() {
     return reviewsize1;
   }
-  public void setReviewsize1(int reviewsize1) {
+  public void setReviewsize1(long reviewsize1) {
     this.reviewsize1 = reviewsize1;
   }
-  public int getGoodcnt() {
-    return goodcnt;
+  public MultipartFile getReviewfile1MF() {
+    return reviewfile1MF;
   }
-  public void setGoodcnt(int goodcnt) {
-    this.goodcnt = goodcnt;
-  }
-  public int getReviewstar() {
-    return reviewstar;
-  }
-  public void setReviewstar(int reviewstar) {
-    this.reviewstar = reviewstar;
+  public void setReviewfile1MF(MultipartFile reviewfile1mf) {
+    reviewfile1MF = reviewfile1mf;
   }
   public String getReviewsize1_label() {
     return reviewsize1_label;
@@ -156,5 +149,4 @@ public class ReviewVO {
     this.reviewsize1_label = reviewsize1_label;
   }
   
-
 }

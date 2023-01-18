@@ -218,5 +218,17 @@ public class PostProc implements PostProcInter {
     int cnt = this.postDAO.visit_cnt(postcnt);
     return cnt;
   }
+
+  @Override
+  public int update_poststar(PostVO postVO) {
+    int cnt = this.postDAO.update_poststar(postVO);
+    return cnt;
+  }
+
+  @Override
+  public ArrayList<PostVO> mf_post_member(HashMap<String, Object> hashMap) {
+    ArrayList<PostVO> list = this.postDAO.mf_post_member(hashMap);
+    return list;
+  }
   
   }

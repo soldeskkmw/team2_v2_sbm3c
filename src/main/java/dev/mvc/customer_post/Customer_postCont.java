@@ -264,6 +264,14 @@ public class Customer_postCont {
       return mav;
     }
     
+    // 자식 데이터 있나 확인
+    if(this.admin_replyProc.read(serviceno) != null) {
+      mav.addObject("type", "삭제 오류");
+      mav.addObject("msg", "관리자의 답글이 달린 게시물은 수정/삭제가 불가능합니다.");
+      mav.setViewName("/service/msg"); 
+      return mav;
+    }
+    
     mav.setViewName("/service/customer_post/update");
 
     return mav; // forward
@@ -273,13 +281,21 @@ public class Customer_postCont {
    * 수정 처리
    */
   @RequestMapping(value = "/service/customer_post/update.do", method = RequestMethod.POST)
-  public ModelAndView update_file(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Customer_postVO customer_postVO) {
+  public ModelAndView update(HttpSession session, @RequestParam(value = "checkBoxId", defaultValue = "0") boolean checkBoxId, Customer_postVO customer_postVO) {
     ModelAndView mav = new ModelAndView();
     
     Customer_postVO customer_postVO_old = customer_postProc.read(customer_postVO.getServiceno());  
     
     if(customer_postVO_old.getMemberno() == (int)session.getAttribute("memberno")) {
       customer_postVO.setMemberno((int)session.getAttribute("memberno"));
+      
+      // 자식 데이터 있나 확인
+      if(this.admin_replyProc.read(customer_postVO.getServiceno()) != null) {
+        mav.addObject("type", "삭제 오류");
+        mav.addObject("msg", "관리자의 답글이 달린 게시물은 수정/삭제가 불가능합니다.");
+        mav.setViewName("/service/msg"); 
+        return mav;
+      }
       
       // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
       int cnt = 0;
@@ -359,7 +375,7 @@ public class Customer_postCont {
     } else {
       mav.addObject("type", "권한 오류");
       mav.addObject("msg", "작성자 본인만 수정이 가능합니다.");
-      mav.setViewName("redirect:/service/msg.do"); // GET
+      mav.setViewName("/service/msg"); 
     }
 
     return mav; // forward
@@ -382,7 +398,14 @@ public class Customer_postCont {
     if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
       mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
-      mav.setViewName("redirect:/service/msg");
+      mav.setViewName("/service/msg"); 
+      return mav;
+    }
+    // 자식 데이터 있나 확인
+    if(this.admin_replyProc.read(serviceno) != null) {
+      mav.addObject("type", "삭제 오류");
+      mav.addObject("msg", "관리자의 답글이 달린 게시물은 수정/삭제가 불가능합니다.");
+      mav.setViewName("/service/msg"); 
       return mav;
     }
     
@@ -403,7 +426,7 @@ public class Customer_postCont {
   public ModelAndView delete(HttpSession session, int serviceno, String word,
                                         @RequestParam(value="now_page", defaultValue="1") int now_page) {
     ModelAndView mav = new ModelAndView();
-    
+      
     int cnt = 0;
     // -------------------------------------------------------------------
     // 파일 삭제 코드 시작
@@ -415,7 +438,14 @@ public class Customer_postCont {
     if ((int)session.getAttribute("memberno") != customer_postVO.getMemberno() && session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
       mav.addObject("msg", "작성자 본인 또는 관리자만 삭제 가능합니다.");
-      mav.setViewName("redirect:/service/msg");
+      mav.setViewName("/service/msg"); 
+      return mav;
+    }
+    // 자식 데이터 있나 확인
+    if(this.admin_replyProc.read(serviceno) != null) {
+      mav.addObject("type", "삭제 오류");
+      mav.addObject("msg", "관리자의 답글이 달린 게시물은 수정/삭제가 불가능합니다.");
+      mav.setViewName("/service/msg"); 
       return mav;
     }
         

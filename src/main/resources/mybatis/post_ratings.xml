@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- post_ratings.xml과 연동되는 Spring interface "dev.mvc.post_ratings.Post_ratingsDAOInter" 선언 --> 
+<mapper namespace="dev.mvc.post_ratings.Post_ratingsDAOInter">
+
+  <!-- 포스트 별 평점 등록  -->
+  <insert id="create" parameterType="dev.mvc.post_ratings.Post_ratingsVO">
+    INSERT INTO post_ratings(ratingno, memberno, postno, ratings, rdate)
+    VALUES(post_ratings_seq.nextval, #{memberno}, #{postno}, #{ratings}, sysdate)
+  </insert>
+
+  <!-- 특정 포스트에 등록된 평점 목록 -->
+  <select id="list_by_postno" resultType="dev.mvc.post_ratings.Post_ratingsVO" parameterType="int">
+    SELECT ratingno, memberno, postno, ratings, rdate
+    FROM post_ratings 
+    WHERE postno = #{postno}
+    ORDER BY postno ASC
+  </select>
+  
+  <!-- post + post_ratings INNER JOIN 목록 -->
+  <select id="list_all_post" resultType="dev.mvc.post_ratings.Post_ratingsVO">
+		SELECT p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1,
+		           r.ratingno, r.memberno, r.postno, r.ratings, r.rdate
+		FROM post p, post_ratings r
+		WHERE p.postno = r.postno
+  </select>
+  
+  <!-- member + post_ratings INNER JOIN 목록 -->
+  <select id="list_all_member" resultType="dev.mvc.post_ratings.Post_ratingsVO">
+		SELECT m.memberno, m.memberid, m.memberpasswd, m.membername, m.tel, m.mdate,
+		           r.ratingno, r.memberno, r.postno, r.ratings, r.rdate
+		FROM member m, post_ratings r
+		WHERE m.memberno = r.memberno
+  </select>
+  
+  <!-- 평점 수정 -->
+  <update id="update_ratings" parameterType="dev.mvc.post_ratings.Post_ratingsVO">
+    UPDATE post_ratings
+    SET ratings=#{ratings}
+    WHERE memberno = #{memberno} AND postno = #{postno}
+  </update>
+
+  <!-- 평점 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM post_ratings
+    WHERE ratingno=#{ratingno}
+  </delete>
+
+</mapper>
+
+
+
+

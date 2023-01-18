@@ -51,23 +51,25 @@
     </ASIDE> 
     
     <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='/service/customer_post/list_all.do'>
-      <input type='hidden' name='servicecateno' value='${param.servicecateno }'>
-      
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='/service/customer_post/list_all.do?servicecateno=${param.servicecateno}&word='">검색 취소</button>  
-      </c:if>    
-    </form>
+    <nav class="navbar navbar-expand-sm" style='padding:0px;'>
+	    <form class="form-inline justify-content-end" style='width: 100%;' name='frm' id='frm' method='get' action='/service/customer_post/list_all.do'>
+	      <input class="form-control mr-sm-2" type='hidden' name='servicecateno' value='${param.servicecateno }'>
+	      
+	      <c:choose>
+	        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+	          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+	        </c:when>
+	        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+	          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='word' id='word' value='' style='width: 20%;'>
+	        </c:otherwise>
+	      </c:choose>
+	      <button class='btn btn-secondary' type='submit'>검색</button>
+	      <c:if test="${param.word.length() > 0 }">
+	        <button class='btn btn-danger ml-sm-2' type='button' 
+	                     onclick="location.href='/service/customer_post/list_all.do?servicecateno=${param.servicecateno}&word='">검색 취소</button>  
+	      </c:if>    
+	    </form>
+    </nav>
   </DIV>
   
 

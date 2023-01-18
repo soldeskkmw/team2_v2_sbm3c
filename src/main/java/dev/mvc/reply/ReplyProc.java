@@ -8,71 +8,75 @@ import org.springframework.stereotype.Component;
 
 
 import dev.mvc.reply.ReviewReplyVO;
+import dev.mvc.review.ReviewVO;
 import dev.mvc.reply.ReplyVO;
 import dev.mvc.tool.Tool;
  
 @Component("dev.mvc.reply.ReplyProc")
 public class ReplyProc implements ReplyProcInter {
-  @Autowired
-  private ReplyDAOInter replyDAO;
+  
+  @Autowired ReplyDAOInter replyDAO;
 
   @Override
-  public int replycreate(ReplyVO replyVO) {
-    int replycnt=this.replyDAO.replycreate(replyVO);
-    return replycnt;
+  public int create(ReplyVO replyVO) {
+    int cnt = this.replyDAO.create(replyVO);
+    return cnt;
   }
 
   @Override
-  public ArrayList<ReplyVO> replylist_by_reviewno(int reviewno) {
-    ArrayList<ReplyVO> replylist = this.replyDAO.replylist_by_reviewno(reviewno);
+  public ArrayList<ReplyVO> read_by_reviewno_reply(int reviewno, int cateno) {
+    ArrayList<ReplyVO> list = this.replyDAO.read_by_reviewno_reply(reviewno, cateno);
     
-    for (int i=0; i<replylist.size(); i++) {
-      ReplyVO replyVO = replylist.get(i);
+    for(int i=0; i<list.size(); i++) {
+      ReplyVO replyVO = list.get(i);
       
+      String reviewtitle = replyVO.getReviewtitle();
+      String reviewcontent = replyVO.getReviewcontent();
       
-      String reply = replyVO.getReplycontent();
+      reviewtitle = Tool.convertChar(reviewtitle);
+      reviewcontent = Tool.convertChar(reviewcontent);
       
-      
-      reply = Tool.convertChar(reply);
-      
-    
-      replyVO.setReplycontent(reply);
+      replyVO.setReviewtitle(reviewtitle);
+      replyVO.setReviewcontent(reviewcontent);
     }
-    
-    return replylist;
+    return list;
   }
-  
-  
- 
+
+  @Override
+  public int update_reply(ReplyVO replyVO) {
+    int cnt = this.replyDAO.update_reply(replyVO);
+    return cnt;
+  }
+
+  @Override
+  public int reply_delete(int replyno) {
+    int cnt = this.replyDAO.reply_delete(replyno);
+    return cnt;
+  }
   
   @Override
-  public int replydelete(int replyno) {
-    int replycnt = this.replyDAO.replydelete(replyno);
-    return replycnt;
+  public int update_reviewtext(ReviewVO reviewVO) {
+    int cnt = this.replyDAO.update_reviewtext(reviewVO);
+    return cnt;
   }
-  
-  /**
-   * Á¶È¸
-   */
+
   @Override
-  public ReplyVO replyread(int replyno) {
-    ReplyVO replyVO = this.replyDAO.replyread(replyno);
-    
-    
-    String replycontent = replyVO.getReplycontent();
-    
-    
-    replycontent = Tool.convertChar(replycontent); 
-    
-    
-    replyVO.setReplycontent(replycontent);  
-    
-   
-    
-    return replyVO;
+  public int update_reviewfile(ReviewVO reviewVO) {
+    int cnt = this.replyDAO.update_reviewfile(reviewVO);
+    return cnt;
+  }
+
+  @Override
+  public int visit_cnt(int cnt) {
+    int review_cnt = this.replyDAO.visit_cnt(cnt);
+    return review_cnt;
   }
   
-  
+  @Override
+  public int review_delete(int reviewno) {
+    int cnt = this.replyDAO.review_delete(reviewno);
+    return cnt;
+  }
   
 }
 

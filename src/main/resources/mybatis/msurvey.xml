@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- survey.xml과 연동되는 Spring interface "dev.mvc.survey.SurveyDAOInter" 선언 --> 
+<mapper namespace="dev.mvc.msurvey.MsurveyDAOInter">
+  <insert id="msurvey_create" parameterType="dev.mvc.msurvey.MsurveyVO">
+   INSERT INTO msurvey(msurveyno, surveyno, memberno, surveyanswer1, surveyanswer2, surveyanswer3, surveyanswer4,
+                                surveyanswer5, surveyanswer6, etc)
+   VALUES (msurvey_seq.nextval, #{surveyno}, #{memberno}, #{surveyanswer1}, #{surveyanswer2}, #{surveyanswer3}, #{surveyanswer4},
+                #{surveyanswer5}, #{surveyanswer6}, #{etc})
+  </insert> 
+  
+    <!-- 조회, id: read, 입력: noticeno, 리턴: NoticeVO -->
+  <select id="msurvey_read" resultType="dev.mvc.msurvey.MsurveyVO" parameterType="int">
+    SELECT msurveyno, surveyno, memberno, surveyanswer1, surveyanswer2, surveyanswer3, surveyanswer4,
+                                surveyanswer5, surveyanswer6, etc
+    FROM msurvey
+    WHERE msurveyno = #{msurveyno}
+  </select>  
+  
+  
+       
+</mapper>

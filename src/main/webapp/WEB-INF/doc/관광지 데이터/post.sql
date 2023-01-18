@@ -3,22 +3,22 @@ DROP TABLE post CASCADE CONSTRAINTS;
 DROP TABLE post;
 
 CREATE TABLE POST(
-        POSTNO                              NUMBER(10)       NOT NULL       PRIMARY KEY,
-        ADMINNO                             NUMBER(10)       NOT NULL,
-        CATENO                              NUMBER(10)       NOT NULL,
-        POSTTITLE                           VARCHAR2(400)       NOT NULL,
-        POSTCONTENT                         CLOB       NOT NULL,
-        POSTWORD                            VARCHAR2(400)       NULL ,
-        RDATE                               DATE       NOT NULL,
-        UDATE                               DATE       NULL ,
-        POSTSTAR                            NUMBER(2,1)       NOT NULL,         -- 별점
-        POSTCNT                             NUMBER(30)       DEFAULT 0    NOT NULL,       -- 게시글 조회수
-        POSTFILE1                           VARCHAR2(200)       NULL ,          -- 원본 파일명 image
-        POSTFILE1SAVED                      VARCHAR2(400)       NULL ,      -- 저장된 파일명, image
-        POSTTHUMB1                          VARCHAR2(200)       NULL ,      -- preview image
-        POSTSIZE1                           NUMBER(10)   DEFAULT 0    NULL,        
-        FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
-        FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
+      POSTNO                              NUMBER(10)       NOT NULL       PRIMARY KEY,
+      ADMINNO                             NUMBER(10)       NOT NULL,
+      CATENO                              NUMBER(10)       NOT NULL,
+      POSTTITLE                           VARCHAR2(400)       NOT NULL,
+      POSTCONTENT                         CLOB       NOT NULL,
+      POSTWORD                            VARCHAR2(400)       NULL ,
+      RDATE                               DATE       NOT NULL,
+      UDATE                               DATE       NULL ,
+      POSTSTAR                          NUMBER(3,2)    DEFAULT 1     NOT NULL,
+      POSTCNT                             NUMBER(30)       NOT NULL,
+      POSTFILE1                           VARCHAR2(200)       NULL ,
+      POSTFILE1SAVED                      VARCHAR2(400)       NULL ,
+      POSTTHUMB1                          VARCHAR2(200)       NULL ,
+      POSTSIZE1                           NUMBER(10)       NULL ,
+  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
+  FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
 );
 
 COMMENT ON TABLE POST is '관광지 데이터';
@@ -77,7 +77,7 @@ VALUES(post_seq.nextval, 3, 6, '요즘 대세는 스페셜티 커피! 서울 스
 INSERT INTO post(postno, adminno, cateno, posttitle, postcontent, postword, 
                     rdate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1)
 VALUES(post_seq.nextval, 3, 6, '가을 하늘을 볼 수 있는 서울 하늘 뷰 맛집 4곳', '짧은 가을을 만끽하기 좋은 방법 중 하나는 푸른 하늘을 두 눈에 가득 담는 것. 하늘멍 때리기 좋은 서울 하늘 뷰 맛집 네 곳을 소개한다.', '뷰 맛집, 옥상 뷰, 서울 뷰, 전망, 하늘 뷰, 남산 뷰, 하늘 사진, 일몰 사진, 하늘 사진 찍기 좋은 곳, 서울 카페, 감성 카페, 와인바, 상수, 상수역, 상수동, 창신역, 한성대, 동묘, 혜화역, 위스키, 남산 카페, 남산, 남산 케이블카, 회현역, 후암동, 찻집, 부암동, 상명대, 서촌, 경복궁',
-                    sysdate, 4.0, 0, 'view.jpg', 'view_1.jpg', 'view_t.jpg', 1000);
+                    sysdate, 4.0, 0, 'view.jpg', 'view_1.jpg', 'view_t.jpg', 1000);               
                     
 COMMIT;
 
@@ -92,10 +92,17 @@ ORDER BY postno ASC;
          2          3          6 요즘 대세는 스페셜티 커피! 서울 스페셜티 커피 전문점 4곳                                                                                                                                                                                                                                                                                                                                                         좋은 원두가 주는 다채로운 풍미의 향연, 일반 커피와 얼마나 다른지 궁금하다면?     스페셜티 전문점, 디저트, 시그니처 커피, 스페셜티 커피, 커피 추천, 커피 맛집, 스페셜티 커피 추천, 서울 카페, 스페셜티 카페, 카페 추천, 카페 갈 곳, 데이트, 데이트 코스 추천, 카페 데이트, 바리스타, 원두, 신사동, 신사, 양재, 문래, 용산                                                                                                                                                                          2022-11-16 11:48:30                              5          0 special.jpg                                                                                                                                                                                              special_1.jpg                                                                                                                                                                                                                                                                                                                                                                                                    special_t.jpg                                                                                                                                                                                                  1000
          3          3          6 가을 하늘을 볼 수 있는 서울 하늘 뷰 맛집 4곳                                                                                                                                                                                                                                                                                                                                                                     짧은 가을을 만끽하기 좋은 방법 중 하나는 푸른 하늘을 두 눈에 가득 담는 것. 하늘멍 때리기 좋은 서울 하늘 뷰 맛집 네 곳을 소개한다. 뷰 맛집, 옥상 뷰, 서울 뷰, 전망, 하늘 뷰, 남산 뷰, 하늘 사진, 일몰 사진, 하늘 사진 찍기 좋은 곳, 서울 카페, 감성 카페, 와인바, 상수, 상수역, 상수동, 창신역, 한성대, 동묘, 혜화역, 위스키, 남산 카페, 남산, 남산 케이블카, 회현역, 후암동, 찻집, 부암동, 상명대, 서촌, 경복궁                                                                                                                                    2022-11-16 11:52:18                              4          0 view.jpg                                                                                                                                                                                                 view_1.jpg                                                                                                                                                                                                                                                                                                                                                                                                       view_t.jpg                                                                                                                                                                                                     1000
 
+SELECT a.adminid, a.adminname,
+        p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1,
+        r.ratings
+FROM admin a, post p, post_ratings r
+WHERE p.postno=1 AND a.adminno = p.adminno AND p.postno=r.postno;
+
 -- 조회
-SELECT postno, adminno, cateno, posttitle, postcontent, rdate, udate, poststar, postcnt
-FROM post
-WHERE postno=1;
+SELECT a.adminid, a.adminname,
+        p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1
+FROM admin a, post p
+WHERE postno=1 AND a.adminno = p.adminno;
 
     POSTNO    ADMINNO     CATENO POSTTITLE                                                                                                                                                                                                                                                                                                                                                                                                        POSTCONTENT                                                                      RDATE               UDATE                 POSTSTAR    POSTCNT
 ---------- ---------- ---------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------- ------------------- ------------------- ---------- ----------
@@ -197,3 +204,19 @@ WHERE r >= 1 AND r <= 3;
          2          3          6 요즘 대세는 스페셜티 커피! 서울 스페셜티 커피 전문점 4                                                                                                                                                                                                                                                                                                                                                           좋은 원두가 주는 다채로운 풍미의 향연, 일반 커피와 얼마나 다른지 궁금하다면?     스페셜티 전문점, 디저트, 시그니처 커피, 스페셜티 커피, 커피 추천, 커피 맛집, 스페셜티 커피 추천, 서울 카페, 스페셜티 카페, 카페 추천, 카페 갈 곳, 데이트, 데이트 코스 추천, 카페 데이트, 바리스타, 원두, 신사동, 신사, 양재, 문래, 용산                                                                                                                                                                          2022-11-16 11:43:19 2022-11-16 11:57:22          5          0          2
 
 commit;
+
+-- post_ratings테이블의 특정 post별 평점 평균 산출
+SELECT AVG(ratings)
+FROM post_ratings
+WHERE postno=1;
+
+-- post테이블의 평점 컬럼 수정
+UPDATE post
+SET poststar = (SELECT AVG(ratings) FROM post_ratings WHERE postno=1)
+WHERE postno = 1;
+
+-- 조회에서 평점 출력
+SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+FROM post
+ORDER BY postno ASC;
+

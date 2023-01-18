@@ -22,12 +22,21 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>GoingShare</title>
  
-<link href="/css/style.css" rel="Stylesheet" type="text/css">
- 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
+
+<script type="text/JavaScript"
+          src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/JavaScript">
+
+</script>
     
+<link rel="icon" href="/images/travel.png">   
 </head> 
  
 <body>
@@ -77,7 +86,7 @@
           <br>
           <FORM name='frm' method='POST' action='./delete.do'>
               <input type='hidden' name='reviewno' value='${reviewno}'>
-              <input type='hidden' name='postno' value='1'>
+              <input type='hidden' name='postno' value='${postno}'>
               <input type='hidden' name='now_page' value='${param.now_page}'>
               <br><br>
               <div style='text-align: center; margin: 10px auto;'>

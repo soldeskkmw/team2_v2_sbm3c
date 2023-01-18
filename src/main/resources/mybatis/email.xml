@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "dev.mvc.email.EmailDAOInter">
+
+
+
+  <!-- 문자 받은 정보 등록  -->
+  <insert id="send" parameterType="dev.mvc.email.EmailVO">
+    INSERT INTO email (emailno, memberno, ip, authno, mdate, search, receiver)
+    VALUES(email_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
+  </insert>
+  
+  <!-- 문자 받은 정보 목록  -->
+  <select id="email_list" resultType="dev.mvc.email.EmailVO">
+    SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
+    FROM email
+    ORDER BY emailno ASC, mdate ASC
+  </select>
+
+  <!-- memberno로 회원 정보 조회 -->
+  <select id="read" resultType="dev.mvc.email.EmailVO" parameterType="int">
+    SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
+    FROM email
+    WHERE emailno = #{emailno}
+  </select>  
+
+  <delete id="delete" parameterType="int">
+    DELETE FROM email
+    WHERE emailno=#{emailno}
+  </delete>
+  
+    <!-- 비밀번호 찾기 문자 받은 정보 등록  -->
+  <insert id="send_passwd" parameterType="dev.mvc.email.EmailVO">
+    INSERT INTO email (emailno, memberno, ip, authno, mdate, search, receiver)
+    VALUES(email_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
+  </insert>
+  
+    <!-- 문자 받은 정보 등록  -->
+  <insert id="admin_send" parameterType="dev.mvc.email.EmailVO">
+    INSERT INTO email (emailno, adminno, ip, authno, mdate, search, receiver)
+    VALUES(email_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
+  </insert>
+  
+      <!-- 관리자 비밀번호 찾기 문자 받은 정보 등록  -->
+  <insert id="admin_send_passwd" parameterType="dev.mvc.email.EmailVO">
+    INSERT INTO email (emailno, adminno, ip, authno, mdate, search, receiver)
+    VALUES(email_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
+  </insert>
+  
+    <!-- 문자 받은 정보 목록  -->
+  <select id="admin_email_list" resultType="dev.mvc.email.EmailVO">
+    SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
+    FROM email
+    WHERE memberno is null
+    ORDER BY emailno ASC, mdate ASC
+  </select>
+
+</mapper>

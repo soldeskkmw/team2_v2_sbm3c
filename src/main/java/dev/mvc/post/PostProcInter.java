@@ -105,5 +105,19 @@ public interface PostProcInter {
    * @return 조회수
    */
   public int visit_cnt(int postcnt);
+  
+  /**
+   * post테이블의 평점(poststar) 컬럼 수정
+   * @param PostVO
+   * @return 평점
+   */
+  public int update_poststar(PostVO postVO);
+  
+  /**
+   * 추천 목록
+   * @return
+   */
+  public ArrayList<PostVO> mf_post_member(HashMap<String, Object> hashMap); 
+  
 
 }

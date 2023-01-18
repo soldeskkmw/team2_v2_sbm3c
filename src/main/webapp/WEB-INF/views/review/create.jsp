@@ -16,15 +16,14 @@
  
 <body>
 
-
 <c:import url="/menu/top.do" />
  
   
   <DIV class='menu_line'></DIV>
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
-  <FORM name='frm' method='POST' action='./create.do' enctype="multipart/form-data">
-    <input type="hidden" name="postno" value="1">
-    <input type="hidden" name="memberno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
+  <FORM name='frm' method='POST' action='../review/create.do' enctype="multipart/form-data">
+    <input type="hidden" name="postno" value="${postno }">
+    <input type="hidden" name="memberno" value="${sessionScope.memberno }"> <%-- 관리자 개발후 변경 필요 --%>
     
     <div>
        <label>리뷰 제목</label>
@@ -39,12 +38,18 @@
        <label>검색어</label>
        <input type='text' name='reviewword' value='월터,벤 스틸러,크리스튼위그,휴먼,도전' required="required" 
                  class="form-control" style='width: 100%;'>
-    </div>   
+    </div>  
+    <div>
+       <label>이미지</label>
+       <input type='file' class="form-control" name='reviewfile1MF' id='reviewfile1MF' 
+                 value='' placeholder="파일 선택">
+    </div> 
    <!-- 파일 부분 삭제함 추가요망  -->   
    <!-- 패스워드 안써서 삭제 -->
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
       <button type="button" onclick="location.href='./list_all.do'" class="btn btn-primary">목록</button>
+      <button type="button" onclick="javascript:history.back();" class="btn btn-primary">목록</button>
     </div>
   
   </FORM>

@@ -33,9 +33,8 @@
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename }</A> > ${posttitle } 삭제</DIV>
-
-<DIV class='content_body'>
+<DIV style='margin-top: 60px; '>
+<A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename } > ${posttitle } 삭제</A>
   <ASIDE class="aside_right">
     <c:if test="${sessionScope.adminid != null }">
       <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
@@ -52,6 +51,8 @@
     <span class='menu_divide' >│</span>
     <A href="./update_file.do?postno=${postno}">파일 수정</A>
   </ASIDE> 
+</DIV>
+<DIV class='title_line'></DIV>
   
   <%-- 검색 폼 --%>
   <DIV style="text-align: right; clear: both;">
@@ -75,8 +76,8 @@
    </nav>
   </DIV>
   
-  <DIV class='menu_line'></DIV>
-
+<DIV class='content_body'>
+  
   <fieldset class="fieldset_basic">
     <ul>
       <li class="li_none">

@@ -1,39 +1,65 @@
 package dev.mvc.reply;
 
 /*
-   REVIEWNO                            NUMBER(10)       NOT NULL       PRIMARY KEY,
-      MEMBERNO                            NUMBER(10)       NULL ,
-      POSTNO                              NUMBER(10)       NULL ,
-      REVIEWTITLE                         VARCHAR2(400)       NOT NULL,
-      REVIEWCONTENT                       CLOB       NOT NULL,
-      REVIEWGOOD                          CHAR(1)       DEFAULT 'N'       NOT NULL,
-      REPLYCNT                            NUMBER(10)       NOT NULL,
-      CNT                                 NUMBER(30)       NOT NULL,
-      REVIEWWORD                          VARCHAR2(400)       NULL ,
-      RDATE                               DATE       NOT NULL,
-      UDATE                               DATE       NULL ,
-      REVIEWFILE1                         VARCHAR2(200)       NULL ,
-      REVIEWFILE1SAVED                    VARCHAR2(400)       NULL ,
-      REVIEWTHUMB1                        VARCHAR2(200)       NULL ,
-      REVIEWSIZE1                         NUMBER(10)       NULL ,
+CREATE TABLE REPLY(
+    REPLYNO                           NUMBER(10)     NOT NULL       PRIMARY KEY,
+    MEMBERNO                          NUMBER(10)     NOT NULL,
+    REVIEWNO                          NUMBER(10)     NOT NULL,
+    REPLYCONTENT                      VARCHAR2(400)    NOT NULL,
+    REPLYRDATE                             DATE     NOT NULL,
+    REPLYUDATE                             DATE     NULL ,
+  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
+  FOREIGN KEY (REVIEWNO) REFERENCES REVIEW (REVIEWNO)
+);
+
+  <!-- 리뷰 조회 + 리뷰당 전체 댓글 목록 -->
+  <select id="read_by_reviewno_reply" resultType="dev.mvc.reply.ReplyVO" parameterType="int">   
+    SELECT r.reviewno, r.memberno, r.cateno, r.reviewtitle, r.reviewcontent, r.reviewcnt, r.reviewword, r.rdate, r.udate, r.reviewfile1, r.reviewfile1saved, r.reviewthumb1, r.reviewsize1,
+              p.replyno, p.replycontent, p.replyrdate, p.replyudate,
+              m.memberid
+    FROM review r, reply p, member m
+    WHERE r.reviewno = p.reviewno AND r.cateno=#{cateno} AND r.memberno = m.memberno
+    ORDER BY replyno ASC
+  </select>
+  
  */
 public class ReplyVO {
- /**리뷰 번호 */
+  /**리뷰 번호 */
   private int reviewno;
  /**회원 번호*/
   private int memberno;
-  /** 회원 아이디 */
-  private String memberid = "";
+  /**관광지 카테고리 번호*/
+  private int cateno;
+  /**리뷰 제목*/
+  private String reviewtitle="";
+  /**리뷰 내용*/
+  private String reviewcontent="";
+  /**댓글수*/
+  private int reviewcnt;
+  /**리뷰 검색어*/
+  private String reviewword = "";
+  /**등록일*/
+  private String rdate;
+  /**수정일*/
+  private String udate;
+  /**리뷰 메인 이미지*/
+  private String reviewfile1="";
+  /**리뷰 실제 저장된 메인 이미지*/
+  private String reviewfile1saved="";
+  /**리뷰 메인 이미지 Preview */
+  private String reviewthumb1="";
+  /**리뷰 메인 이미지 크기*/
+  private long reviewsize1;
   /**댓글 번호*/
   private int replyno;
   /**댓글 내용*/
   private String replycontent="";
-  /**등록일*/
-  private String rdate="";
-  /**수정일*/
-  private String udate="";
-  /**좋아요*/
-  private String reviewgood="N";
+  /**댓글 등록일*/
+  private String replyrdate;
+  /**댓글 수정일*/
+  private String replyudate;
+  /** 회원 아이디 */
+  private String memberid = "";
   
   public int getReviewno() {
     return reviewno;
@@ -47,17 +73,35 @@ public class ReplyVO {
   public void setMemberno(int memberno) {
     this.memberno = memberno;
   }
-  public int getReplyno() {
-    return replyno;
+  public int getCateno() {
+    return cateno;
   }
-  public void setReplyno(int replyno) {
-    this.replyno = replyno;
+  public void setCateno(int cateno) {
+    this.cateno = cateno;
   }
-  public String getReplycontent() {
-    return replycontent;
+  public String getReviewtitle() {
+    return reviewtitle;
   }
-  public void setReplycontent(String replycontent) {
-    this.replycontent = replycontent;
+  public void setReviewtitle(String reviewtitle) {
+    this.reviewtitle = reviewtitle;
+  }
+  public String getReviewcontent() {
+    return reviewcontent;
+  }
+  public void setReviewcontent(String reviewcontent) {
+    this.reviewcontent = reviewcontent;
+  }
+  public int getReviewcnt() {
+    return reviewcnt;
+  }
+  public void setReviewcnt(int reviewcnt) {
+    this.reviewcnt = reviewcnt;
+  }
+  public String getReviewword() {
+    return reviewword;
+  }
+  public void setReviewword(String reviewword) {
+    this.reviewword = reviewword;
   }
   public String getRdate() {
     return rdate;
@@ -71,11 +115,53 @@ public class ReplyVO {
   public void setUdate(String udate) {
     this.udate = udate;
   }
-  public String getReviewgood() {
-    return reviewgood;
+  public String getReviewfile1() {
+    return reviewfile1;
   }
-  public void setReviewgood(String reviewgood) {
-    this.reviewgood = reviewgood;
+  public void setReviewfile1(String reviewfile1) {
+    this.reviewfile1 = reviewfile1;
+  }
+  public String getReviewfile1saved() {
+    return reviewfile1saved;
+  }
+  public void setReviewfile1saved(String reviewfile1saved) {
+    this.reviewfile1saved = reviewfile1saved;
+  }
+  public String getReviewthumb1() {
+    return reviewthumb1;
+  }
+  public void setReviewthumb1(String reviewthumb1) {
+    this.reviewthumb1 = reviewthumb1;
+  }
+  public long getReviewsize1() {
+    return reviewsize1;
+  }
+  public void setReviewsize1(long reviewsize1) {
+    this.reviewsize1 = reviewsize1;
+  }
+  public int getReplyno() {
+    return replyno;
+  }
+  public void setReplyno(int replyno) {
+    this.replyno = replyno;
+  }
+  public String getReplycontent() {
+    return replycontent;
+  }
+  public void setReplycontent(String replycontent) {
+    this.replycontent = replycontent;
+  }
+  public String getReplyrdate() {
+    return replyrdate;
+  }
+  public void setReplyrdate(String replyrdate) {
+    this.replyrdate = replyrdate;
+  }
+  public String getReplyudate() {
+    return replyudate;
+  }
+  public void setReplyudate(String replyudate) {
+    this.replyudate = replyudate;
   }
   public String getMemberid() {
     return memberid;
@@ -84,6 +170,6 @@ public class ReplyVO {
     this.memberid = memberid;
   }
 
-  
-
 }
+
+
