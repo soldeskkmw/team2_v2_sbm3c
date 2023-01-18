@@ -16,6 +16,15 @@
  
 <body>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+<c:import url="/menu/top.do" />
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 <c:import url="/menu/top.do" />
  
   
@@ -48,8 +57,15 @@
    <!-- 패스워드 안써서 삭제 -->
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
+<<<<<<< HEAD
       <button type="button" onclick="location.href='./list_all.do'" class="btn btn-primary">목록</button>
+<<<<<<< HEAD
       <button type="button" onclick="javascript:history.back();" class="btn btn-primary">목록</button>
+=======
+=======
+      <button type="button" onclick="javascript:history.back();" class="btn btn-primary">목록</button>
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
     </div>
   
   </FORM>

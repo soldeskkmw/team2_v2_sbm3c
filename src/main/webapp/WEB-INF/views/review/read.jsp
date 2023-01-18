@@ -19,7 +19,10 @@
 <c:set var="cnt" value="${reviewVO.cnt }" />
 <c:set var="replycnt" value="${reviewVO.replycnt }" />
 <c:set var="memberno" value="${reviewVO.memberno }" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 <!DOCTYPE html> 
 
 <html lang="ko"> 
@@ -78,6 +81,12 @@
                 									<span class='menu_divide' >│</span>
                     										<A href="./create.do?postno=1">등록</A>
      															<span class='menu_divide' >│</span>     
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+     																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>   
+=======
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
      																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>  
      																			<span class='menu_divide' >│</span>
     																<A href="./update_file.do?reviewno=${reviewno}&now_page=${param.now_page}">파일 수정</A>
@@ -93,6 +102,10 @@
      																		
      																		
      																		 
+<<<<<<< HEAD
+=======
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
                							</c:otherwise>
 														</c:choose>                                                                                                             
                </c:when>
@@ -110,6 +123,34 @@
     	  
                </c:otherwise>
 		</c:choose>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+		
+		
+    	 
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+=======
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
   </ASIDE> 
   
   
@@ -168,7 +209,16 @@
         <c:set var="replyno1" value="${ReplyVO.replyno }" />
         <c:set var="memberno1" value="${ReplyVO.memberno }" />     
         <c:set var="memberid1" value="${ReplyVO.memberid }" />
+<<<<<<< HEAD
         [ ${memberid1} ]      
+=======
+<<<<<<< HEAD
+        [ ${memberid1} ]
+        
+=======
+        [ ${memberid1} ]      
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
         
 <c:choose>
 					<c:when test="${sessionScope.memberid ==memberid1 }">
@@ -196,8 +246,17 @@
  
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
   <FORM name='frm' method='POST' action='./replycreate.do' enctype="multipart/form-data">
+<<<<<<< HEAD
     <input type="hidden" name="postno" value=${postno }>
     <input type="hidden" name="cateno" value=${cateno }>
+=======
+<<<<<<< HEAD
+    <input type="hidden" name="postno" value="1">
+=======
+    <input type="hidden" name="postno" value=${postno }>
+    <input type="hidden" name="cateno" value=${cateno }>
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
     <input type="hidden" name="memberno" value="${sessionScope.memberno }"> <%-- 관리자 개발후 변경 필요 --%>
   	<input type="hidden" name="reviewno" value="${reviewno }">
   	<input type="hidden" name="memberid" value="${sessionScope.memberid }">

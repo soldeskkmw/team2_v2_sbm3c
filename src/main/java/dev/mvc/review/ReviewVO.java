@@ -46,6 +46,7 @@ public class ReviewVO {
   private String reviewfile1saved="";
   /**리뷰 메인 이미지 Preview */
   private String reviewthumb1="";
+<<<<<<< HEAD
   /**리뷰 메인 이미지 크기*/
   private long reviewsize1;
   /**
@@ -57,6 +58,13 @@ public class ReviewVO {
   /** 메인 이미지 크기 단위, 파일 크기 */
   private String reviewsize1_label = "";
   
+=======
+  /***/
+  private long reviewsize1;
+  private String reviewsize1_label = "";
+  
+  private MultipartFile reviewfile1MF;
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
   
   public int getReviewno() {
     return reviewno;
@@ -147,6 +155,12 @@ public class ReviewVO {
   }
   public void setReviewsize1_label(String reviewsize1_label) {
     this.reviewsize1_label = reviewsize1_label;
+  }
+  public MultipartFile getReviewfile1MF() {
+    return reviewfile1MF;
+  }
+  public void setReviewfile1MF(MultipartFile reviewfile1mf) {
+    reviewfile1MF = reviewfile1mf;
   }
   
 }

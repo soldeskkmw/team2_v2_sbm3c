@@ -3,9 +3,15 @@ package dev.mvc.review;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+<<<<<<< HEAD
+=======
+import dev.mvc.post.PostVO;
+
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 public interface ReviewProcInter {
   
   /**
+<<<<<<< HEAD
    * ì¹´í…Œê³ ë¦¬ ë³„ ë¦¬ë·° ë“±ë¡
    * @param reviewVO
    * @return ë“±ë¡í•œ ë ˆì½”ë“œ ê°œìˆ˜
@@ -36,6 +42,13 @@ public interface ReviewProcInter {
   /**
    * ê²€ìƒ‰ + íŽ˜ì´ì§• ëª©ë¡
    * @param map
+=======
+<<<<<<< HEAD
+   * post + review INNER JOIN ¸ñ·Ï
+=======
+   * post + review INNER JOIN ï¿½ï¿½ï¿½
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
    * @return
    */
   public ArrayList<ReviewVO> list_by_cateno_search_paging(HashMap<String, Object> map);
@@ -52,6 +65,52 @@ public interface ReviewProcInter {
    */ 
   public String pagingBox(int cateno, int search_count, int now_page, String reviewword);
   
+<<<<<<< HEAD
+=======
+  /**
+<<<<<<< HEAD
+   * Á¶È¸
+=======
+   * ï¿½ï¿½È¸
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+   * @param reviewno
+   * @return
+   */
+  public ReviewVO read(int reviewno);
+  
+  /**
+<<<<<<< HEAD
+   * ±Û Á¤º¸ ¼öÁ¤
+   * @param contentsVO
+   * @return Ã³¸®µÈ ·¹ÄÚµå °¹¼ö
+=======
+   * ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+   * @param contentsVO
+   * @return Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+   */
+  public int update_text(ReviewVO reviewVO);
+  
+  /**
+<<<<<<< HEAD
+   * »èÁ¦
+   * @param contentsno
+   * @return »èÁ¦µÈ ·¹ÄÚµå °¹¼ö
+=======
+   * íŒŒì¼ ì •ë³´ ìˆ˜ì •
+   * @param contentsVO
+   * @return ì²˜ë¦¬ëœ ë ˆì½”ë“œ ê°¯ìˆ˜
+   */
+  public int update_file(ReviewVO reviewVO);
+  
+  /**
+   * ï¿½ï¿½ï¿½ï¿½
+   * @param contentsno
+   * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+   */
+  public int delete(int reviewno);
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 }
 
 

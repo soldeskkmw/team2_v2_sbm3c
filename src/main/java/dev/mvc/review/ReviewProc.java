@@ -6,6 +6,12 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+<<<<<<< HEAD
+=======
+import dev.mvc.post.PostVO;
+import dev.mvc.review.PostReviewVO;
+import dev.mvc.review.ReviewVO;
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 import dev.mvc.tool.Tool;
 
 @Component("dev.mvc.review.ReviewProc")
@@ -38,6 +44,7 @@ public class ReviewProc implements ReviewProcInter {
   }
 
   @Override
+<<<<<<< HEAD
   public ArrayList<ReviewVO> list_by_cateno_search(HashMap<String, Object> hashMap) {
     ArrayList<ReviewVO> list = this.reviewDAO.list_by_cateno_search(hashMap);
     
@@ -45,14 +52,42 @@ public class ReviewProc implements ReviewProcInter {
       ReviewVO reviewVO = list.get(i);
       String reviewtitle = reviewVO.getReviewtitle();
       String reviewcontent = reviewVO.getReviewcontent(); 
+=======
+  public ArrayList<ReviewVO> list_by_postno(int postno) {
+    ArrayList<ReviewVO> reviewlist = this.reviewDAO.list_by_postno(postno);
+    
+    for (int i=0; i<reviewlist.size(); i++) {
+      ReviewVO reviewVO = reviewlist.get(i);
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
       
       reviewtitle = Tool.convertChar(reviewtitle);
       reviewcontent = Tool.convertChar(reviewcontent);
       
+<<<<<<< HEAD
       reviewVO.setReviewtitle(reviewtitle);
       reviewVO.setReviewcontent(reviewcontent);
     }
     return list;
+=======
+      title = Tool.convertChar(title);
+      review = Tool.convertChar(review);
+      if(review.length()>20) {
+        
+        String[] array_word;
+        array_word = review.split("");
+        review="";
+        for(int k=0;k<20;k++) { //출력
+//          System.out.println(array_word[k]);
+          review=review+array_word[k];
+        }
+        review=review+"......";
+      }
+      reviewVO.setReviewtitle(title);
+      reviewVO.setReviewcontent(review);
+    }
+
+    return reviewlist;
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
   }
 
   @Override
@@ -82,6 +117,7 @@ public class ReviewProc implements ReviewProcInter {
     return list;
   }
   
+<<<<<<< HEAD
   /** 
    * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 
    * 현재 페이지: 11 / 22   [이전] 11 12 13 14 15 16 17 18 19 20 [다음] 
@@ -91,6 +127,19 @@ public class ReviewProc implements ReviewProcInter {
    * @param now_page      현재 페이지
    * @param reviewword 검색어
    * @return 페이징 생성 문자열
+=======
+  
+  @Override
+  public int update_file(ReviewVO reviewVO) {
+      int cnt = this.reviewDAO.update_file(reviewVO);
+      return cnt;
+  }
+  
+  
+  /**
+   * ��ȸ
+   * ��ȸ
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
    */
   @Override
   public String pagingBox(int cateno, int search_count, int now_page, String reviewword) {
@@ -131,8 +180,14 @@ public class ReviewProc implements ReviewProcInter {
     str.append("</style>"); 
     str.append("<DIV id='paging'>");
     
+<<<<<<< HEAD
     // 이전 10개 페이지로 이동
     int _now_page = (now_grp - 1) * Review.PAGE_PER_BLOCK;  
+=======
+    reviewtitle = Tool.convertChar(reviewtitle);  // Ư�� ���� ó��
+    reviewtitle = Tool.convertChar(reviewtitle);  // Ư�� ���� ó��
+    reviewcontent = Tool.convertChar(reviewcontent); 
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
     
     if (now_grp >= 2){ // 현재 그룹번호가 2이상이면 페이지수가 11페이 이상임으로 이전 그룹으로 갈수 있는 링크 생성 
       str.append("<span class='span_box_1'><A href='"+Review.LIST_FILE+"?&reviewword="+reviewword+"&now_page="+_now_page+"&cateno="+cateno+"'>이전</A></span>"); 

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ page import="java.util.ArrayList" %>
 <c:set var="postno" value="${postVO.postno }" />
 <c:set var="adminno" value="${postVO.adminno }" />
 <c:set var="adminid" value="${postVO.adminid }" />
@@ -20,6 +20,7 @@
 <c:set var="postthumb1" value="${postVO.postthumb1 }" />
 <c:set var="postsize1" value="${postVO.postsize1 }" />
 <c:set var="postsize1_label" value="${postVO.postsize1_label }" />
+
  
 <!DOCTYPE html> 
 <html lang="ko"> 

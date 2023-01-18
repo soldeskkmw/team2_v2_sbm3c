@@ -41,7 +41,11 @@ function send() {
       let tags = '';
       tags += "<DIV style='text-align: center;'>데이터 " + rdata.length + " 건</DIV>"
       tags += "<DIV style='margin: 0px auto; width: 75%;'>";  
+<<<<<<< HEAD
       for (var i=0; i< rdata.length; i++) {  // 0 ~ 5
+=======
+      for (var i=0; i< rdata.length; i++) {  // 0 ~ 2
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
         tags += "<DIV style='margin: 0px auto; width: 19.5%; float: left;'>";  
         let row = rdata[i]; // 배열에서 하나의 객체 추출 ★
         tags += "post_no: " + row.post_no + "<br>";

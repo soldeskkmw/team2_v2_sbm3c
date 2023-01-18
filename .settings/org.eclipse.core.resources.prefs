@@ -1,5 +1,14 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
+<<<<<<< HEAD
 encoding//src/main/java/dev/mvc/review/ReviewCont.java=UTF-8
 encoding//src/main/java/dev/mvc/review/ReviewDAOInter.java=UTF-8
 encoding//src/main/java/dev/mvc/team2=UTF-8
+<<<<<<< HEAD
+=======
+=======
+encoding//src/main/java/dev/mvc/review/ReviewDAOInter.java=UTF-8
+encoding//src/main/java/dev/mvc/review/ReviewProc.java=UTF-8
+>>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
+encoding//src/main/java/dev/mvc/team2/DatabaseConfiguration.java=UTF-8
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3

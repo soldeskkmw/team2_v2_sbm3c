@@ -14,6 +14,7 @@
 
     win.moveTo(x, y); // 화면 중앙으로 이동
   }
+<<<<<<< HEAD
 
   function type2_recommend_post() {
 	    var url = 'http://localhost:9093/type2_recommend_post/start.do';
@@ -24,6 +25,8 @@
 
 	    win.moveTo(x, y); // 화면 중앙으로 이동
 	  }
+=======
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 </script>
 
 <DIV class='container_main'> 
@@ -118,6 +121,7 @@
                   </c:choose>
                   
                   <li class="nav-item">
+<<<<<<< HEAD
                         <c:choose>
                             <c:when test="${sessionScope.memberid != null}">
                                 <a class="nav-link" href="/post/mf_post_member.do">포스트 추천 받기</a>
@@ -135,6 +139,10 @@
                     <li class="nav-item">
                       <a class="nav-link" href="javascript:type2_recommend_post();">관심분야 추천 받기</a>
                     </li>
+=======
+                    <a class="nav-link" href="javascript:chatbot()">챗봇</a>
+                  </li>
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
                   
               </ul> <!-- navbar-nav mr-auto -->
           </div>  <!-- collapse navbar-collapse -->

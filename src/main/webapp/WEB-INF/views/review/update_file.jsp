@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<<<<<<< HEAD
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+=======
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 
 <c:set var="reviewno" value="${reviewVO.reviewno }" />
 <c:set var="postno" value="${reviewVO.postno }" />
@@ -23,6 +26,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+<<<<<<< HEAD
 <title>GoingShare</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
@@ -38,6 +42,14 @@
 </script>
     
 <link rel="icon" href="/images/travel.png"> 
+=======
+<title>Resort world</title>
+ 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
 </head> 
  
 <body>
