@@ -18,7 +18,7 @@ package dev.mvc.team2;
 
  @Configuration
  @PropertySource("classpath:/application.properties")  // 설정 파일 위치
-<<<<<<< HEAD
+
 @MapperScan(basePackages= { "dev.mvc.admin",
                                            "dev.mvc.admin_reply",
                                            "dev.mvc.cate",
@@ -36,32 +36,18 @@ package dev.mvc.team2;
                                            "dev.mvc.sms",
                                            "dev.mvc.survey",
                                            "dev.mvc.surveyitem"}) // DAO interface를 찾는 위치
-=======
-@MapperScan(basePackages= {  "dev.mvc.cate",
-                                           "dev.mvc.member", 
-                                           "dev.mvc.admin",
-                                           "dev.mvc.sms",
-                                           "dev.mvc.notice",
-                                           "dev.mvc.survey",
-                                           "dev.mvc.post",
-                                           "dev.mvc.post_ratings",
-                                           "dev.mvc.servicecate",
-                                           "dev.mvc.customer_post",
-                                           "dev.mvc.review",
-                                           "dev.mvc.admin_reply",
-                                           "dev.mvc.reply"}) // DAO interface를 찾는 위치
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
+
+
 public class DatabaseConfiguration {
      
      @Autowired
      private ApplicationContext applicationContext;
      
      @Bean
-<<<<<<< HEAD
+
      @ConfigurationProperties(prefix="spring.datasource.hikari")  // 설정 파일의 접두사 선언 spring.datasource.hikari....
-=======
-     @ConfigurationProperties(prefix="spring.datasource.hikari") // 설정 파일의 접두사 선언 spring.datasource.hikari....
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
+
+
      public HikariConfig hikariConfig() {
          return new HikariConfig();
      }

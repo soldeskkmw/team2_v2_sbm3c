@@ -42,124 +42,74 @@
       return false; // submit 중지
     }
 
-<<<<<<< HEAD
     let adminage = $('#adminage').val(); // 태그의 아이디가 'adminage'인 태그의 값
     if ($.trim(adminage).length == 0) { // adminage를 입력받지 않은 경우
-=======
-    let adminage = $('#adminage').val(); // 태그의 아이디가 'id'인 태그의 값
-    if ($.trim(adminage).length == 0) { // id를 입력받지 않은 경우
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       msg = '· 나이를 입력하세요.<br>· 나이 입력은 필수입니다.';
       
       $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
       $('#modal_title').html('나이 입력 누락'); // 제목 
       $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
       $('#btn_close').attr("data-focus", "adminage");  // 닫기 버튼 클릭시 adminage 입력으로 focus 이동
-=======
-      $('#btn_close').attr("data-focus", "adminage");  // 닫기 버튼 클릭시 mname 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       $('#modal_panel').modal();               // 다이얼로그 출력
       return false;
     } 
     
-<<<<<<< HEAD
     let adminname = $('#adminname').val(); // 태그의 아이디가 'adminname'인 태그의 값
 	  if ($.trim(adminname).length == 0) { // adminname를 입력받지 않은 경우
-=======
-    let adminname = $('#adminname').val(); // 태그의 아이디가 'id'인 태그의 값
-	  if ($.trim(adminname).length == 0) { // id를 입력받지 않은 경우
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 	    msg = '· 이름을 입력하세요.<br>· 이름 입력은 필수입니다.';
 	    
 	    $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
 	    $('#modal_title').html('이름 입력 누락'); // 제목 
 	    $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
 	    $('#btn_close').attr("data-focus", "adminname");  // 닫기 버튼 클릭시 adminname 입력으로 focus 이동
-=======
-	    $('#btn_close').attr("data-focus", "adminname");  // 닫기 버튼 클릭시 mname 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 	    $('#modal_panel').modal();               // 다이얼로그 출력
 	    return false;
 		} 
 
-<<<<<<< HEAD
     let admintel = $('#admintel').val().trim(); // 태그의 아이디가 'admintel'인 태그의 값
-=======
-    let admintel = $('#admintel').val().trim(); // 태그의 아이디가 'id'인 태그의 값
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 	  if (admintel.length == 0) { // id를 입력받지 않은 경우
 	    msg = '· 전화번호를 입력하세요.<br>· 전화번호 입력은 필수입니다.';
 	    
 	    $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
 	    $('#modal_title').html('전화번호 입력 누락'); // 제목 
 	    $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
 	    $('#btn_close').attr("data-focus", "admintel");  // 닫기 버튼 클릭시 admintel 입력으로 focus 이동
-=======
-	    $('#btn_close').attr("data-focus", "admintel");  // 닫기 버튼 클릭시 tel 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 	    $('#modal_panel').modal();               // 다이얼로그 출력
 	    return false;
 		} 
 
-<<<<<<< HEAD
       let adminreceiver = $('#adminreceiver').val().trim(); // 태그의 아이디가 'adminreceiver'인 태그의 값
-=======
-      let adminreceiver = $('#adminreceiver').val().trim(); // 태그의 아이디가 'id'인 태그의 값
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       if (adminreceiver.length == 0) { // id를 입력받지 않은 경우
         msg = '· 이메일을 입력하세요.<br>· 이메일 입력은 필수입니다.';
         
         $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
         $('#modal_title').html('이메일 입력 누락'); // 제목 
         $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
         $('#btn_close').attr("data-focus", "adminreceiver");  // 닫기 버튼 클릭시 adminreceiver 입력으로 focus 이동
-=======
-        $('#btn_close').attr("data-focus", "adminreceiver");  // 닫기 버튼 클릭시 tel 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         $('#modal_panel').modal();               // 다이얼로그 출력
         return false;
       } 
 
-<<<<<<< HEAD
       let zipcode = $('#zipcode').val().trim(); // 태그의 아이디가 'zipcode'인 태그의 값
-=======
-      let zipcode = $('#zipcode').val().trim(); // 태그의 아이디가 'id'인 태그의 값
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       if (zipcode.length == 0) { // id를 입력받지 않은 경우
         msg = '· 우편번호를 입력하세요.<br>· 우편번호 입력은 필수입니다.';
         
         $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
         $('#modal_title').html('우편번호 입력 누락'); // 제목 
         $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
         $('#btn_close').attr("data-focus", "zipcode");  // 닫기 버튼 클릭시 zipcode 입력으로 focus 이동
-=======
-        $('#btn_close').attr("data-focus", "zipcode");  // 닫기 버튼 클릭시 tel 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         $('#modal_panel').modal();               // 다이얼로그 출력
         return false;
       } 
 
-<<<<<<< HEAD
       let address1 = $('#address1').val().trim(); // 태그의 아이디가 'address1'인 태그의 값
-=======
-      let address1 = $('#address1').val().trim(); // 태그의 아이디가 'id'인 태그의 값
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       if (address1.length == 0) { // id를 입력받지 않은 경우
         msg = '· 주소를 입력하세요.<br>· 주소 입력은 필수입니다.';
         
         $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
         $('#modal_title').html('주소 입력 누락'); // 제목 
         $('#modal_content').html(msg);        // 내용
-<<<<<<< HEAD
         $('#btn_close').attr("data-focus", "address1");  // 닫기 버튼 클릭시 address1 입력으로 focus 이동
-=======
-        $('#btn_close').attr("data-focus", "address1");  // 닫기 버튼 클릭시 tel 입력으로 focus 이동
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         $('#modal_panel').modal();               // 다이얼로그 출력
         return false;
       } 
@@ -196,11 +146,7 @@
   </div>
   <!-- ******************** Modal 알림창 종료 ******************** -->
 
-<<<<<<< HEAD
   <DIV class='title_line' style="font-size:1.5rem;">관리자 정보 조회 및 수정</DIV>
-=======
-  <DIV class='title_line' style="font-size:1.5rem;">회원 정보 조회 및 수정</DIV>
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 
   <DIV class='content_body'>
 
@@ -259,20 +205,12 @@
 
     <div class="form_input">
       <input type='text' class="form-control" name='address1' id='address1' 
-<<<<<<< HEAD
                  value=' ${adminVO.address1 }' style='width: 100%;' placeholder="주소">
-=======
-                 value=' ${adminVO.address1} ' style='width: 100%;' placeholder="주소">
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     </div>   
 
     <div class="form_input">
       <input type='text' class="form-control" name='address2' id='address2' 
-<<<<<<< HEAD
                 value=' ${adminVO.address2 }'  style='width: 100%;' placeholder="상세 주소">
-=======
-                value=' ${adminVO.address2} '  style='width: 100%;' placeholder="상세 주소">
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     </div>      
   
   

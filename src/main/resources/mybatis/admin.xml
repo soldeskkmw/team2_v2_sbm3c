@@ -39,7 +39,6 @@
 		SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
 		FROM admin
 		WHERE adminid=#{adminid}
-<<<<<<< HEAD
 	</select> 
 		
   <!-- adminno로 관리자 정보 수정 -->
@@ -158,14 +157,6 @@
     FROM admin
     WHERE permission = 'X'
     ORDER BY admingrade ASC, adminid ASC
-=======
-  </select>
-  
-  <select id="read" resultType="dev.mvc.admin.AdminVO" parameterType="int">
-    SELECT adminno, adminid, adminpasswd, adminname
-    FROM admin
-    WHERE adminno=#{adminno}
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   </select>
   
 </mapper>

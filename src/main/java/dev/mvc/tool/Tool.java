@@ -367,39 +367,16 @@ public class Tool {
       String path = "";
       if (File.separator.equals("\\")) {
           // Windows 개발시 사용 폴더
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-          // path="C:\\kd\\ws_java\\team2_v2_sbm3c\\src\\main\\resources\\static";
-          
-          // Windows 배포, 폴더 생성
-          path = "C:/kd/deploy/team2_v2_sbm3c";
-=======
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
           // path="C:\\kd\\ws_java\\team2_v2_sbm3c_work\\src\\main\\resources\\static";
           
           // Windows 배포, 폴더 생성
           path = "C:/kd/deploy/team2_v2_sbm3c_work";
-<<<<<<< HEAD
-=======
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 
       } else {
           // Linux 배포
           // 기본 명령어
-<<<<<<< HEAD
           // pwd: 현재 경로 확인, mkdir deploy: 폴더 생성, cd deploy: 폴더 이동, rmdir team2_v2_sbm3c_work: 폴더 삭제, cd ..: 상위 폴더로 이동 
           path = "/home/ubuntu/deploy/team2_v2_sbm3c_work";
-=======
-<<<<<<< HEAD
-          // pwd: 현재 경로 확인, mkdir deploy: 폴더 생성, cd deploy: 폴더 이동, rmdir team2_v2_sbm3c: 폴더 삭제, cd ..: 상위 폴더로 이동 
-          path = "/home/ubuntu/deploy/team2_v2_sbm3c";
-=======
-          // pwd: 현재 경로 확인, mkdir deploy: 폴더 생성, cd deploy: 폴더 이동, rmdir team2_v2_sbm3c_work: 폴더 삭제, cd ..: 상위 폴더로 이동 
-          path = "/home/ubuntu/deploy/team2_v2_sbm3c_work";
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       }
       // System.out.println("path: " + path);
       
