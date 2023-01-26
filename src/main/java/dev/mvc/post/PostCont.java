@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.admin.AdminVO;
 import dev.mvc.cate.CateProcInter;
 import dev.mvc.cate.CateVO;
 import dev.mvc.tool.Tool;
@@ -35,12 +36,12 @@ import dev.mvc.tool.Upload;
 public class PostCont {
 
   @Autowired
-  @Qualifier("dev.mvc.cate.CateProc")
-  private CateProcInter cateProc;
-  
-  @Autowired
   @Qualifier("dev.mvc.post.PostProc")
   private PostProcInter postProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.cate.CateProc")
+  private CateProcInter cateProc;
   
   @Autowired
   @Qualifier("dev.mvc.admin.AdminProc")
@@ -117,7 +118,7 @@ public class PostCont {
         
         if (Tool.isImage(postfile1saved)) { // 이미지인지 검사
           // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150
-          postthumb1 = Tool.preview(upDir, postfile1saved, 200, 150); 
+          postthumb1 = Tool.preview(upDir, postfile1saved, 300, 200); 
         }
       }    
       
@@ -544,7 +545,11 @@ public class PostCont {
     return mav;
   }
   
+<<<<<<< HEAD
   // recommend 추천시스템 GET 요청
+=======
+  // GET 요청
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   public String mf_recommend(String django_url) throws MalformedURLException, IOException {
     System.out.println("-> django_url: " + django_url);
     
@@ -552,8 +557,18 @@ public class PostCont {
     HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
     
     int statusCode = httpConn.getResponseCode();        
+<<<<<<< HEAD
     System.out.println((statusCode == 200) ? "success" : "fail");
     System.out.println("Response code: " + statusCode);
+=======
+<<<<<<< HEAD
+//    System.out.println((statusCode == 200) ? "success" : "fail");
+//    System.out.println("Response code: " + statusCode);
+=======
+    System.out.println((statusCode == 200) ? "success" : "fail");
+    System.out.println("Response code: " + statusCode);
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     
     BufferedReader br = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
     String line=br.readLine();
@@ -582,8 +597,16 @@ public class PostCont {
       e.printStackTrace();
     }
     
+<<<<<<< HEAD
     System.out.println("-> source: " + source);
 
+=======
+<<<<<<< HEAD
+=======
+    System.out.println("-> source: " + source);
+
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     // 포스트 번호를 추출
     HashMap<String, Object> hashMap = new HashMap<String, Object>();
     
@@ -593,7 +616,14 @@ public class PostCont {
     for (int index=0; index < json.length(); index++) {
       JSONObject obj = (JSONObject)json.opt(index);
       String post_no = obj.optString("post_no"); // 포스트 번호만 추출
+<<<<<<< HEAD
       System.out.println("-> movie_id: " + post_no);
+=======
+<<<<<<< HEAD
+=======
+      System.out.println("-> movie_id: " + post_no);
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       postno_list.add(post_no);
     }
     
@@ -635,8 +665,16 @@ public class PostCont {
       e.printStackTrace();
     }
     
+<<<<<<< HEAD
     System.out.println("-> source: " + source);
 
+=======
+<<<<<<< HEAD
+=======
+    System.out.println("-> source: " + source);
+
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     // 포스트 번호를 추출
     HashMap<String, Object> hashMap = new HashMap<String, Object>();
     
@@ -646,7 +684,14 @@ public class PostCont {
     for (int index=0; index < json.length(); index++) {
       JSONObject obj = (JSONObject)json.opt(index);
       String post_no = obj.optString("post_no"); // 포스트 번호만 추출
+<<<<<<< HEAD
       System.out.println("-> post_no: " + post_no);
+=======
+<<<<<<< HEAD
+=======
+      System.out.println("-> post_no: " + post_no);
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       postno_list.add(post_no);
     }
     

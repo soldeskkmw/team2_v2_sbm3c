@@ -123,7 +123,11 @@ function setFocus() {  // focus 이동
                 <!-- 보내는 번호 : SMS 서비스를 가입한 기업의 관리자 전화번호 -->
          
               <input type="hidden" name="sphone1" value="010"> <!-- 전화번호 첫째자리 -->
+<<<<<<< HEAD
               <input type="hidden" name="sphone2" value="2722"> <!-- 전화번호 둘째자리 -->
+=======
+              <input type="hidden" name="sphone2" value="2722"> <!-- 전화번호 둘째자리 2722-->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
               <input type="hidden" name="sphone3" value="9751"> <!-- 전화번호 셋째자리 -->
               
               ▶ 통신사 정책에 따라 발신번호와 수신번호가 같은 경우 발송되지 않습니다. 

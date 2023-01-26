@@ -52,7 +52,11 @@
             cursor: pointer;
         }
     </style>
+<<<<<<< HEAD
 <link rel="icon" href="/images/travel.png">     
+=======
+    
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 </head>
 <body>
 <DIV class="container">

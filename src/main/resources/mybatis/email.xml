@@ -2,51 +2,84 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "dev.mvc.email.EmailDAOInter">
 
+<<<<<<< HEAD
   <!-- email 받은 회원 정보 아이디 찾기 등록  -->
+=======
+
+
+  <!-- 문자 받은 정보 등록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <insert id="send" parameterType="dev.mvc.email.EmailVO">
     INSERT INTO email (emailno, memberno, ip, authno, mdate, search, receiver)
     VALUES(email_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
   </insert>
   
+<<<<<<< HEAD
   <!-- email 받은 회원 정보 목록  -->
+=======
+  <!-- 문자 받은 정보 목록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <select id="email_list" resultType="dev.mvc.email.EmailVO">
     SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
     FROM email
     ORDER BY emailno ASC, mdate ASC
   </select>
 
+<<<<<<< HEAD
   <!-- emailno로 email 정보 조회 -->
+=======
+  <!-- memberno로 회원 정보 조회 -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <select id="read" resultType="dev.mvc.email.EmailVO" parameterType="int">
     SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
     FROM email
     WHERE emailno = #{emailno}
   </select>  
 
+<<<<<<< HEAD
   <!-- email 정보 삭제 -->
+=======
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <delete id="delete" parameterType="int">
     DELETE FROM email
     WHERE emailno=#{emailno}
   </delete>
   
+<<<<<<< HEAD
   <!-- email 받은 회원 정보 비밀번호 찾기 등록  -->
+=======
+    <!-- 비밀번호 찾기 문자 받은 정보 등록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <insert id="send_passwd" parameterType="dev.mvc.email.EmailVO">
     INSERT INTO email (emailno, memberno, ip, authno, mdate, search, receiver)
     VALUES(email_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
   </insert>
   
+<<<<<<< HEAD
   <!-- email 받은 관리자 정보 아이디 찾기 등록  -->
+=======
+    <!-- 문자 받은 정보 등록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <insert id="admin_send" parameterType="dev.mvc.email.EmailVO">
     INSERT INTO email (emailno, adminno, ip, authno, mdate, search, receiver)
     VALUES(email_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
   </insert>
   
+<<<<<<< HEAD
   <!-- email 받은 관리자 정보 비밀번호 찾기 등록  -->
+=======
+      <!-- 관리자 비밀번호 찾기 문자 받은 정보 등록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <insert id="admin_send_passwd" parameterType="dev.mvc.email.EmailVO">
     INSERT INTO email (emailno, adminno, ip, authno, mdate, search, receiver)
     VALUES(email_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search}, #{receiver})
   </insert>
   
+<<<<<<< HEAD
     <!-- email 받은 관리자 정보 목록  -->
+=======
+    <!-- 문자 받은 정보 목록  -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
   <select id="admin_email_list" resultType="dev.mvc.email.EmailVO">
     SELECT emailno, memberno, adminno, ip, authno, mdate, search, receiver
     FROM email

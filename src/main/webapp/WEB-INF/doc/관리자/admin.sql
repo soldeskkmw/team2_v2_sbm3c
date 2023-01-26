@@ -18,7 +18,11 @@ CREATE TABLE ADMIN(
       ADMINGRADE                          NUMBER(2)          NOT NULL, -- 관리자 등급(1~10: 메인 관리자, 11~20: 관리자, 21~29: 정지 관리자,31~40 탈퇴 관리자)
       ADMINGENDER                         CHAR(1)            NOT NULL, -- 관리자 성별(남 : M, 여 : W)
       ADMINAGE                            NUMBER(2)          NOT NULL,  -- 나이
+<<<<<<< HEAD
       PERMISSION                          CHAR(1)            DEFAULT 'X'     NOT NULL, -- O, X  (가입 허가)
+=======
+      PERMISSION                          CHAR(1)            DEFAULT 'X'     NOT NULL, -- O, X
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       MDATE                               DATE               NOT NULL -- 가입일
 );
 
@@ -49,8 +53,13 @@ CREATE SEQUENCE ADMIN_seq
 
 
 
+<<<<<<< HEAD
 INSERT INTO admin(adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, mdate)
 VALUES(admin_seq.nextval, 'admin1', '1234', '관리자1');
+=======
+INSERT INTO admin(adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, mdate)
+VALUES(admin_seq.nextval, 'admin1', '1234', '관리자1','010-0000-0000', 'abcd@gmail.com', '41346', '서울시', '동대문구', 0, 'W', 21, sysdate);
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 
 INSERT INTO admin(adminno, adminid, adminpasswd, adminname)
 VALUES(admin_seq.nextval, 'admin2', '1234', '관리자2');

@@ -6,7 +6,11 @@
 <head> 
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+<<<<<<< HEAD
 <title>GoingShare</title> 
+=======
+<title>http://localhost:9093/recommend_post/mf_post.do</title> 
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
                  
@@ -41,7 +45,15 @@ function send() {
       let tags = '';
       tags += "<DIV style='text-align: center;'>데이터 " + rdata.length + " 건</DIV>"
       tags += "<DIV style='margin: 0px auto; width: 75%;'>";  
+<<<<<<< HEAD
       for (var i=0; i< rdata.length; i++) {  // 0 ~ 2
+=======
+<<<<<<< HEAD
+      for (var i=0; i< rdata.length; i++) {  // 0 ~ 5
+=======
+      for (var i=0; i< rdata.length; i++) {  // 0 ~ 2
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         tags += "<DIV style='margin: 0px auto; width: 19.5%; float: left;'>";  
         let row = rdata[i]; // 배열에서 하나의 객체 추출 ★
         tags += "post_no: " + row.post_no + "<br>";
@@ -66,7 +78,10 @@ function send() {
 }
 
 </script>
+<<<<<<< HEAD
 <link rel="icon" href="/images/travel.png"> 
+=======
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 </head> 
 <body>
 <DIV class="title_line" style='width: 80%;'>AI 기반 포스트 추천 받기</DIV>

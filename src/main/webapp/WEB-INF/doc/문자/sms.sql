@@ -42,10 +42,17 @@ commit;
 INSERT INTO sms(smsno, memberno, adminno, ip, authno, mdate, search)
 VALUES(sms_seq.nextval, 1, 1, '1.225.90.237', '12345678', sysdate, '아이디찾기');
 
+<<<<<<< HEAD
 INSERT INTO sms(smsno, memberno, ip, authno, mdate, search)
 VALUES(sms_seq.nextval, 1,  1, '2.225.90.237', '11111111', sysdate, '아이디찾기');
 
 INSERT INTO sms(smsno, memberno, ip, authno, mdate, search)
+=======
+INSERT INTO sms(smsno, memberno,adminno, ip, authno, mdate, search)
+VALUES(sms_seq.nextval, 1,  1, '2.225.90.237', '11111111', sysdate, '아이디찾기');
+
+INSERT INTO sms(smsno, memberno,adminno, ip, authno, mdate, search)
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 VALUES(sms_seq.nextval, 1, 1, '3.225.90.238', '22222222', sysdate, '아이디찾기');
 
 commit;

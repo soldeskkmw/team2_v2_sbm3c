@@ -2,6 +2,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dev.mvc.cate.CateVO" %>
+
+<script type="text/javascript">
+  function chatbot() {
+//     var url = 'http://127.0.0.1:8000/chatbot/chatting';
+    var url = 'http://whwjdrb1009.asuscomm.com:8000/chatbot/chatting';
+    var win = window.open(url, 'AI 서비스', 'width=800px, height=700px');
+
+    var x = (screen.width - 800) / 2;
+    var y = (screen.height - 660) / 2;
+
+    win.moveTo(x, y); // 화면 중앙으로 이동
+  }
+<<<<<<< HEAD
+
+  function type2_recommend_post() {
+	    var url = 'http://localhost:9093/type2_recommend_post/start.do';
+	    var win = window.open(url, 'AI 서비스', 'width=1000px, height=750px');
+
+	    var x = (screen.width - 1000) / 2;
+	    var y = (screen.height - 750) / 2;
+
+	    win.moveTo(x, y); // 화면 중앙으로 이동
+	  }
+=======
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+</script>
+
 <DIV class='container_main'> 
   <!-- 헤더 -->
   <div class="header">
@@ -120,6 +147,7 @@
                           </div>
                       </c:when>
                   </c:choose>
+<<<<<<< HEAD
 
 
               </ul> <!-- navbar-nav mr-auto -->
@@ -136,6 +164,35 @@
            -->
 
          <!-- 검색창 end -->
+=======
+                  
+                  <li class="nav-item">
+<<<<<<< HEAD
+                        <c:choose>
+                            <c:when test="${sessionScope.memberid != null}">
+                                <a class="nav-link" href="/post/mf_post_member.do">포스트 추천 받기</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="nav-link" href='/member/login.do'>로그인하여 포스트 추천 받기</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li> 
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="javascript:chatbot();">챗봇</a>
+                    </li> 
+                    
+                    <li class="nav-item">
+                      <a class="nav-link" href="javascript:type2_recommend_post();">관심분야 추천 받기</a>
+                    </li>
+=======
+                    <a class="nav-link" href="javascript:chatbot()">챗봇</a>
+                  </li>
+>>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
+                  
+              </ul> <!-- navbar-nav mr-auto -->
+          </div>  <!-- collapse navbar-collapse -->
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       </nav> <!-- navbar -->
   </div> <!-- 헤더 end -->
   

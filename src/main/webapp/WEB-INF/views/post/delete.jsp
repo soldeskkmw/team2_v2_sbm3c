@@ -53,7 +53,33 @@
   </ASIDE> 
 </DIV>
 <DIV class='title_line'></DIV>
+<<<<<<< HEAD
 
+=======
+  
+  <%-- 검색 폼 --%>
+  <DIV style="text-align: right; clear: both;">
+  <nav class="navbar navbar-expand-sm" style='padding:0px;'>
+    <form  class="form-inline justify-content-end" name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do' style='width: 100%;'>
+      <input type='hidden' name='cateno' value='${cateVO.cateno }'>  <%-- 게시판의 구분 --%>
+      <input class="form-control mr-sm-2" placeholder="Search" type='hidden' name='cateno' value='${param.cateno }'>
+      <c:choose>
+        <c:when test="${param.postword != '' }"> <%-- 검색하는 경우 --%>
+          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='${param.postword }' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button class='btn btn-secondary' type='submit'>검색</button>
+      <c:if test="${param.postword.length() > 0 }">
+        <button class='btn btn-danger ml-sm-2' type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateVO.cateno}&postword='">취소</button>  
+      </c:if>    
+    </form>
+   </nav>
+  </DIV>
+  
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <DIV class='content_body'>
   
   <fieldset class="fieldset_basic">

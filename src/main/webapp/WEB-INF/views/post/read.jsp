@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ page import="java.util.ArrayList" %>
 <c:set var="postno" value="${postVO.postno }" />
 <c:set var="adminno" value="${postVO.adminno }" />
 <c:set var="adminid" value="${postVO.adminid }" />
@@ -20,6 +20,7 @@
 <c:set var="postthumb1" value="${postVO.postthumb1 }" />
 <c:set var="postsize1" value="${postVO.postsize1 }" />
 <c:set var="postsize1_label" value="${postVO.postsize1_label }" />
+
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -89,12 +90,20 @@ function type2_recommend_post() {
   win.moveTo(x, y); // 화면 중앙으로 이동
 }
 </script>
+<<<<<<< HEAD
 <link rel="icon" href="/images/travel.png"> 
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
 
+=======
+</head>
+ 
+<body>
+<c:import url="/menu/top.do" />
+ 
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <DIV class='title_line'  style="width:80%; margin-top: 60px;">
   <A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link' style="font-size:1.7rem; font-weight:600;">${cateVO.catename }</A>
   <ASIDE class="aside_right" style="margin-top: 10px;">
@@ -115,7 +124,32 @@ function type2_recommend_post() {
     <A href="../post_ratings/list_by_postno.do?postno=${postno }">평점 보러가기</A>
   </ASIDE> 
 </DIV>
+<<<<<<< HEAD
 
+=======
+  
+  <%-- 검색 --%>
+  <DIV style="text-align: right; clear: both;">
+  <nav class="navbar navbar-expand-sm" style='padding:0px;'>
+    <form  class="form-inline justify-content-end" name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do' style='width: 100%;'>
+      <input class="form-control mr-sm-2" placeholder="Search" type='hidden' name='cateno' value='${param.cateno }'>
+      <c:choose>
+        <c:when test="${param.postword != '' }"> <%-- 검색하는 경우 --%>
+          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='${param.postword }' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button class='btn btn-secondary' type='submit'>검색</button>
+      <c:if test="${param.postword.length() > 0 }">
+        <button class='btn btn-danger ml-sm-2' type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateVO.cateno}&postword='">취소</button>  
+      </c:if>    
+    </form>
+   </nav>
+  </DIV>
+  
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <DIV class='content_body'>
   <fieldset class="fieldset_basic">
     <ul>
@@ -141,6 +175,7 @@ function type2_recommend_post() {
             </c:choose>
         </DIV>
         <DIV style="width: 40%; float:left; margin-left:20px;">
+<<<<<<< HEAD
 	        <c:if test="${sessionScope.memberid != null}">
 					  <%--평점 등록 폼 start --%>
 					  <FORM name='frm' method='POST' action='../post_ratings/create.do' enctype="multipart/form-data">
@@ -180,6 +215,47 @@ function type2_recommend_post() {
 					  </FORM>
 					  <%--평점 등록 폼 end --%>
 	         </c:if>
+=======
+          <c:if test="${sessionScope.memberid != null}">
+            <%--평점 등록 폼 start --%>
+            <FORM name='frm' method='POST' action='../post_ratings/create.do' enctype="multipart/form-data">
+              <input type="hidden" name="postno" value="${param.postno }">
+              <input type="hidden" name="cateno" value="${param.cateno }">
+              <input type="hidden" name="postword" value="${param.postword }">
+              <input type="hidden" name="now_page" value="${param.now_page }">
+              <input type="hidden" name="memberno" value="${sessionScope.memberno }">
+              
+              <div class="card">
+                <h5 class="card-header">평점 등록하기</h5>
+                <div class="card-body">
+                  <select id="ratings" name="ratings">
+                    <option value="" selected="selected">평점을 선택해주세요.</option>
+                    <option value="1.0">1.0</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2.0">2.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5.0">5.0</option>
+                  </select>
+                  <div class="div1_0"><IMG src="/post_ratings/images/1.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div1_5"><IMG src="/post_ratings/images/1.5.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div2_0"><IMG src="/post_ratings/images/2.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div2_5"><IMG src="/post_ratings/images/2.5.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div3_0"><IMG src="/post_ratings/images/3.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div3_5"><IMG src="/post_ratings/images/3.5.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div4_0"><IMG src="/post_ratings/images/4.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div4_5"><IMG src="/post_ratings/images/4.5.png" style="height: 30px; margin:15px 0;"></div>
+                  <div class="div5_0"><IMG src="/post_ratings/images/5.png" style="height: 30px; margin:15px 0;"></div>
+                  <DIV style="text-align:right;"><button type="submit" class="enroll_btn btn btn-primary">등록</button></DIV>
+                </div>
+              </div>
+            </FORM>
+            <%--평점 등록 폼 end --%>
+           </c:if>
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         </DIV>
         <DIV style="width: 50%; margin-bottom:40px; font-size: 1.1em;">
           <c:if test="${postfile1.trim().length() > 0 }">
@@ -200,9 +276,15 @@ function type2_recommend_post() {
        </li>
       <li class="li_none">
         <DIV class='menu_line'></DIV>
+<<<<<<< HEAD
 	      <DIV style='margin:30px 0;'>
 	        <h4><span class="badge badge-pill badge-dark">Keyword</span></h4>
 	        <DIV style='margin:10px;'>${postword }</DIV>
+=======
+        <DIV style='margin:30px 0;'>
+          <h4><span class="badge badge-pill badge-dark">Keyword</span></h4>
+          <DIV style='margin:10px;'>${postword }</DIV>
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         </DIV>
       </li>
       
@@ -210,6 +292,43 @@ function type2_recommend_post() {
   </fieldset>
 
 </DIV>
+
+<DIV class='title_line'><A  class='title_link' style="font-size:30px">리뷰</A><A href="../review/create.do?postno=${postno}&cateno=${cateno}">등록</A></DIV>
+
+ 
+<%-- 리뷰 목록  --%>
+<c:forEach var="ReviewVO" items="${reviewlist}">
+        <c:set var="postno1" value="${ReviewVO.postno }" />      
+  			<c:set var="reviewcontent1" value="${ReviewVO.reviewcontent }" />
+        <c:set var="reviewno1" value="${ReviewVO.reviewno }" />
+        <c:set var="memberno1" value="${ReviewVO.memberno }" />     
+       <c:set var="reviewtitle1" value="${ReviewVO.reviewtitle }" /> 
+          
+    <A  class='title_link' style="font-size:20px"> 제목 : [${reviewtitle1 } ]</A>
+    
+    
+    <c:choose>
+					<c:when test="${sessionScope.memberno ==memberno1 }">
+                    <A href="../review/delete.do?now_page=${param.now_page}&reviewno=${reviewno1}&postno=${postno}&cateno=${cateno}"><strong class="aside_right">리뷰삭제</strong></A>     
+           </c:when>
+           <c:otherwise>
+               	  <c:choose>
+              						<c:when test="${sessionScope.adminid == null}">
+                              
+               						</c:when>
+                					<c:otherwise>
+               									<A href="../review/delete.do?now_page=${param.now_page}&reviewno=${reviewno1}&postno=${postno}&cateno=${cateno}"><strong class="aside_right">리뷰삭제</strong></A>   	  
+               						</c:otherwise>
+									</c:choose> 
+           </c:otherwise>
+</c:choose>
+    
+    
+     <br>
+     <a href="../review/read.do?reviewno=${reviewno1}&now_page=${param.now_page }&postno=${postno}&cateno=${cateno}"><input type='text' name='replycontent' readonly value='${reviewcontent1}' required="required" 
+                  class="form-control" style='width: 100%;'></a>                  	
+		<br>
+ </c:forEach>   
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

@@ -1,6 +1,7 @@
 package dev.mvc.email;
 
 /*
+<<<<<<< HEAD
     EMAILNO                             NUMBER(10)             NOT NULL          PRIMARY KEY,
     MEMBERNO                         NUMBER(10)             NULL,
     ADMINNO                           NUMBER(10)              NULL,
@@ -11,6 +12,16 @@ package dev.mvc.email;
     RECEIVER                            VARCHAR2(30)           NOT NULL,
      FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
      FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
+=======
+EMAILNO                          NUMBER(10)       NOT NULL    PRIMARY KEY,
+MEMBERNO                      NUMBER(10)       NOT NULL,
+IP                                     VARCHAR2(20)     NOT NULL,
+AUTHNO                           VARCHAR2(10)     NOT NULL,
+MDATE                             DATE           NOT NULL,
+SEARCH                            VARCHAR2(20)     NOT NULL,
+RECEIVER                          VARCHAR2(20)     NOT NULL,
+ FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 */
 
 public class EmailVO {

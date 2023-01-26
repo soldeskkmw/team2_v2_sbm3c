@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- post.xml과 연동되는 Spring interface "dev.mvc.review.ReviewDAOInter" 선언 --> 
 <mapper namespace="dev.mvc.review.ReviewDAOInter">
 
+<<<<<<< HEAD
 	<!-- 리뷰 등록 -->
 	<insert id="create" parameterType="dev.mvc.review.ReviewVO">
 		INSERT INTO REVIEW(reviewno, memberno, cateno, reviewtitle, reviewcontent, replycnt, reviewcnt, reviewword,
@@ -39,10 +40,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		          reviewrdate, reviewudate, reviewfile1, reviewfile1saved, reviewthumb1, reviewsize1
 		FROM review
 		<choose>
+=======
+	<!-- 카테고리 별 리뷰 등록 -->
+	<insert id="create" parameterType="dev.mvc.review.ReviewVO">
+		INSERT INTO review(reviewno, memberno, cateno, reviewtitle, reviewcontent, reviewcnt, reviewword, 
+                    rdate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1) 
+		VALUES (review_seq.nextval, #{memberno}, #{cateno}, #{reviewtitle}, #{reviewcontent}, #{reviewcnt}, #{reviewword},
+		            sysdate, #{reviewfile1}, #{reviewfile1saved}, #{reviewthumb1}, #{reviewsize1})
+	</insert> 
+  
+	<!-- 카테고리별 리뷰 전체 목록 -->
+	<select id="list_by_cateno" resultType="dev.mvc.review.ReviewVO" parameterType="int">
+	  SELECT reviewno, memberno, cateno, reviewtitle, reviewcontent, reviewcnt, reviewword, 
+              rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
+	  FROM review
+	  WHERE cateno = #{cateno}
+	  ORDER BY reviewno
+	</select>
+
+	<!-- 카테고리별 검색 목록 -->
+  <select id="list_by_cateno_search" resultType="dev.mvc.review.ReviewVO" parameterType="HashMap">
+    SELECT reviewno, memberno, cateno, postno, reviewtitle, reviewcontent, cnt, reviewword, rdate, udate
+    FROM review
+    <choose>
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
       <when test="reviewword == null or reviewword == ''"> <!-- 검색하지 않는 경우 -->
         WHERE cateno=#{cateno}
       </when>
       <otherwise> <!-- 검색하는 경우 -->
+<<<<<<< HEAD
         WHERE cateno=#{cateno} AND (UPPER(reviewtitle) LIKE '%' || #{reviewword} || '%' 
                                                   OR UPPER(reviewcontent) LIKE '%' || #{reviewword} || '%' 
                                                   OR UPPER(reviewword) LIKE '%' || #{reviewword} || '%')
@@ -134,3 +160,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 </mapper>
 
+=======
+        WHERE cateno=#{cateno} AND (UPPER(reviewtitle) LIKE '%' || #{reviewtitle} || '%' 
+                                                  OR UPPER(reviewcontent) LIKE '%' || #{reviewcontent} || '%' 
+                                                  OR UPPER(reviewword) LIKE '%' || #{reviewword} || '%')
+      </otherwise>
+    </choose>
+    ORDER BY reviewno ASC
+  </select>
+
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM review
+    <choose>
+      <when test="reviewword == null or reviewword == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+        WHERE cateno=#{cateno}
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE cateno=#{cateno} AND (UPPER(reviewtitle) LIKE '%' || #{reviewtitle} || '%' 
+                                                  OR UPPER(reviewcontent) LIKE '%' || #{reviewcontent} || '%' 
+                                                  OR UPPER(reviewword) LIKE '%' || #{reviewword} || '%')
+      </otherwise>
+    </choose>
+  </select>
+                        
+</mapper>
+
+
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f

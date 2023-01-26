@@ -63,11 +63,19 @@ WHERE memberid='user1';
    
 2) 등록
 -- 회원 계정
+<<<<<<< HEAD
 INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, mdate)
 VALUES (member_seq.nextval, 'user1', '1234', '회원1', '010-1234-5678', 'fset663517@naver.com', 11, 'M', sysdate);
  
 INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, mdate)
 VALUES (member_seq.nextval, 'user2', '1234', '회원2', '010-1111-2222', 'fset663517@gmail.com', 11, 'W', sysdate);
+=======
+INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender,age, mdate)
+VALUES (member_seq.nextval, 'user1', '1234', '회원1', '010-1234-5678', 'fset663517@naver.com', 11, 'M', 22, sysdate);
+ 
+INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate)
+VALUES (member_seq.nextval, 'user2', '1234', '회원2', '010-1111-2222', 'fset663517@gmail.com', 11, 'W', 22, sysdate);
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 
 COMMIT;
 

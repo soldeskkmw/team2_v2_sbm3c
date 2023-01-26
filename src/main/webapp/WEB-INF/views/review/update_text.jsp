@@ -13,6 +13,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
+<<<<<<< HEAD
 <title>Going Share</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
@@ -31,6 +32,20 @@ $(function() {
         return false;
     } */
 });
+=======
+<title>GoingShare</title>
+ 
+<link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
+
+<script type="text/JavaScript"
+          src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script type="text/JavaScript">
+
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 </script>
     
 <link rel="icon" href="/images/travel.png">   
@@ -54,6 +69,7 @@ $(function() {
 <DIV class='title_line'></DIV>
 
 <DIV class='content_body'>
+<<<<<<< HEAD
   <%--수정 폼 --%>
   <FORM name='frm' method='POST' action='./update_text.do'>
     <input type="hidden" name="reviewno" value="${reviewno }">
@@ -61,6 +77,50 @@ $(function() {
     <input type="hidden" name="memberno" value="${memberno }">
     <div style="margin: 40px 0;">
        <input type='text' name='reviewtitle' value='${reviewtitle }'  required="required" placeholder="제목을 입력하세요." autofocus="autofocus" class="form-control" style='width: 100%;'>
+=======
+  <ASIDE class="aside_right">
+    
+  <%--<c:if test="${sessionScope.admin_id != null }">--%>
+    <%--<A href="./create.do?postno=${postVO.postno  }">등록</A> --%>
+    <%--</c:if> --%>
+    
+    <A href="javascript:location.reload();">새로고침</A>
+    
+  </ASIDE> 
+  
+  <%-- 검색 폼 
+  <DIV style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do'>
+      <input type='hidden' name='cateno' value='${cateVO.cateno }'>  게시판의 구분
+      
+      <c:choose>
+        <c:when test="${param.word != '' }"> 검색하는 경우 
+          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> 검색하지 않는 경우 
+          <input type='text' name='word' id='word' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button type='submit'>검색</button>
+      <c:if test="${param.word.length() > 0 }">
+        <button type='button' 
+                     onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateVO.cateno}&word='">검색 취소</button>  
+      </c:if>    
+    </form>
+  </DIV>--%>
+  
+  <DIV class='menu_line'></DIV>
+  <%--수정 폼 --%>
+  <FORM name='frm' method='POST' action='./update_text.do'>
+    <input type="hidden" name="reviewno" value="${reviewno}">
+     <%-- 포스트 연결후 변경 필요 --%>
+     <%-- 관리자 개발후 변경 필요 --%>
+    
+    <div>
+       <label>제목</label>
+       <input type='text' name='reviewtitle' value='${reviewtitle }' required="required" 
+                 autofocus="autofocus" class="form-control" style='width: 100%;'>
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     </div>
     <div>
        <label>Contents</label>
@@ -69,10 +129,14 @@ $(function() {
     <div style="margin: 40px 0;">
        <input type='text' name='reviewword' value='${reviewword }' placeholder="검색어를 입력하세요." required="required" maxlength="400" class="form-control" style='width: 100%;'>
     </div>   
+    
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>
       <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
+<<<<<<< HEAD
       <button type="button" onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateno}'" class="btn btn-primary">목록</button>
+=======
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     </div>
   </FORM>
 </DIV>

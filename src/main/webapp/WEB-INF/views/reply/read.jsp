@@ -1,96 +1,42 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<<<<<<< HEAD
-
-<c:set var="cateno" value="${reviewVO.cateno }" />
-=======
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dev.mvc.member.MemberVO" %>
-
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <c:set var="reviewno" value="${reviewVO.reviewno }" />
-<c:set var="membername" value="${reviewVO.membername }" />
-<c:set var="reviewtitle" value="${reviewVO.reviewtitle }" />    
-<c:set var="reviewcontent" value="${reviewVO.reviewcontent }" />
-<c:set var="replycnt" value="${reviewVO.replycnt }" />
-<c:set var="reviewcnt" value="${reviewVO.reviewcnt }" />
-<c:set var="reviewword" value="${reviewVO.reviewword }" />
-<c:set var="reviewrdate" value="${reviewVO.reviewrdate.substring(0, 10) }" />
-<c:set var="reviewudate" value="${reviewVO.reviewudate.substring(0, 10) }" />
+<c:set var="postno" value="${reviewVO.postno }" />
+<c:set var="reviewtitle" value="${reviewVO.reviewtitle }" />        
 <c:set var="reviewfile1" value="${reviewVO.reviewfile1 }" />
 <c:set var="reviewfile1saved" value="${reviewVO.reviewfile1saved }" />
 <c:set var="reviewthumb1" value="${reviewVO.reviewthumb1 }" />
 <c:set var="reviewsize1" value="${reviewVO.reviewsize1 }" />
+<c:set var="reviewcontent" value="${reviewVO.reviewcontent }" />
+<c:set var="reviewword" value="${reviewVO.reviewword }" />
 <c:set var="reviewsize1_label" value="${reviewVO.reviewsize1_label }" />
-<<<<<<< HEAD
-
-=======
 <c:set var="reviewstar" value="${reviewVO.reviewstar }" />
 <c:set var="goodcnt" value="${reviewVO.goodcnt }" />
 <c:set var="cnt" value="${reviewVO.cnt }" />
 <c:set var="replycnt" value="${reviewVO.replycnt }" />
 <c:set var="memberno" value="${reviewVO.memberno }" />
-<<<<<<< HEAD
-
-=======
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <!DOCTYPE html> 
-
 <html lang="ko"> 
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-
-<<<<<<< HEAD
-<title>Going Share</title>
+<title>Resort world</title>
  
-<link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
-<script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="/css/style.css" rel="Stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/JavaScript">
-=======
-<title>GoingShare</title>
- 
-<link href="/css/style.css" rel="Stylesheet" type="text/css">  <!-- /static -->
-
-<script type="text/JavaScript"
-          src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script type="text/JavaScript">
-
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
-</script>
     
-<link rel="icon" href="/images/travel.png">   
 </head> 
  
 <body>
 <c:import url="/menu/top.do" /> 
 
-<<<<<<< HEAD
-<DIV class='title_line'  style="width:80%; margin-top: 60px;">
-  <A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link' style="font-size:1.7rem; font-weight:600;">${cateVO.catename }</A>
-  <ASIDE class="aside_right" style="margin-top: 10px; font-size:1rem;">
-    <c:if test="${sessionScope.memberpasswd == memberVO.memberpasswd }">
-      <A href="./update_text.do?reviewno=${reviewno}">리뷰 수정</A>
-      <span class='menu_divide' >│</span>
-      <A href="./update_file.do?reviewno=${reviewno}">이미지 수정</A>
-      <span class='menu_divide' >│</span>
-      <A href="./delete.do?reviewno=${reviewno}&cateno=${cateno}">리뷰 삭제</A>  
-      <span class='menu_divide' >│</span>
-    </c:if>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_search_paging.do?cateno=${cateno }&now_page=${param.now_page}&reviewword=${param.reviewword }">리뷰 목록</A>    
-  </ASIDE> 
-</DIV>
-=======
  
 <DIV class='title_line'><span style="font-size: 1.5em; font-weight: bold;">리뷰</span></DIV>
 
@@ -123,11 +69,8 @@
                     										<A href="./create.do?postno=1">등록</A>
      															<span class='menu_divide' >│</span>     
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
      																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>   
 =======
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
      																		<A href="./update_text.do?reviewno=${reviewno}&now_page=${param.now_page}">글 수정</A>  
      																			<span class='menu_divide' >│</span>
     																<A href="./update_file.do?reviewno=${reviewno}&now_page=${param.now_page}">파일 수정</A>
@@ -143,10 +86,7 @@
      																		
      																		
      																		 
-<<<<<<< HEAD
-=======
 >>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
                							</c:otherwise>
 														</c:choose>                                                                                                             
                </c:when>
@@ -164,8 +104,6 @@
     	  
                </c:otherwise>
 		</c:choose>
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD
 		
 		
@@ -191,67 +129,55 @@
   	
 =======
 >>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
   </ASIDE> 
   
   
   <DIV class='menu_line'></DIV>
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 
-<DIV class='content_body'>
   <fieldset class="fieldset_basic">
     <ul>
       <li class="li_none">
-        <DIV style="width: 100%; margin-bottom: 30px;">
-          <span style="font-size: 2em; font-weight: bold;">${reviewtitle }</span><br>
-        </DIV>
-        <DIV style="width: 100%; margin-bottom: 20px;">
-          <span>✍🏻 BY ${membername } </span>
-          <c:choose>
-            <c:when test="${reviewudate != null}"><span>${reviewudate }</span></c:when>
-            <c:otherwise><span>${reviewrdate }</span></c:otherwise>
-          </c:choose>
-        </DIV>
-        <DIV style="width: 50%; float:left; margin-bottom:10px;">
+        <DIV style="width: 50%; float: left; margin-right: 10px;">
             <c:choose>
               <c:when test="${reviewthumb1.endsWith('jpg') || reviewthumb1.endsWith('png') || reviewthumb1.endsWith('gif')}">
-                <A href="/review/storage/${reviewfile1saved }"><IMG src="/review/storage/${reviewfile1saved }" style="width: 70%;"></A> 
+                <%-- /static/review/storage/ --%>
+                <A href="/review/storage/${reviewfile1saved }"><IMG src="/review/storage/${reviewfile1saved }" style="width: 100%;"></A> 
               </c:when>
               <c:otherwise> <!-- 기본 이미지 출력 -->
-                <IMG src="/review/images/none1.png" style="width: 70%;"> 
+                <IMG src="/review/images/none1.png" style="width: 100%;"> 
               </c:otherwise>
             </c:choose>
         </DIV>
-        <DIV style="width: 50%; margin-bottom:40px; font-size: 1.1em;">
+        <DIV style="width: 47.5%; height: 260px; float: left; margin-right: 10px; margin-bottom: 30px;">
+          <span style="font-size: 1.5em; font-weight: bold;">${reviewtitle}</span><br>
+          <span style="color: #FF0000; font-size: 2.0em;">별점 = ${reviewstar}</span>          
+          <span style="font-size: 1.0em;">좋아요 수 = ${goodcnt}</span><br>
+          <span style="font-size: 1.0em;">조회수 = ${cnt}</span><br>
+          <span style="font-size: 1.0em;">댓글수 = ${replycnt}</span><br>          
+        </DIV> 
+
+        <DIV>${reviewcontent }</DIV>
+      </li>
+
+           
+     <li class="li_none">
+        <DIV style='text-decoration: none;'>
+          검색어(키워드): ${word }
+        </DIV>
+      </li>
+      <li class="li_none">
+        <DIV>
           <c:if test="${reviewfile1.trim().length() > 0 }">
-            📁 대표 이미지 다운받기: <A href='/download?dir=/review/storage&reviewfilename=${reviewfile1saved}&downname=${reviewfile1}'>${reviewfile1}</A>📥 (${reviewsize1_label}) 
-            <A href='/download?dir=/review/storage&reviewfilename=${reviewfile1saved}&downname=${reviewfile1}'></A>
+            첨부 파일: <A href='/download?dir=/review/storage&filename=${reviewfile1saved}&downname=${reviewfile1}'>${reviewfile1}</A> (${reviewsize1_label}) 
+            <A href='/download?dir=/review/storage&filename=${reviewfile1saved}&downname=${reviewfile1}'><IMG SRC="/review/images/download.png"></A>
           </c:if>
         </DIV>
-        <DIV class='menu_line'></DIV>
-        <DIV style="width:80%; margin: 0 auto; margin-bottom:80px;">${reviewcontent }</DIV>
-      </li>
-      <li class="li_none">
-        <DIV class='menu_line'></DIV>
-        <DIV style='margin:30px 0;'>
-          <h4><span class="badge badge-pill badge-dark">Keyword</span></h4>
-          <DIV style='margin:10px;'>${reviewword }</DIV>
-        </DIV>
-      </li>
-      <li class="li_none">
-        <DIV class='menu_line'></DIV>
-        <DIV style='margin:30px 0;'>
-          <h4><span class="badge badge-pill badge-dark">댓글 ${replycnt }</span></h4>
-          <DIV style='margin:10px;'>${reviewword }</DIV>
-        </DIV>
-      </li>
+      </li>   
     </ul>
   </fieldset>
 
 </DIV>
  
-<<<<<<< HEAD
-=======
  <DIV class='title_line'><A  class='title_link' style="font-size:30px">댓글</A></DIV>
  
  
@@ -262,15 +188,11 @@
         <c:set var="memberno1" value="${ReplyVO.memberno }" />     
         <c:set var="memberid1" value="${ReplyVO.memberid }" />
 <<<<<<< HEAD
-        [ ${memberid1} ]      
-=======
-<<<<<<< HEAD
         [ ${memberid1} ]
         
 =======
         [ ${memberid1} ]      
 >>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
         
 <c:choose>
 					<c:when test="${sessionScope.memberid ==memberid1 }">
@@ -299,16 +221,11 @@
   <%--등록 폼  --%> <%--등록 폼 위쪽 코드들 제거 -> post no 및 vo 받아와서 설정 후 다시 코드 작성--%>
   <FORM name='frm' method='POST' action='./replycreate.do' enctype="multipart/form-data">
 <<<<<<< HEAD
-    <input type="hidden" name="postno" value=${postno }>
-    <input type="hidden" name="cateno" value=${cateno }>
-=======
-<<<<<<< HEAD
     <input type="hidden" name="postno" value="1">
 =======
     <input type="hidden" name="postno" value=${postno }>
     <input type="hidden" name="cateno" value=${cateno }>
 >>>>>>> 8fc72d6731d86e0f8db2e008743e4e885d4270e0
->>>>>>> ccf1856aa8c91cb2454ed2ec9c008f842127afa3
     <input type="hidden" name="memberno" value="${sessionScope.memberno }"> <%-- 관리자 개발후 변경 필요 --%>
   	<input type="hidden" name="reviewno" value="${reviewno }">
   	<input type="hidden" name="memberid" value="${sessionScope.memberid }">
@@ -348,7 +265,6 @@
 
   	
  
->>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
  

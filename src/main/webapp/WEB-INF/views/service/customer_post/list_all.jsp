@@ -50,7 +50,11 @@
     </select>
     </ASIDE> 
     
+<<<<<<< HEAD
     <DIV style="text-align: right; clear: both; padding-top:10px;">  
+=======
+    <DIV style="text-align: right; clear: both;">  
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
     <nav class="navbar navbar-expand-sm" style='padding:0px;'>
 	    <form class="form-inline justify-content-end" style='width: 100%;' name='frm' id='frm' method='get' action='/service/customer_post/list_all.do'>
 	      <input class="form-control mr-sm-2" type='hidden' name='servicecateno' value='${param.servicecateno }'>

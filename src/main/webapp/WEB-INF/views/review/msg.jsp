@@ -12,7 +12,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
 <link rel="icon" href="/images/travel.png"> 
+=======
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
 </head> 
 <body>
 <c:import url="/menu/top.do" />
@@ -97,7 +100,11 @@
             </c:when>
         </c:choose>
         
+<<<<<<< HEAD
         <button type='button' onclick="location.href='./create.do?cateno=${cateno}'" class="btn btn-primary">새로운 리뷰 등록</button>
+=======
+        <button type='button' onclick="location.href='./create.do?cateno=${cateno}'" class="btn btn-primary">새로운 컨텐츠 등록</button>
+>>>>>>> e4cf39784193f12e790d7b6a5d51711db347cc8f
         <button type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateno}'" class="btn btn-primary">목록</button>
       </LI>
     </UL>
