@@ -542,7 +542,7 @@
                 <net.java.amateras.uml.usecasediagram.model.UsecaseModel reference="../net.java.amateras.uml.usecasediagram.model.UsecaseModel/targetConnections/net.java.amateras.uml.usecasediagram.model.UsecaseRelationModel/source/sourceConnections/net.java.amateras.uml.usecasediagram.model.UsecaseRelationModel[2]/target/sourceConnections/net.java.amateras.uml.usecasediagram.model.UsecaseRelationModel/target"/>
               </children>
               <filterProperty/>
-              <name>team2-review</name>
+              <name>리뷰</name>
             </parent>
             <listeners serialization="custom">
               <java.beans.PropertyChangeSupport>

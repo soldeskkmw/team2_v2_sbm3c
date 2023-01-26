@@ -17,23 +17,22 @@
 
 
 <script type="text/javascript">
-    
+
 </script> 
+<link rel="icon" href="/images/travel.png"> 
 </head> 
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>인증번호 입력</DIV>
+  <DIV class='title_line' style="font-size:1.5rem;">인증번호 입력</DIV>
     
     <DIV class='content_body'>
       <DIV style='width: 60%; margin: 0px auto;'>
-        <form name="smsconfirm" action="./form.do">
           <label>입력된 번호가 일치하지 않습니다. 다시 인증 번호를 요청해주세요.</label><br>
-          <input type="submit" value="인증번호 재요청" class="btn btn-secondary">
-        </form>
+	              <button type="button" onclick="location.href='../sms/form.do'" class="btn btn-secondary">인증번호 재요청</button>
       </DIV>  
     </DIV> <%--  <DIV class='content_body'> END --%>
- 
+    
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 <!-- -------------------------------------------- -->
 </body>

@@ -81,6 +81,14 @@ public class Admin_replyCont {
       mav.setViewName("/service/msg");
       return mav;
     }
+
+    // 이미 답글이 등록되었는지 확인
+    if(this.admin_replyProc.read(admin_replyVO.getServiceno()) != null) {
+      mav.addObject("type", "삭제 오류");
+      mav.addObject("msg", "이미 답글이 달린 게시물입니다.");
+      mav.setViewName("/service/msg"); 
+      return mav;
+    }
     
     admin_replyVO.setAdminno((int)session.getAttribute("adminno"));
 
@@ -274,7 +282,7 @@ public class Admin_replyCont {
     } else {
       mav.addObject("type", "권한 오류");
       mav.addObject("msg", "관리자만 이용할 수 있는 기능입니다.");
-      mav.setViewName("redirect:/service/msg");
+      mav.setViewName("/service/msg"); 
     }
 
     return mav; // forward
@@ -292,7 +300,7 @@ public class Admin_replyCont {
  // 로그인 여부 확인 후 처리 필요
     if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
+      mav.addObject("msg", "관리자만 이용하실 수 있습니다.");
       mav.setViewName("/service/msg");
       return mav;
     }
@@ -325,8 +333,8 @@ public class Admin_replyCont {
  // 로그인 여부 확인 후 처리 필요
     if (session.getAttribute("adminno") == null || session.getAttribute("adminno") == "") {
       mav.addObject("type", "권한 오류");
-      mav.addObject("msg", "로그인 하신 고객님만 이용하실 수 있습니다.");
-      mav.setViewName("redirect:/service/msg");
+      mav.addObject("msg", "관리자만 이용하실 수 있습니다.");
+      mav.setViewName("/service/msg"); 
       return mav;
     }
     
@@ -378,5 +386,5 @@ public class Admin_replyCont {
     mav.setViewName("redirect:/service/customer_post/list_all.do"); 
     
     return mav;
-  }   
+  }
 }

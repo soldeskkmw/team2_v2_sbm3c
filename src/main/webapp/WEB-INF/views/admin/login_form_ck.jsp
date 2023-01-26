@@ -29,23 +29,27 @@
     
 </script> 
 
+<link rel="icon" href="/images/travel.png">
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>관리자 로그인</DIV>
+  <DIV class='title_line' style="font-size:1.5rem;">관리자 로그인</DIV>
 
   <DIV class='content_body'> 
     <DIV style='width: 40%; margin: 0px auto;'>
       <FORM name='frm' method='POST' action='./login.do'>
+      
+         <%-- 로그인 후 자동으로 이동할 페이지 전달 ★ --%>
+        <input type="hidden" name="return_url" value="${return_url}">
       
         <div class="form_input">
           <input type='text' class="form-control" name='adminid' id='adminid' 
                     value="${ck_admin_id }" required="required" 
                     style='width: 80%;' placeholder="아이디" autofocus="autofocus">
           <Label>   
-            <input type='checkbox' name='id_save' value='Y' ${ck_admin_id_save == 'Y' ? "checked='checked'" : "" }> 저장
+            <input type='checkbox' name='adminid_save'  style='accent-color:gray;' value='Y' ${ck_admin_id_save == 'Y' ? "checked='checked'" : "" }> 저장
           </Label>    
         </div>   
      
@@ -53,7 +57,7 @@
           <input type='password' class="form-control" name='adminpasswd' id='adminpasswd' 
                     value='${ck_admin_passwd }' required="required" style='width: 80%;' placeholder="패스워드">
           <Label>
-            <input type='checkbox' name='passwd_save' value='Y' ${ck_admin_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
+            <input type='checkbox' name='adminpasswd_save'  style='accent-color:gray;' value='Y' ${ck_admin_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
           </Label>                    
         </div>   
      

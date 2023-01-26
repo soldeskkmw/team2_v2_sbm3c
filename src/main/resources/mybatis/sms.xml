@@ -2,18 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "dev.mvc.sms.SMSDAOInter">
 
-<!-- 문자 받은 정보 생성  -->
+
+
+  <!-- 문자 받은 회원 정보 아이디 찾기 등록  -->
   <insert id="proc" parameterType="dev.mvc.sms.SMSVO">
-    INSERT INTO sms (smsno, memberno, ip, authno, mdate)
-    VALUES(sms_seq.nextval, 1, #{ip}, #{authno}, sysdate)
+    INSERT INTO sms (smsno, memberno, ip, authno, mdate, search)
+    VALUES(sms_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search})
   </insert>
   
+  <!-- 문자 받은 회원 정보 목록  -->
   <select id="sms_list" resultType="dev.mvc.sms.SMSVO">
-    SELECT smsno, memberno, ip, authno, mdate
+    SELECT smsno, memberno, adminno, ip, authno, mdate, search
     FROM sms
+    WHERE adminno is null
     ORDER BY smsno ASC, mdate ASC
   </select>
 
+  <!-- smsno로 회원 정보 조회 -->
+  <select id="read" resultType="dev.mvc.sms.SMSVO" parameterType="int">
+    SELECT smsno, memberno, adminno, ip, authno, mdate, search
+    FROM sms
+    WHERE smsno = #{smsno}
+  </select>  
 
+  <!-- smsno로 sms 정보 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM sms
+    WHERE smsno=#{smsno}
+  </delete>
 
+  <!-- 문자 받은 회원 정보 패스워드 찾기 등록  -->
+  <insert id="proc_passwd" parameterType="dev.mvc.sms.SMSVO">
+    INSERT INTO sms (smsno, memberno, ip, authno, mdate, search)
+    VALUES(sms_seq.nextval, #{memberno}, #{ip}, #{authno}, sysdate, #{search})
+  </insert>
+  
+  <!-- 문자 받은 관리자 정보 아이디 찾기 등록  -->
+  <insert id="admin_proc" parameterType="dev.mvc.sms.SMSVO">
+    INSERT INTO sms (smsno, adminno, ip, authno, mdate, search)
+    VALUES(sms_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search})
+  </insert>
+  
+  <!-- 문자 받은 관리자 정보 패스워드 찾기 등록  -->
+  <insert id="admin_proc_passwd" parameterType="dev.mvc.sms.SMSVO">
+    INSERT INTO sms (smsno, adminno, ip, authno, mdate, search)
+    VALUES(sms_seq.nextval, #{adminno}, #{ip}, #{authno}, sysdate, #{search})
+  </insert>
+
+  <!-- 문자 받은 관리자 정보 목록  -->
+  <select id="admin_sms_list" resultType="dev.mvc.sms.SMSVO">
+    SELECT smsno, memberno, adminno, ip, authno, mdate, search
+    FROM sms
+    WHERE memberno is null
+    ORDER BY smsno ASC, mdate ASC
+  </select>
 </mapper>

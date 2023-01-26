@@ -7,7 +7,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Going Share</title>
+<title>GoingShare</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -117,13 +117,14 @@
 	  $('#panel_delete').hide();
   }
 </script>
-    
+ 
+ <link rel="icon" href="/images/travel.png">   
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>전체 카테고리</DIV>
+<DIV class='title_line' style="font-size:1.5rem;">전체 카테고리</DIV>
 
 <DIV class='content_body'>
   <%-- 등록 --%>
@@ -135,8 +136,8 @@
       <label>출력 순서</label>
       <input type='number' name='seqno' id="seqno" value='1' required="required" min="1" max="1000" step="1" style='width: 5%;'>
   
-      <button type="submit" id='submit'>등록</button>
-      <button type="button" onclick="cancel();">취소</button>
+      <button type="submit" id='submit' class="btn btn-secondary btn-sm">등록</button>
+      <button type="button" onclick="cancel();" class="btn btn-secondary btn-sm">취소</button>
     </FORM>
   </DIV>
   
@@ -167,8 +168,8 @@
       
       <span id="frm_delete_catename"></span> <%-- 삭제할 카테고리 이름 --%>
        
-      <button type="submit" id='btn_submit'>삭제</button>
-      <button type="button" onclick="cancel()">취소</button>
+      <button type="submit" id='btn_submit' class="btn btn-secondary">삭제</button>
+      <button type="button" onclick="cancel()" class ="btn btn-secondary">취소</button>
       
       <span id='panel_delete_animation' style='display: none;'></span>
     </FORM>
@@ -208,11 +209,11 @@
         <TD class="td_bs">${rdate}</TD>
         <TD class="td_bs">${udate }</TD>
         <TD class="td_bs">
-          <A href="../post/create.do?cateno=${cateno}" title="${catename } 등록"><IMG src="/cate/images/append.png" class="icon"></A>
-          <A href="javascript: read_update_ajax(${cateno })" title="${catename } 수정"><IMG src="/cate/images/update.png" class="icon"></A>
-          <A href="javascript: read_delete_ajax(${cateno})" title="${catename } 삭제"><IMG src="/cate/images/delete.png" class="icon"></A>
-          <A href="./update_seqno_up.do?cateno=${cateno}" title="출력 순서 올림"><IMG src="/cate/images/up.png" class="icon"></A>
-          <A href="./update_seqno_down.do?cateno=${cateno}" title="출력 순서 내림"><IMG src="/cate/images/down.png" class="icon"></A>
+          <A href="../post/create.do?cateno=${cateno}" title="${catename } 등록"><IMG src="/images/add1.png" class="icon"></A>
+          <A href="javascript: read_update_ajax(${cateno })" title="${catename } 수정"><IMG src="/images/file_rename.png" class="icon"></A>
+          <A href="javascript: read_delete_ajax(${cateno})" title="${catename } 삭제"><IMG src="/images/trash.png" class="icon"></A>
+          <A href="./update_seqno_up.do?cateno=${cateno}" title="출력 순서 올림"><IMG src="/images/up.png" class="icon"></A>
+          <A href="./update_seqno_down.do?cateno=${cateno}" title="출력 순서 내림"><IMG src="/images/down.png" class="icon"></A>
           
           <c:choose>
             <c:when test="${visible == 'Y' }">

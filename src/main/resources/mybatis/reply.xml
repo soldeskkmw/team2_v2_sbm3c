@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper 
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
+<!-- post.xml과 연동되는 Spring interface "dev.mvc.reply.ReplyDAOInter" 선언 --> 
 <mapper namespace="dev.mvc.reply.ReplyDAOInter">
 
-<!-- 생성 -->
-  <insert id="replycreate" parameterType="dev.mvc.reply.ReplyVO">
-INSERT INTO REPLY( replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid)
-    
-VALUES (reply_seq.nextval, #{memberno},#{reviewno},#{replycontent},sysdate,null,#{reviewgood},#{memberid})
+  <!-- 댓글 등록 -->
+  <insert id="create" parameterType="dev.mvc.reply.ReplyVO">
+		INSERT INTO reply(replyno, memberno, reviewno, replycontent, replyrdate)
+		VALUES (reply_seq.nextval, #{memberno}, #{reviewno}, #{replycontent}, sysdate)
   </insert> 
-  
-    <!-- 조회, id: read, 입력: reviewno, 리턴: ReviewVO -->
-  <select id="replyread" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
-	   SELECT replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid
-FROM reply
-WHERE replyno=#{replyno}
-  </select>  
-  
-  
-  <!-- 특정 카테고리의 등록된 글목록 -->
-  <select id="replylist_by_reviewno" resultType="dev.mvc.reply.ReplyVO" parameterType="int">   
-    SELECT  replyno, memberno, reviewno, replycontent,rdate, udate, reviewgood,memberid
-    
+
+  <!-- 특정 리뷰에 등록된 댓글 목록 -->
+  <select id="list_by_reviewno" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
+		SELECT replyno, memberno, reviewno, replycontent, replyrdate, replyudate
 		FROM reply
 		WHERE reviewno = #{reviewno}
-		ORDER BY replyno DESC
-  </select>
-
- <!-- post + review INNER JOIN 목록 -->
-  <select id="replylist_all" resultType="dev.mvc.reply.ReviewReplyVO">
-		SELECT c.reviewno,
-		          t.reviewno, t.memberno, t.replyno, t.replycontent,
-   t.rdate, t.udate,t.reviewgood,t.memberid 
-		FROM review c, reply t
-		WHERE c.reviewno = #{t.reviewno}
-		ORDER BY t.replyno DESC
+		ORDER BY replyno ASC
   </select>
   
-  <delete id="replydelete" parameterType="int">
-    DELETE FROM reply
-    WHERE replyno=#{replyno}
+  <!-- 댓글 조회,  id: read, 입력: replyno, 리턴: ReplyVO -->
+  <select id="read" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
+		SELECT replyno, memberno, reviewno, replycontent, replyrdate, replyudate
+		FROM reply
+		WHERE replyno=#{replyno}
+  </select>
+  
+  <!-- 리뷰 내용 + 리뷰 전체 댓글 목록 INNER JOIN + 회원 -->
+  <select id="read_all_list" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
+    SELECT m.membername, m.memberpasswd,
+              r.reviewno, r.memberno, r.cateno, r.reviewtitle, r.reviewcontent, r.replycnt, r.reviewcnt, r.reviewword,
+              r.reviewrdate, r.reviewudate, r.reviewfile1, r.reviewfile1saved, r.reviewthumb1, r.reviewsize1,
+              p.replyno, p.memberno as replymemberno, p.replycontent, p.replyrdate, p.replyudate
+    FROM member m, review r, reply p
+    WHERE r.reviewno = p.reviewno AND p.reviewno = #{reviewno} AND r.cateno = #{cateno} AND m.memberno=p.memberno
+    ORDER BY replyno ASC
+  </select>
+  
+  <!-- 댓글 수정 -->
+  <update id="update_reply" parameterType="dev.mvc.reply.ReplyVO">
+		UPDATE reply
+		SET replycontent=#{replycontent}, replyudate = sysdate
+		WHERE replyno=#{replyno}
+  </update>
+  
+  <!-- 댓글 삭제 -->
+  <delete id="delete" parameterType="int">
+		DELETE FROM reply
+		WHERE replyno=#{replyno}
   </delete>
   
 </mapper>
+

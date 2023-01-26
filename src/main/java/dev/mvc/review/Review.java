@@ -10,20 +10,20 @@ public class Review {
     public static int PAGE_PER_BLOCK = 10;
 
     /** 목록 파일명 */
-    public static String LIST_FILE = "list_by_reviewno_search_paging.do";
+    public static String LIST_FILE = "list_by_cateno_search_paging.do";
     // public static String LIST_FILE = "list_by_cateno_grid.do";
     
     // Windows, VMWare, AWS cloud 절대 경로 설정
     public static synchronized String getUploadDir() {
         String path = "";
         if (File.separator.equals("\\")) {
-            // path = "C:/kd/deploy/resort_v1sbm3c/contents/storage/";
-            path="C:\\kd\\ws_java\\team2_v2sbm3c\\src\\main\\resources\\static\\review\\storage\\";
+            // path = "C:/kd/deploy/team2_v2_sbm3c/post/storage/";
+            path="C:\\kd\\ws_java\\team2_v2_sbm3c\\src\\main\\resources\\static\\review\\storage\\";
             // System.out.println("Windows 10: " + path);
             
         } else {
             // System.out.println("Linux");
-            path = "/home/ubuntu/deploy/team2_v2sbm3c/review/storage/";
+            path = "/home/ubuntu/deploy/team2_v2_sbm3c/review/storage/";
         }
         
         return path;

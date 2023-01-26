@@ -30,13 +30,13 @@
   });
    
 </script>
-    
+<link rel="icon" href="/images/travel.png">     
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./notice_list" class='title_link'>공지사항</A></DIV>
+<DIV class='title_line' style="font-size:1.5rem;"><A href="./notice_list" class='title_link'>공지사항</A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">

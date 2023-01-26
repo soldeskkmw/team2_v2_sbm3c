@@ -7,34 +7,30 @@ DROP TABLE REVIEW CASCADE CONSTRAINTS;
 
 
 CREATE TABLE REVIEW(
-      REVIEWNO                            NUMBER(10)       NOT NULL       PRIMARY KEY,
-      MEMBERNO                            NUMBER(10)       NULL ,
-      POSTNO                              NUMBER(10)       NULL ,
+      REVIEWNO                            NUMBER(10)          NOT NULL       PRIMARY KEY,
+      MEMBERNO                            NUMBER(10)          NOT NULL ,
+      CATENO                              NUMBER(10)          NOT NULL ,
       REVIEWTITLE                         VARCHAR2(400)       NOT NULL,
-      REVIEWCONTENT                       CLOB       NOT NULL,
-      REVIEWSTAR											 NUMBER(3)           NOT NULL,
-      GOODCNT                          NUMBER(10)            NOT NULL,
-      REPLYCNT                            NUMBER(10)       NOT NULL,
-      CNT                                 NUMBER(30)       NOT NULL,
+      REVIEWCONTENT                       CLOB                NOT NULL,
+      REPLYCNT                            NUMBER(10)          NULL,
+      CNT                                 NUMBER(30)          NULL,
       REVIEWWORD                          VARCHAR2(400)       NULL ,
-      RDATE                               DATE       NOT NULL,
-      UDATE                               DATE       NULL ,
+      RDATE                               DATE                NOT NULL,
+      UDATE                               DATE                NULL ,
       REVIEWFILE1                         VARCHAR2(200)       NULL ,
       REVIEWFILE1SAVED                    VARCHAR2(400)       NULL ,
       REVIEWTHUMB1                        VARCHAR2(200)       NULL ,
-      REVIEWSIZE1                         NUMBER(10)       NULL ,
+      REVIEWSIZE1                         NUMBER(10)          NULL ,
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
-  FOREIGN KEY (POSTNO) REFERENCES POST (POSTNO)
+  FOREIGN KEY (CATENO) REFERENCES CATE (CATENO)
 );
 
 COMMENT ON TABLE REVIEW is '리뷰';
 COMMENT ON COLUMN REVIEW.REVIEWNO is '리뷰 번호';
 COMMENT ON COLUMN REVIEW.MEMBERNO is '회원 번호';
-COMMENT ON COLUMN REVIEW.POSTNO is '관광지 데이터 번호';
+COMMENT ON COLUMN REVIEW.CATENO is '카테고리 번호';
 COMMENT ON COLUMN REVIEW.REVIEWTITLE is '리뷰 제목';
 COMMENT ON COLUMN REVIEW.REVIEWCONTENT is '리뷰 내용';
-COMMENT ON COLUMN REVIEW.REVIEWSTAR is '별점';
-COMMENT ON COLUMN REVIEW.GOODCNT is '좋아요수';
 COMMENT ON COLUMN REVIEW.REPLYCNT is '댓글수';
 COMMENT ON COLUMN REVIEW.CNT is '리뷰 조회수';
 COMMENT ON COLUMN REVIEW.REVIEWWORD is '리뷰 검색어';
@@ -54,19 +50,19 @@ CREATE SEQUENCE review_seq
   CACHE 2                       -- 2번은 메모리에서만 계산
   NOCYCLE;                     -- 다시 1부터 생성되는 것을 방지
   
-
+commit;
 
   
   
   -- 등록: 1건 이상
 
-INSERT INTO REVIEW( reviewno, memberno, postno, reviewtitle, reviewcontent, reviewstar,goodcnt, replycnt, cnt, reviewword,
- rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1)
+INSERT INTO REVIEW( reviewno, memberno, cateno, reviewtitle, reviewcontent, reviewcnt, cnt, reviewword,
+ rdate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1)
     
-VALUES (review_seq.nextval, 1,1,'testtitle','testcontent',0,0,1,1,'testreword',sysdate,null,null,null,null,null);
+VALUES (review_seq.nextval, 1, 6, 'testtitle', 'testcontent', 1, 1, 'testreword', sysdate, null, null, null, null);
 
 -- 포스트당 전체 목록
-SELECT  reviewno, memberno, postno, reviewtitle, reviewcontent, reviewstar,goodcnt, replycnt, cnt, reviewword,
+SELECT  reviewno, memberno, cateno, reviewtitle, reviewcontent, replycnt, cnt, reviewword,
  rdate, udate, reviewfile1, reviewfile1saved, reviewthumb1,reviewsize1
     
 FROM review

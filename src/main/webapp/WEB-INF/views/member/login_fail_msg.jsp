@@ -25,12 +25,12 @@
     });    
   });
 </script>
- 
+ <link rel="icon" href="/images/travel.png">
 </head> 
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>알림</DIV>
+<DIV class='title_line' style="font-size:1.5rem;">알림</DIV>
   <DIV class='message'>
     <fieldset class='fieldset_basic'>
       <ul>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -141,10 +142,10 @@
   <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
     <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
       <label>카테고리 이름</label>
-      <input type='text' name='servicetype_content' id='servicetype_content' value='' required="required" style='width: 25%;' autofocus="autofocus">
+      <input type='text' name='servicetype_content' id='servicetype_content' value='' required="required" style='width: 25%; margin:auto;' autofocus="autofocus">
   
-      <button type="submit" id='submit'>등록</button>
-      <button type="button" onclick="cancel();">취소</button>
+      <button type="submit" id='submit' class="btn btn-secondary btn-sm">등록</button>
+      <button type="button" onclick="cancel();" class="btn btn-secondary btn-sm">취소</button>
     </FORM>
   </DIV>
   
@@ -155,13 +156,13 @@
       <input type="hidden" name="cnt" id="cnt" value="${ServiceCateVO.cnt }">
       
       <label>카테고리 이름</label>
-      <input type='text' name='servicetype_content' id="servicetype_content" value='' required="required" style='width: 25%;' autofocus="autofocus">
+      <input type='text' name='servicetype_content' id="servicetype_content" value='' required="required" class="form-control" style='width: 25%;' autofocus="autofocus">
 
       <label>출력 순서</label>
       <input type='number' name='order_index' id="order_index" value='' required="required" min="1" max="1000" step="1" style='width: 5%;'>
   
-      <button type="submit" id='submit'>수정</button>
-      <button type="button" onclick="cancel();">취소</button>
+      <button type="submit" id='submit' class="btn btn-secondary btn-sm">수정</button>
+      <button type="button" onclick="cancel();" class="btn btn-secondary btn-sm">취소</button>
       
       <span id='panel_update_animation' style='display: none;'></span>
     </FORM>
@@ -176,8 +177,8 @@
       
       <span id="frm_delete_name"></span> <%-- 삭제할 카테고리 이름 --%>
        
-      <button type="submit" id='btn_submit'>삭제</button>
-      <button type="button" onclick="cancel()">취소</button>
+      <button type="submit" id='btn_submit' class="btn btn-secondary btn-sm">삭제</button>
+      <button type="button" onclick="cancel()" class="btn btn-secondary btn-sm">취소</button>
       
       <span id='panel_delete_animation' style='display: none;'></span>
     </FORM>

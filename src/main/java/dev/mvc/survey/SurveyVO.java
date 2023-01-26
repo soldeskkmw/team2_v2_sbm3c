@@ -1,28 +1,29 @@
 package dev.mvc.survey;
 
-//CREATE TABLE SURVEY(
-//    SURVEYNO                          NUMBER(8)    NOT NULL    PRIMARY KEY,
-//    SURVEYTOPIC                       VARCHAR2(100)    NOT NULL,
-//    STARTDATE                         DATE     NOT NULL ,
-//    ENDDATE                           DATE     NOT NULL ,
-//    YN                                VARCHAR2(1)    DEFAULT 'N'     NOT NULL,
-//    RDATE                             DATE     NOT NULL
+//CREATE TABLE survey(
+//    surveyno                          NUMBER(8)    NOT NULL    PRIMARY KEY,
+//    surveytopic                         VARCHAR2(100)    NOT NULL,
+//    yn                                VARCHAR2(1)    DEFAULT 'Y'     NOT NULL,
+//    rdate                             DATE     NOT NULL,
+//    adminno                             NUMBER(10)          NOT NULL,
+//        FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
 //);
 
 public class SurveyVO {
-  /**설문 제목 번호*/
+  /** 설문 번호 */
   private int surveyno;
-  /**설문 제목*/
-  private String surveytopic;
-  /**시작 날짜*/
-  private String startdate;
-  /**종료 날짜*/
-  private String enddate;
   
-  /**진행 여부*/
-  private int yn;
-  /**등록일*/
-  private String rdate;
+  /** 설문 주제 */
+  private String surveytopic = "";
+  
+  /** 여부 */
+  private String yn = "";
+  
+  /** 등록일 */
+  private String rdate = "";
+  
+  /**관리자번호 */
+  private int adminno;
   
   public int getSurveyno() {
     return surveyno;
@@ -30,36 +31,34 @@ public class SurveyVO {
   public void setSurveyno(int surveyno) {
     this.surveyno = surveyno;
   }
+  
   public String getSurveytopic() {
     return surveytopic;
   }
   public void setSurveytopic(String surveytopic) {
     this.surveytopic = surveytopic;
   }
-  public String getStartdate() {
-    return startdate;
-  }
-  public void setStartdate(String startdate) {
-    this.startdate = startdate;
-  }
-  public String getEnddate() {
-    return enddate;
-  }
-  public void setEnddate(String enddate) {
-    this.enddate = enddate;
-  }
-  public int getYn() {
+  
+  public String getYn() {
     return yn;
   }
-  public void setYn(int yn) {
+  public void setYn(String yn) {
     this.yn = yn;
   }
+  
   public String getRdate() {
     return rdate;
   }
   public void setRdate(String rdate) {
     this.rdate = rdate;
   }
-
+  public int getAdminno() {
+    return adminno;
+  }
+  public void setAdminno(int adminno) {
+    this.adminno = adminno;
+  }
+  
+  
   
 }

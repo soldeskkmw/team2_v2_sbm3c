@@ -6,74 +6,71 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-import dev.mvc.reply.ReviewReplyVO;
-import dev.mvc.reply.ReplyVO;
 import dev.mvc.tool.Tool;
  
 @Component("dev.mvc.reply.ReplyProc")
 public class ReplyProc implements ReplyProcInter {
-  @Autowired
-  private ReplyDAOInter replyDAO;
+  
+  @Autowired ReplyDAOInter replyDAO;
 
   @Override
-  public int replycreate(ReplyVO replyVO) {
-    int replycnt=this.replyDAO.replycreate(replyVO);
-    return replycnt;
+  public int create(ReplyVO replyVO) {
+    int cnt = this.replyDAO.create(replyVO);
+    return cnt;
   }
 
   @Override
-  public ArrayList<ReplyVO> replylist_by_reviewno(int reviewno) {
-    ArrayList<ReplyVO> replylist = this.replyDAO.replylist_by_reviewno(reviewno);
+  public ArrayList<ReplyVO> list_by_reviewno(int reviewno) {
+    ArrayList<ReplyVO> list = this.replyDAO.list_by_reviewno(reviewno);
     
-    for (int i=0; i<replylist.size(); i++) {
-      ReplyVO replyVO = replylist.get(i);
+    for (int i=0; i<list.size(); i++) {
+      ReplyVO replyVO = list.get(i);
       
+      String replycontent = replyVO.getReplycontent();
       
-      String reply = replyVO.getReplycontent();
+      replycontent = Tool.convertChar(replycontent);
       
-      
-      reply = Tool.convertChar(reply);
-      
-    
-      replyVO.setReplycontent(reply);
+      replyVO.setReplycontent(replycontent);
     }
-    
-    return replylist;
+    return list;
   }
-  
-  
- 
-  
+
   @Override
-  public int replydelete(int replyno) {
-    int replycnt = this.replyDAO.replydelete(replyno);
-    return replycnt;
-  }
-  
-  /**
-   * Á¶È¸
-   */
-  @Override
-  public ReplyVO replyread(int replyno) {
-    ReplyVO replyVO = this.replyDAO.replyread(replyno);
-    
+  public ReplyVO read(int replyno) {
+    ReplyVO replyVO = this.replyDAO.read(replyno);
     
     String replycontent = replyVO.getReplycontent();
-    
-    
-    replycontent = Tool.convertChar(replycontent); 
-    
-    
-    replyVO.setReplycontent(replycontent);  
-    
-   
-    
+    replycontent = Tool.convertChar(replycontent);
+    replyVO.setReplycontent(replycontent); 
+
     return replyVO;
   }
+
+  @Override
+  public ReplyVO read_all_list(int replyno) {
+    ReplyVO replyVO = this.replyDAO.read_all_list(replyno);
+    
+    String replycontent = replyVO.getReplycontent();
+    replycontent = Tool.convertChar(replycontent);
+    replyVO.setReplycontent(replycontent); 
+
+    return replyVO;
+  }
+
+  @Override
+  public int update_reply(ReplyVO replyVO) {
+    int cnt = this.replyDAO.update_reply(replyVO);
+    return cnt;
+  }
+
+  @Override
+  public int delete(int replyno) {
+    int cnt = this.replyDAO.delete(replyno);
+    return cnt;
+  }
+
   
-  
-  
+
 }
 
 

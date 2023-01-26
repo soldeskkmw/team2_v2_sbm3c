@@ -12,7 +12,7 @@
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
   $(function() {
@@ -69,9 +69,7 @@
   function cart_ajax(contentsno) {
     var f = $('#frm_login');
     $('#contentsno', f).val(contentsno);  // 쇼핑카트 등록시 사용할 상품 번호를 저장.
-    
     // console.log('-> contentsno: ' + $('#contentsno', f).val()); 
-    
     if ($('#login_yn') != 'Y') {  // 로그인이 안되어 있다면
       $('#div_login').show();   // 로그인 폼 
     } else {  // 로그인 한 경우
@@ -81,51 +79,57 @@
   }
   
 </script>
-
+<link rel="icon" href="/images/travel.png"> 
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
- 
+<DIV style='height:60px;'></DIV>
+<DIV style="width:100%; height:250px; position: relative;">
+	<c:choose>
+	  <c:when test="${param.cateno == 1 }">
+ 	      <IMG src="/post/images/main_festival.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+ 	  </c:when>
+	  <c:when test="${param.cateno == 2 }">
+	      <IMG src="/post/images/main_hotels.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+	  </c:when>
+	  <c:when test="${param.cateno == 3 }">
+        <IMG src="/post/images/main_trip.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+    </c:when>
+    <c:when test="${param.cateno == 4 }">
+        <IMG src="/post/images/main_life.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+    </c:when>
+    <c:when test="${param.cateno == 5 }">
+        <IMG src="/post/images/main_food.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+    </c:when>
+    <c:when test="${param.cateno == 6 }">
+        <IMG src="/post/images/main_cafe.jpg" style="width: 100%; height: 100%; opacity:0.6; object-fit: cover;">
+    </c:when>
+	</c:choose>
+	<DIV style="position: absolute; float:left; transform: translate( 10%, -250% ); padding:0 25px; ">
+    <A style="font-size:4em; font-weight:600; color:white;">${cateVO.catename }</A>
+	</DIV>
+</DIV>
+
 <DIV class='title_line'>
-  <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }" class='title_link'>${cateVO.catename }</A>
+<ul class="nav nav-tabs" >
+  <li class="nav-item dropdown" style="font-weight:600;" >
+    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">NEWS</a>
+    <div class="dropdown-menu">
+	    <c:if test="${sessionScope.adminpasswd != null }">
+	      <A class="dropdown-item" href="./create.do?cateno=${cateVO.cateno }">등록</A>    
+	    </c:if>
+      <a class="dropdown-item" href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }">기본목록형</a>
+      <a class="dropdown-item" href="./list_by_cateno_grid.do?cateno=${cateVO.cateno }">갤러리형</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../review/list_by_cateno_search_paging.do?cateno=${cateVO.cateno }" >Review</a>
+  </li>
+</ul>
 </DIV>
 
 <DIV class='content_body'>
-  <ASIDE class="aside_right">
-    <c:if test="${sessionScope.adminid != null }">
-      <A href="./create.do?cateno=${cateVO.cateno }">등록</A>    
-      <span class='menu_divide' >│</span>
-    </c:if>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_grid.do?cateno=${cateVO.cateno }">갤러리형</A>
-  </ASIDE> 
-
-  <%-- 검색 --%>
-  <DIV style="text-align: right; clear: both;">
-  <nav class="navbar navbar-expand-sm" style='padding:0px;'>
-    <form  class="form-inline justify-content-end" name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do' style='width: 100%;'>
-      <input class="form-control mr-sm-2" placeholder="Search" type='hidden' name='cateno' value='${param.cateno }'>
-      <c:choose>
-        <c:when test="${param.postword != '' }"> <%-- 검색하는 경우 --%>
-          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='${param.postword }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button class='btn btn-secondary' type='submit'>검색</button>
-      <c:if test="${param.postword.length() > 0 }">
-        <button class='btn btn-danger ml-sm-2' type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateVO.cateno}&postword='">취소</button>  
-      </c:if>    
-    </form>
-   </nav>
-  </DIV>
-  
-  <DIV class='menu_line'></DIV>
   
   <%-- ******************** Ajax 기반 로그인 폼 시작 ******************** --%>
   <DIV id='div_login' style='display: none;'>
@@ -168,37 +172,17 @@
     <colgroup>
 	    <c:choose>
 	      <c:when test="${sessionScope.adminid != null }">
-		      <col style="width: 20%;"></col>
+		      <col style="width: 35%;"></col>
 		      <col style="width: 55%;"></col>
 		      <col style="width: 10%;"></col>
-		      <col style="width: 15%;"></col>
 	      </c:when>
 	      <c:otherwise>
-		      <col style="width: 20%;"></col>
+		      <col style="width: 40%;"></col>
 		      <col style="width: 60%;"></col>
-		      <col style="width: 20%;"></col>
 	      </c:otherwise>
 	    </c:choose>
     </colgroup>
     <%-- table 컬럼 --%>
-     <thead>
-      <tr>
-	      <c:choose>
-	        <c:when test="${sessionScope.adminid != null }">
-	          <th style='text-align: center;'>파일</th>
-	          <th style='text-align: center;'>Contents</th>
-	          <th style='text-align: center;'>별점, 조회수</th>
-	          <th style='text-align: center;'>기타</th>
-	        </c:when>
-	        <c:otherwise>
-		        <th style='text-align: center;'>파일</th>
-		        <th style='text-align: center;'>Contents</th>
-		        <th style='text-align: center;'>별점, 조회수</th>
-	        </c:otherwise>
-	      </c:choose>
-      </tr>
-    
-    </thead>
     
     <%-- table 내용 --%>
     <tbody>
@@ -213,49 +197,56 @@
 				<c:set var="poststar" value="${postVO.poststar }" />
 				<c:set var="postcnt" value="${postVO.postcnt }" />
 
-        <tr style="height: 132px;"> 
-          <td style='vertical-align: middle; text-align: center;'>
-            <c:choose>
-              <c:when test="${postthumb1.endsWith('jpg') || postthumb1.endsWith('png') || postthumb1.endsWith('gif')}"> <%-- 이미지인지 검사 --%>
-                <%-- /static/post/storage/ --%>
-                <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}"><IMG src="/post/storage/${postthumb1 }" style="width: 120px;"></a> 
-              </c:when>
-              <c:otherwise> <!-- 파일이 없거나 이미지가 아닌 경우 출력 -->
-							  <c:choose>
-                  <c:when test="${postsize1 > 0 }"> <!-- 파일명 출력 -->
-                    <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}">${postfile1 }</a>
-                  </c:when>
-                  <c:when test="${postsize1 == 0 }"> <!-- 기본 이미지 출력 -->
-                    <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}"><IMG src="/post/images/none1.png" style="width: 80px;"></a>
-                  </c:when>
-                </c:choose>
-              </c:otherwise>
-            </c:choose>
+        <tr style="height: 200px;"> 
+          <td style='vertical-align: middle; text-align: right;'>
+            <div>
+	            <c:choose>
+	              <c:when test="${postthumb1.endsWith('jpg') || postthumb1.endsWith('png') || postthumb1.endsWith('gif')}"> <%-- 이미지인지 검사 --%>
+	                <%-- /static/post/storage/ --%>
+	                <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}"><IMG src="/post/storage/${postthumb1 }" style="width: 70%;"></a> 
+	              </c:when>
+	              <c:otherwise> <!-- 파일이 없거나 이미지가 아닌 경우 출력 -->
+	                <c:choose>
+	                  <c:when test="${postsize1 > 0 }"> <!-- 파일명 출력 -->
+	                    <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}">${postfile1 }</a>
+	                  </c:when>
+	                  <c:when test="${postsize1 == 0 }"> <!-- 기본 이미지 출력 -->
+	                    <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}"><IMG src="/post/images/none1.png" style="width: 70%;"></a>
+	                  </c:when>
+	                </c:choose>
+	              </c:otherwise>
+	            </c:choose>
+            </div>
           </td>  
           <td style='vertical-align: middle;'>
-            <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}">
-	            <div><strong>${postVO.posttitle}</strong></div>
-<%-- 	            <c:choose>
-	              <c:when test="${postVO.postcontent.length() > 160 }">
-	                  ${postVO.postcontent.substring(0, 160)}.....
-	              </c:when>
-	              <c:when test="${postVO.postcontent.length() <= 160 }">
-	                  ${postVO.postcontent}
-	              </c:when>
-	            </c:choose> --%>
-            </a> 
+            <a href="./read.do?postno=${postno}&cateno=${cateno}&postcnt=${postcnt}&postword=${param.postword}&now_page=${param.now_page}" style="text-decoration:none;">
+              <div style="font-size: 25px; font-weight: bold; ">${postVO.posttitle}</div>
+            </a>
+	          <div>
+              <c:choose>
+                <c:when test="${postVO.postcontent.length() > 120 }">
+                    ${postVO.postcontent.substring(0, 120)}.....
+                </c:when>
+                <c:when test="${postVO.postcontent.length() <= 120 }">
+                    ${postVO.postcontent}
+                </c:when>
+              </c:choose>
+            </div>
+            <DIV  style="margin-top: 10%;">
+	            <div style="font-size: 1em;"><a>작성일 : ${rdate }</a>
+                <c:if test="${udate != null }">
+                 <a style="font-size: 1em;"> || 수정일 : ${udate }</a>
+                </c:if>
+              </div>
+	            <a>👀 ${postcnt }</a>
+              <a>⭐ ${poststar}</a>
+            </DIV>
           </td> 
-          <td style='vertical-align: middle; text-align: left;'>
-            <div style="font-size: 0.8em;">${rdate }</div>
-            <div style="font-size: 0.8em;">${udate }</div>
-            <div>별점: <fmt:formatNumber value="${poststar}" pattern="#,###"/></div>
-            <div>조회수: ${postcnt }</div>
-          </td>
-          <c:if test="${sessionScope.adminid != null }">
+          <c:if test="${sessionScope.adminpasswd != null }">
 	          <td style='vertical-align: middle; text-align: center;'>
-	            <A href="/post/update_text.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="글 수정"><IMG src="/post/images/update.png" class="icon"></A>
-	            <A href="/post/update_file.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="파일 수정"><IMG src="/post/images/update_file.png" class="icon"></A>
-	            <A href="/post/delete.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="삭제"><IMG src="/post/images/delete.png" class="icon"></A>
+	            <A href="/post/update_text.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="글 수정"><IMG src="/images/file_rename.png" class="icon"></A>
+	            <A href="/post/update_file.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="대표 이미지 수정"><IMG src="/post/images/update_file.png" class="icon"></A>
+	            <A href="/post/delete.do?cateno=${cateno }&postno=${postno}&postword=${param.postword }" title="삭제"><IMG src="/images/trash.png" class="icon"></A>
 	          </td>
 	          </c:if>
         </tr>

@@ -13,7 +13,7 @@
 <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+<link rel="icon" href="/images/travel.png">
 </head> 
 <body>
 <c:import url="/menu/top.do" />
@@ -31,7 +31,7 @@
           <LI class='li_none'>
             <button type='button' 
                          onclick="location.href='./login.do?memberid=${param.memberid}'"
-                         class="btn btn-primary">로그인</button>
+                         class="btn btn-primary btn-secondary">로그인</button>
           </LI> 
         </c:when>
         
@@ -48,10 +48,10 @@
           <LI class='li_none'>
             <button type='button' 
                          onclick="location.href='/'"
-                         class="btn btn-primary">시작 화면</button>
+                         class="btn btn-secondary">시작 화면</button>
             <button type='button' 
                          onclick="location.href='/member/list.do'"
-                         class="btn btn-primary">회원 목록</button>                   
+                         class="btn btn-secondary">회원 목록</button>                   
           </LI>                                                                       
         </c:when>
                 
@@ -68,11 +68,11 @@
           <LI class='li_none'>
             <button type='button' 
                          onclick="location.href='/member/list.do'"
-                         class="btn btn-primary">회원 목록</button>
+                         class="btn btn-secondary">회원 목록</button>
           </LI>                                                                     
         </c:when>    
             
-        <c:when test="${code == 'delete_fail'}"> <%-- Java if --%>
+        <c:when test="${param.code == 'delete_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
             <span class="span_fail">${param.membername }님(${param.memberid }) 회원 정보 삭제에 실패했습니다.</span>
           </LI>                                                                      
@@ -85,7 +85,7 @@
           <LI class='li_none'>
             <button type='button' 
                          onclick="location.href='/'"
-                         class="btn btn-primary">확인</button>
+                         class="btn btn-secondary">확인</button>
           </LI>                                                                     
         </c:when>   
         
@@ -94,6 +94,28 @@
             <span class="span_fail">${param.membername }님(${param.memberid }) 패스워드 변경에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>  
+        
+         <c:when test="${param.code == 'unregister_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">회원 탈퇴 하였습니다.</span>
+          </LI>   
+          <LI class='li_none'>
+            <button type='button' 
+                         onclick="location.href='/'"
+                         class="btn btn-secondary">확인</button>
+          </LI>                                                                     
+        </c:when>
+        
+        <c:when test="${param.code == 'grade_update_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">회원 등급을 변경 하였습니다.</span>
+          </LI>   
+          <LI class='li_none'>
+            <button type='button' 
+                         onclick="location.href='/member/list.do'"
+                         class="btn btn-secondary">확인</button>
+          </LI>                                                                     
+        </c:when>   
         
         <c:otherwise>
           <LI class='li_none_left'>
@@ -116,8 +138,14 @@
         <%-- <a href="./list_by_cateno.do?cateno=${param.cateno}" class="btn btn-primary">목록</a> --%>
         <%-- <button type='button' onclick="location.href='./list_by_cateno_search.do?cateno=${param.cateno}'" class="btn btn-primary">목록</button> --%>
         <%-- <button type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${param.cateno}'" class="btn btn-primary">목록</button> --%>
-
+<%-- 
       </LI>
+        <c:when test="${param.code == 'id_search_fail'}"> Java if
+          <LI class='li_none'>
+            <span class="span_fail">전화번호가 등록 되어 있지 않습니다.</span>
+          </LI>                                                                      
+        </c:when> --%>
+      
     </UL>
   </fieldset>
 

@@ -15,32 +15,34 @@
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="icon" href="/survey/images/travel.png">
     
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>공지사항</DIV>
+<DIV class='title_line'>설문조사</DIV>
 
 <DIV class='content_body'>
-     
+
   <TABLE class='table table-hover'>
     <colgroup>
       <col style='width: 5%;'/>
-      <col style='width: 25%;'/>
-      <col style='width: 40%;'/>    
-      <col style='width: 20%;'/>
-      <c:if test="${sessionScope.adminid != null }">
       <col style='width: 10%;'/>
+      <col style='width: 40%;'/>    
+      <col style='width: 25%;'/>
+      <c:if test="${sessionScope.adminid != null }">
+      <col style='width: 20%;'/>
      </c:if>
     </colgroup>
    
     <thead>  
     <TR>
       <TH class="th_bs"></TH>
-      <TH class="th_bs">공지사항</TH>
-      <TH class="th_bs">내용</TH>
+      <TH class="th_bs">진행 여부</TH>
+      <TH class="th_bs">설문</TH>
       <TH class="th_bs">등록일</TH>
       <c:if test="${sessionScope.adminid != null }">
       <TH class="th_bs">편집</TH>
@@ -50,34 +52,43 @@
     </thead>
     
    <tbody>
-    <c:forEach var="noticeVO" items="${notice_list }">
-      <c:set var="noticeno" value="${noticeVO.noticeno }" />
-      <c:set var="noticetitle" value="${noticeVO.noticetitle }" />
-      <c:set var="noticecontent" value="${noticeVO.noticecontent }" />
-      <c:set var="rdate" value="${noticeVO.rdate.substring(0, 16) }" />
+    <c:forEach var="surveyVO" items="${survey_list }">
+      <c:set var="surveyno" value="${surveyVO.surveyno }" />
+      <c:set var="surveytopic" value="${surveyVO.surveytopic }" />
+      <c:set var="rdate" value="${surveyVO.rdate }" />
+      <c:set var="yn" value="${surveyVO.yn }" />
+      
       
       <TR style="height: 40px;">
-        <TD style='vertical-align: middle;'><div>${noticeno }</div></TD>
-        <TD style='vertical-align: middle;'><div><a href="./notice_read.do?noticeno=${noticeno }&noticeword=${param.noticeword }&now_page=${param.now_page}">${noticetitle }</A></div></TD>
+        <TD style='vertical-align: middle;'><div>${surveyno }</div></TD>
         <TD style='vertical-align: middle;'>
-        <a href="./notice_read.do?noticeno=${noticeno }&noticeword=${param.noticeword }&now_page=${param.now_page}">
-          <strong>
-            <c:choose>
-              <c:when test="${noticecontent.length() > 25 }">
-                  ${noticecontent.substring(0, 25)}.....
+        <c:choose>
+              <c:when test="${yn eq 'Y' }">
+                  <a>진행 중</a>
               </c:when>
-              <c:when test="${noticecontent.length() <= 25 }">
-                  ${noticecontent}
+              <c:when test="${yn eq 'N' }">
+                  <a>종료</a>
               </c:when>
-            </c:choose>
-          </strong> 
-          </a> 
+        </c:choose>
         </TD>
+        <TD style='vertical-align: middle;'><a href="../msurvey/msurvey_create.do?surveyno=${surveyno }">
+        <c:choose>
+              <c:when test="${surveytopic.length() > 25 }">
+                  ${surveytopic.substring(0, 25)}.....
+              </c:when>
+              <c:when test="${surveytopic.length() <= 25 }">
+                  ${surveytopic}
+              </c:when>
+        </c:choose>
+        </a>        
+         </TD>
+  
+       
         <TD class="td_bs"><div>${rdate }</div></TD>
         <c:if test="${sessionScope.adminid != null }">
         <TD class="td_bs">
-          <A href="./notice_read_update.do?noticeno=${noticeno}" title="수정"><IMG src="/notice/images/edit.png" class="icon"></A>
-          <A href="./notice_read_delete.do?noticeno=${noticeno}" title="삭제"><IMG src="/notice/images/delete.png" class="icon"></A>
+          <A href="./survey_read_update.do?surveyno=${surveyno}" title="수정"><IMG src="/survey/images/edit.png" class="icon"></A>
+          <A href="./survey_read_delete.do?surveyno=${surveyno}" title="삭제"><IMG src="/survey/images/delete.png" class="icon"></A>
         </TD>   
         </c:if>
       </TR> 
@@ -90,11 +101,11 @@
   </TABLE>
   <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
     
-    <FORM name='frm_create' id='frm_create' method='POST' action='./notice_create.do'>
+    <FORM name='frm_create' id='frm_create' method='GET' action='./survey_create.do'>
       <label></label>
     <c:if test="${sessionScope.adminid != null }">
     
-      <button type="button" id='submit' onclick="location.href='./notice_create.do'" class="btn btn-secondary">등록</button>
+      <button type="button" id='submit' onclick="location.href='./survey_create.do'" class="btn btn-secondary">등록</button>
       <button type="button" onclick="cancel();" class="btn btn-secondary">취소</button>
     </c:if>
     </FORM>

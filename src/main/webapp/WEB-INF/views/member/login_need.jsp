@@ -19,7 +19,7 @@
  
   });
 </script>
- 
+<link rel="icon" href="/images/travel.png"> 
 </head> 
  
 <body>

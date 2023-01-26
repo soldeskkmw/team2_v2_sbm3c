@@ -2,82 +2,141 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace = "dev.mvc.member.MemberDAOInter">
+
+  <!-- 회원 아이디 중복 확인 -->
   <select id="checkID" resultType="int" parameterType="String">
     SELECT COUNT(memberid) as cnt
     FROM member
     WHERE memberid=#{memberid}
   </select>
   
+  <!-- 회원 회원가입 -->
   <insert id="create" parameterType="dev.mvc.member.MemberVO">
-    INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, mdate)
-    VALUES (member_seq.nextval, #{memberid}, #{memberpasswd}, #{membername}, #{tel}, sysdate)
+    INSERT INTO member(memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate)
+    VALUES (member_seq.nextval, #{memberid}, #{memberpasswd}, #{membername}, #{tel}, #{receiver}, #{grade}, #{gender}, #{age}, sysdate)
   </insert>
 
+  <!-- 회원 리스트 -->
   <select id="list" resultType="dev.mvc.member.MemberVO">
-    SELECT memberno, memberid, memberpasswd, membername, tel, mdate
+    SELECT memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate
     FROM member
-    ORDER BY memberno ASC, memberid ASC
+    ORDER BY grade ASC, memberid ASC
   </select>
 
   <!-- memberno로 회원 정보 조회 -->
   <select id="read" resultType="dev.mvc.member.MemberVO" parameterType="int">
-    SELECT memberno, memberid, memberpasswd, membername, tel, mdate
+    SELECT memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate
     FROM member
     WHERE memberno = #{memberno}
   </select>  
 
-  <!-- id로 회원 정보 조회 -->
+  <!-- memberid로 회원 정보 조회 -->
   <select id="readById" resultType="dev.mvc.member.MemberVO" parameterType="String">
-    SELECT memberno, memberid, memberpasswd, membername, tel, mdate
+    SELECT memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate
     FROM member
     WHERE memberid = #{memberid}
   </select>
 
+<!-- memberno로 회원 정보 수정 -->
   <update id="update" parameterType="dev.mvc.member.MemberVO">
     UPDATE member 
-    SET membername=#{membername}, tel=#{tel}
+    SET membername=#{membername}, tel=#{tel}, receiver=#{receiver}, age=#{age}
     WHERE memberno=#{memberno}
   </update>
 
+  <!-- adminno로 회원 삭제 -->
   <delete id="delete" parameterType="int">
     DELETE FROM member
     WHERE memberno=#{memberno}
   </delete>
 
-  <!--  현재 패스워드 검사 -->
+  <!--  현재 회원 아이디와 패스워드 검사 -->
   <select id="passwd_check" parameterType="HashMap" resultType="int">
     SELECT COUNT(memberno) as cnt
     FROM member
     WHERE memberno=#{memberno} AND memberpasswd=#{memberpasswd}
   </select>
   
-  <!-- 패스워드 변경 -->
+  <!-- 회원 패스워드 변경 -->
   <update id="passwd_update" parameterType="HashMap">
     UPDATE member
     SET memberpasswd=#{memberpasswd}
     WHERE memberno=#{memberno}
   </update>
 
-  <!-- 로그인 -->
+  <!-- 회원 로그인 (회원 등급이 0보다 크고 20보다 작거나 같을때)-->
   <select id="login" resultType="int" parameterType="HashMap">
     SELECT COUNT(memberno) as cnt
     FROM member
-    WHERE memberid=#{memberid} AND memberpasswd=#{memberpasswd}
+    WHERE memberid=#{memberid} AND memberpasswd=#{memberpasswd} AND grade <![CDATA[> 0 ]]> AND grade <![CDATA[<= 20 ]]>
   </select>
+                  
                
   <!-- tel로 회원 정보 조회 -->
   <select id="readBytel" resultType="dev.mvc.member.MemberVO" parameterType="String">
-    SELECT memberno, memberid, memberpasswd, membername, tel, mdate
-    FROM member
-    WHERE tel = #{tel} 
-  </select>
-                   
-   <!-- 이름으로 회원 정보 조회 -->
-  <select id="id_search_result" resultType="dev.mvc.member.MemberVO" parameterType="String">
-    SELECT memberid
+    SELECT memberno, memberid, membername, tel, receiver, grade, gender, age, mdate
     FROM member
     WHERE tel = #{tel}
-  </select>                 
+  </select>
                    
+   <!-- 회원 아이디 찾기
+          회원 전화번호 or 회원 이메일로 회원 정보 조회 -->
+  <select id="id_search_result" resultType="dev.mvc.member.MemberVO" parameterType="String">
+    SELECT memberid, membername
+    FROM member
+    WHERE tel = #{tel} OR receiver = #{receiver}
+  </select>                
+  
+    <!-- 회원 아이디와 회원 전화번호로 회원 정보 조회 -->
+  <select id="readByIdTel" resultType="dev.mvc.member.MemberVO" parameterType="String">
+    SELECT memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate
+    FROM member
+    WHERE memberid=#{memberid} AND tel=#{tel} 
+  </select>
+  
+  <!--  현재 회원 아이디와 전화번호 검사 -->
+  <select id="IdTel_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(memberno) as cnt
+    FROM member
+    WHERE memberid=#{memberid} AND tel=#{tel} AND memberno=#{memberno}
+  </select>
+                   
+   <!-- 회원 비밀번호 찾기 (새로운 비밀번호로 변경)
+          회원 아이디와 회원 전화번호 or 회원 아이디와 회원 이메일로 회원 정보 조회 -->
+  <update id="passwd_search_result" parameterType="HashMap">
+    UPDATE member 
+    SET memberpasswd=#{memberpasswd}
+    WHERE memberid=#{memberid} AND tel=#{tel} OR memberid=#{memberid} AND receiver=#{receiver}
+  </update>   
+                                   
+   <!-- 회원 이메일로 회원 정보 조회 -->
+  <select id="readByReceiver" resultType="dev.mvc.member.MemberVO" parameterType="String">
+    SELECT memberno, memberid, membername, tel, receiver, grade, age, mdate
+    FROM member
+    WHERE receiver = #{receiver}
+  </select>      
+  
+  <!-- 회원 아이디와 회원 이메일로 회원 정보 조회 -->
+  <select id="readByIdReceiver" resultType="dev.mvc.member.MemberVO" parameterType="String">
+    SELECT memberno, memberid, memberpasswd, membername, tel, receiver, grade, gender, age, mdate
+    FROM member
+    WHERE memberid=#{memberid} AND receiver=#{receiver} 
+  </select>
+                  
+  <!--  현재 회원 아이디와 이메일 검사 -->
+  <select id="IdReceiver_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(memberno) as cnt
+    FROM member
+    WHERE memberid=#{memberid} AND receiver=#{receiver} AND memberno=#{memberno}
+  </select>
+                
+  <!-- 회원 탈퇴 
+         회원 등급 수정-->       
+  <update id="unregister" parameterType="dev.mvc.member.MemberVO">
+    UPDATE member 
+    SET grade=#{grade}
+    WHERE memberno=#{memberno}
+  </update>
+  
 </mapper>
 

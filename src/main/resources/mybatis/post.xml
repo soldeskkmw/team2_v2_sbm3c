@@ -24,13 +24,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY postno DESC
   </select>
 
-  <!-- 조회,  id: read, 입력: cateno, 리턴: PostVO -->
+  <!-- 조회,  id: read, 입력: postno, 리턴: PostVO -->
   <select id="read" resultType="dev.mvc.post.PostVO" parameterType="int">
-    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
-    FROM post
-    WHERE postno=#{postno}
+      SELECT a.adminid, a.adminname,
+              p.postno, p.adminno, p.cateno, p.posttitle, p.postcontent, p.postword, p.rdate, p.poststar, p.postcnt, p.postfile1, p.postfile1saved, p.postthumb1, p.postsize1
+      FROM admin a, post p
+    WHERE p.postno=#{postno} AND a.adminno=p.adminno
   </select>
-  
+
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_cateno_search" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
     SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
@@ -64,6 +65,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </choose>
   </select>
   
+  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_cateno_search_paging" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
+   SELECT postno, adminno, cateno, posttitle, postcontent, postword, 
+             rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, r
+   FROM (
+              SELECT postno, adminno, cateno, posttitle, postcontent, postword, 
+                        rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, rownum as r
+              FROM (
+                        SELECT postno, adminno, cateno, posttitle, postcontent, postword, 
+                                  rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+                        FROM post
+                        <choose>
+                          <when test="postword == null or postword == ''"> <!-- 검색하지 않는 경우 -->
+                             WHERE cateno=#{cateno}
+                          </when>
+                          <otherwise>
+                            WHERE cateno=#{cateno} AND (UPPER(posttitle) LIKE '%' || #{postword} || '%' 
+                                                              OR UPPER(postcontent) LIKE '%' || #{postword} || '%' 
+                                                              OR UPPER(postword) LIKE '%' || #{postword} || '%')
+                          </otherwise>
+                        </choose>
+                        ORDER BY postno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+    <!--  1 page: WHERE r >= 1 AND r <= 10; 
+            2 page: WHERE r >= 11 AND r <= 20;
+            3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select>  
+  
   <!-- admin + post INNER JOIN 목록 -->
   <select id="list_all_admin" resultType="dev.mvc.post.AdminPostVO">
     SELECT a.adminno, a.adminid, a.adminpasswd, a.adminname,
@@ -72,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE a.adminno = p.adminno
     ORDER BY p.postno DESC
   </select>
-  
+
   <!-- cate + post INNER JOIN 목록 -->
   <select id="list_all_cate" resultType="dev.mvc.post.CatePostVO">
     SELECT c.cateno, c.catename,
@@ -80,30 +113,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM cate c, post p
     WHERE c.cateno = p.cateno
     ORDER BY p.postno DESC
-  </select>
-
-  <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
-  <select id="list_by_cateno_search_paging" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
-     SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, r
-     FROM (
-                SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1, rownum as r
-	              FROM (
-	                        SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, udate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
-	                        FROM post
-	                        <choose>
-											      <when test="postword == null or postword == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
-											        WHERE cateno=#{cateno}
-											      </when>
-											      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
-											        WHERE cateno=#{cateno} AND (UPPER(posttitle) LIKE '%' || #{postword} || '%' 
-											                                                  OR UPPER(postcontent) LIKE '%' || #{postword} || '%' 
-											                                                  OR UPPER(postword) LIKE '%' || #{postword} || '%')
-											      </otherwise>
-                          </choose>
-	                        ORDER BY postno DESC
-	               )
-    )
-    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
   </select>
   
   <!-- 글 수정 -->
@@ -138,6 +147,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT COUNT(*) as cnt
     FROM post
     WHERE cateno=#{cateno}
+  </select>
+   
+  <!-- post테이블의 평점(poststar) 컬럼 수정 -->
+  <update id="update_poststar" parameterType="dev.mvc.post.PostVO">
+    UPDATE post
+    SET poststar = (SELECT AVG(ratings) FROM post_ratings WHERE postno=#{postno})
+    WHERE postno = #{postno}
+  </update>
+  
+  <!-- 추천 목록, WHERE postno IN -->
+  <select id="mf_post_member" resultType="dev.mvc.post.PostVO" parameterType="HashMap">
+    SELECT postno, adminno, cateno, posttitle, postcontent, postword, rdate, poststar, postcnt, postfile1, postfile1saved, postthumb1, postsize1
+    FROM post
+    WHERE postno IN <foreach collection="postno_list" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+    ORDER BY postno ASC
   </select>
   
 </mapper>

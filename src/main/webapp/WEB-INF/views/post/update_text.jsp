@@ -16,7 +16,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Going Share</title>
+<title>GoingShare</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -40,14 +40,14 @@
   });
  
 </script>
+<link rel="icon" href="/images/travel.png"> 
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename }</A> > 글 수정</DIV>
-
-<DIV class='content_body'>
+<DIV style='margin-top: 60px; '>
+<A href="./list_by_cateno_search_paging.do?cateno=${cateno }" class='title_link'>${cateVO.catename } > 글 수정</A>
   <ASIDE class="aside_right">
     <c:if test="${sessionScope.admin_id != null }">
       <A href="./create.do?cateno=${cateVO.cateno }">등록</A>
@@ -58,48 +58,25 @@
     <A href="./list_by_cateno_search_paging.do?cateno=${cateVO.cateno }">기본 목록형</A>    
     <span class='menu_divide' >│</span>
     <A href="./list_by_cateno_grid.do?cateno=${cateVO.cateno }">갤러리형</A>
-  </ASIDE> 
-  
-  <%-- 검색 폼 --%>
-  <DIV style="text-align: right; clear: both;">
-  <nav class="navbar navbar-expand-sm" style='padding:0px;'>
-    <form  class="form-inline justify-content-end" name='frm' id='frm' method='get' action='./list_by_cateno_search_paging.do' style='width: 100%;'>
-      <input type='hidden' name='cateno' value='${cateVO.cateno }'>  <%-- 게시판의 구분 --%>
-      <input class="form-control mr-sm-2" placeholder="Search" type='hidden' name='cateno' value='${param.cateno }'>
-      <c:choose>
-        <c:when test="${param.postword != '' }"> <%-- 검색하는 경우 --%>
-          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='${param.postword }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='postword' id='postword' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button class='btn btn-secondary' type='submit'>검색</button>
-      <c:if test="${param.postword.length() > 0 }">
-        <button class='btn btn-danger ml-sm-2' type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateVO.cateno}&postword='">취소</button>  
-      </c:if>    
-    </form>
-   </nav>
-  </DIV>
-  
-  <DIV class='menu_line'></DIV>
+  </ASIDE>
+</DIV>
+<DIV class='title_line'></DIV>
+
+<DIV class='content_body'>
   <%--수정 폼 --%>
   <FORM name='frm' method='POST' action='./update_text.do'>
     <input type="hidden" name="postno" value="${postno }">
     <input type="hidden" name="cateno" value="${cateno }">
-    <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
-    
-    <div>
-       <label>Title</label>
+    <input type="hidden" name="adminno" value="${adminno }">
+    <div style="margin: 40px 0;">
        <input type='text' name='posttitle' value='${posttitle }'  required="required" placeholder="제목을 입력하세요." autofocus="autofocus" class="form-control" style='width: 100%;'>
     </div>
     <div>
        <label>Contents</label>
        <textarea class="form-control" name='postcontent' id='postcontent' rows='10' placeholder="내용을 입력하세요." style='width: 100%;'>${postcontent }</textarea>
     </div>
-    <div>
-       <label>Tag</label>
-       <input type='text' name='postword' value='${postword }' placeholder="검색어를 입력하세요." required="required" class="form-control" style='width: 100%;'>
+    <div style="margin: 40px 0;">
+       <input type='text' name='postword' value='${postword }' placeholder="검색어를 입력하세요." required="required" maxlength="400" class="form-control" style='width: 100%;'>
     </div>   
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">저장</button>

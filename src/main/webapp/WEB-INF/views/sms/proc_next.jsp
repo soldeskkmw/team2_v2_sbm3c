@@ -23,11 +23,12 @@ $(function(){
 });
     
 </script> 
+<link rel="icon" href="/images/travel.png"> 
 </head> 
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>인증번호 입력</DIV>
+  <DIV class='title_line' style="font-size:1.5rem;">인증번호 입력</DIV>
     
     <DIV class='content_body'>
       <DIV style='width: 60%; margin: 0px auto;'>

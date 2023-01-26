@@ -21,16 +21,16 @@
    
   
 </script>
-    
+<link rel="icon" href="/images/travel.png">     
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>공지사항 등록</DIV>
+<DIV class='title_line' style="font-size:1.5rem;">공지사항 등록</DIV>
 
 <DIV class='content_body'>
-  <ASIDE class="aside_right">
+  <ASIDE class="aside_right" style="padding-bottom:7px;">
     <c:if test="${sessionScope.adminid != null }">
         <A href="./notice_create.do">등록</A>
         <span class='menu_divide' >│</span>
@@ -42,29 +42,6 @@
 
   </ASIDE> 
   
-  <%-- 검색 폼 --%>
-  <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_noticeno_search.do'>
-    <%-- <input type='hidden' name='noticeno' value='${noticeVO.noticeno }'>  
-     --%>
-     <%-- 게시판의 구분 --%>
-      
-      
-      <c:choose>
-        <c:when test="${param.noticeword != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='noticeword' id='noticeword' value='${param.noticeword }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='noticeword' id='noticeword' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.noticeword.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list_by_noticeno_search.do?noticeno=${noticeVO.noticeno}&noticeword='">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
   
   
   <DIV class='menu_line'></DIV>

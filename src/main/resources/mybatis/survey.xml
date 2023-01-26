@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE mapper 
+ 
+<!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<!-- survey.xml과 연동되는 Spring interface "dev.mvc.survey.SurveyDAOInter" 선언 --> 
 <mapper namespace="dev.mvc.survey.SurveyDAOInter">
-  <insert id="survey_create" parameterType="dev.mvc.survey.SurveyVO">
-   INSERT INTO survey(surveyno, surveytopic, startdate, enddate, yn, rdate)
-   VALUES (notice_seq.nextval, #{surveytopic}, #{startdate}, #{enddate}, #{yn}, sysdate)
+  <insert id="create" parameterType="dev.mvc.survey.SurveyVO">
+    INSERT INTO survey(surveyno, surveytopic, yn, rdate, adminno)
+    VALUES(survey_seq.nextval, #{surveytopic}, #{yn}, sysdate, #{adminno})
   </insert> 
   
   <!-- 
   전체 목록, 출력 순서 반영
   레코드 갯수 만큼 SurveyVO 객체를 만들어 ArrayList에 저장하여 리턴,
-  ArrayList<SurveyVO> list = new ArrayList<SurveyVO>(); 
+  ArrayList<SurveyVO> list_all = new ArrayList<SurveyVO>(); 
   -->
-  <select id="survey_list" resultType="dev.mvc.survey.SurveyVO">
-    SELECT surveyno, surveytopic, startdate, enddate, yn, rdate
+  <select id="list_all" resultType="dev.mvc.survey.SurveyVO">
+    SELECT surveyno, surveytopic, yn, rdate, adminno
     FROM survey
-    ORDER BY surveyno ASC
+    ORDER BY rdate ASC
   </select>
   
-  <!-- 조회, id: read, 입력: noticeno, 리턴: NoticeVO -->
-  <select id="survey_read" resultType="dev.mvc.survey.SurveyVO" parameterType="int">
-    SELECT surveyno, surveytopic, startdate, enddate, yn, rdate
+  <!-- 조회, id: read, 입력: surveyno, 리턴: SurveyVO -->
+  <select id="read" resultType="dev.mvc.survey.SurveyVO" parameterType="int">
+    SELECT surveyno, surveytopic, yn, rdate, adminno
     FROM survey
     WHERE surveyno = #{surveyno}
   </select>  
-  
-    <!-- 수정 처리 -->  
-  <update id="survey_read_update" parameterType="dev.mvc.survey.SurveyVO">
+
+  <!-- 수정 -->  
+  <update id="update" parameterType="dev.mvc.survey.SurveyVO">
     UPDATE survey
-    SET surveytopic=#{surveytopic}, startdate=#{startdate}, enddate=#{enddate}
+    SET surveytopic=#{surveytopic}, yn=#{yn}, rdate=sysdate
     WHERE surveyno=#{surveyno}
   </update>  
   
-  <!-- 삭제, return: int -->
-  <delete id="survey_read_delete" parameterType="int">
+   <!-- 삭제, return: int -->
+  <delete id="delete" parameterType="int">
     DELETE FROM survey
     WHERE surveyno = #{surveyno}
-  </delete>   
-       
+  </delete>  
+  
 </mapper>

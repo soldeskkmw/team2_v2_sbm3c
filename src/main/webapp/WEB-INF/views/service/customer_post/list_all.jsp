@@ -50,24 +50,26 @@
     </select>
     </ASIDE> 
     
-    <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='/service/customer_post/list_all.do'>
-      <input type='hidden' name='servicecateno' value='${param.servicecateno }'>
-      
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='/service/customer_post/list_all.do?servicecateno=${param.servicecateno}&word='">검색 취소</button>  
-      </c:if>    
-    </form>
+    <DIV style="text-align: right; clear: both; padding-top:10px;">  
+    <nav class="navbar navbar-expand-sm" style='padding:0px;'>
+	    <form class="form-inline justify-content-end" style='width: 100%;' name='frm' id='frm' method='get' action='/service/customer_post/list_all.do'>
+	      <input class="form-control mr-sm-2" type='hidden' name='servicecateno' value='${param.servicecateno }'>
+	      
+	      <c:choose>
+	        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+	          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+	        </c:when>
+	        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+	          <input class="form-control mr-sm-2 justify-content-end" placeholder="Search" type='text' name='word' id='word' value='' style='width: 20%;'>
+	        </c:otherwise>
+	      </c:choose>
+	      <button class='btn btn-secondary' type='submit'>검색</button>
+	      <c:if test="${param.word.length() > 0 }">
+	        <button class='btn btn-danger ml-sm-2' type='button' 
+	                     onclick="location.href='/service/customer_post/list_all.do?servicecateno=${param.servicecateno}&word='">검색 취소</button>  
+	      </c:if>    
+	    </form>
+    </nav>
   </DIV>
   
 
@@ -75,9 +77,16 @@
   
   <table class="table table-striped" style='width: 100%;'>
     <colgroup>
+      <col style="width: 10%;"></col>
       <col style="width: 20%;"></col>
-      <col style="width: 60%;"></col>
-      <col style="width: 20%;"></col>
+      <col style="width: 40%;"></col>
+      <col style="width: 10%;"></col>
+      <col style="width: 10%;"></col>
+      
+      <c:if test="${sessionScope.adminno != null }">      
+      <col style="width: 10%;"></col>
+       </c:if>
+       
     </colgroup>
     <%-- table 컬럼 --%>
 <!--     <thead>
@@ -90,6 +99,21 @@
     
     </thead> -->
     
+        <thead>  
+    <TR>
+      <TH class="th_bs"></TH>
+      <TH class="th_bs">제목</TH>
+      <TH class="th_bs">내용</TH>
+      <TH class="th_bs">등록일</TH>
+      <TH class="th_bs">공개 여부</TH>
+      <c:if test="${sessionScope.adminid != null }">
+      <TH class="th_bs">편집</TH>
+      </c:if>
+
+    </TR>
+    </thead>
+    
+    
     <%-- table 내용 --%>
     <tbody>
       <c:forEach var="customer_postVO" items="${list }">
@@ -100,14 +124,24 @@
         <c:set var="servicecontents" value="${customer_postVO.servicecontents }" />        
         <c:set var="servicevisible" value="${customer_postVO.servicevisible }" />
         <c:set var="thumb1" value="${customer_postVO.thumb1 }" />
+        <c:set var="rdate" value="${customer_postVO.rdate }" />
         
         <tr style="height: 60px;">
-          <td style='vertical-align: middle; text-align: center;'>
-          
+          <td style='vertical-align: middle; text-align: center;'><div>${serviceno }</div></td>
+
+          <td style='vertical-align: middle;'>
             <c:choose>
               <c:when test="${fn:contains(servicevisible, 'T') || sessionScope.adminno != null || sessionScope.memberno == memberno}">
-                ${servicetitle }
+                <c:choose>
+                    <c:when test="${servicetitle.length() > 20 }">
+                        ${servicetitle.substring(0, 20)}.....
+                    </c:when>
+                    <c:when test="${servicetitle.length() <= 20 }">
+                        ${servicetitle}
+                    </c:when>
+                  </c:choose>
                 </td>
+                
                 <td style='vertical-align: middle;'>
                 <a href="./read.do?serviceno=${serviceno}&servicecateno=${servicecateno}"><strong>${title}</strong> 
                   <c:choose>
@@ -129,12 +163,32 @@
             
             </a> 
           </td> 
+          
+          <td style='vertical-align: middle;'><div>${rdate.substring(0, 10) }</div></td>
+          
           <td style='vertical-align: middle; text-align: center;'>
 <%--             <A href="/contents/map.do?servicecateno=${servicecateno }&serviceno=${serviceno}" title="지도"><IMG src="/contents/images/map.png" class="icon"></A> --%>
 <%--             <A href="/contents/youtube.do?servicecateno=${servicecateno }&serviceno=${serviceno}" title="Youtube"><IMG src="/contents/images/youtube.png" class="icon"></A> --%>
             <!-- 공개상태, 답변 여부 -->
-            공개상태 : ${servicevisible }
+             <c:choose>
+              <c:when test="${servicevisible eq 'T' }">
+                  <a>공개</a>
+              </c:when>
+              <c:when test="${servicevisible eq 'F' }">
+                  <a>비공개</a>
+              </c:when>
+        </c:choose>
+            
           </td>
+          
+        <c:if test="${sessionScope.adminid != null }">
+        <TD class="td_bs">
+          <A href="./survey_read_update.do?surveyno=${surveyno}" title="수정"><IMG src="/survey/images/edit.png" class="icon"></A>
+          <A href="./survey_read_delete.do?surveyno=${surveyno}" title="삭제"><IMG src="/survey/images/delete.png" class="icon"></A>
+        </TD>   
+        </c:if>
+          
+          
         </tr>
       </c:forEach>
       
@@ -144,8 +198,11 @@
 <%--   <c:if test="${sessionScope.memberno != null }"> --%>
 <!--     <button onclick="location.href='/service/customer_post/create.do'">글쓰기</button> -->
 <%--   </c:if> --%>
-  <button onclick="location.href='/service/customer_post/create.do'">글쓰기</button>
+   <div class="content_body_bottom">
+
+  <button onclick="location.href='/service/customer_post/create.do'"  class="btn btn-secondary">글쓰기</button>
   
+  </div>
 
   <!-- 페이지 목록 출력 부분 시작 -->
   <DIV class='bottom_menu'>${paging }</DIV> <%-- 페이지 리스트 --%>

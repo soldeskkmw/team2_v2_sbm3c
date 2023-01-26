@@ -46,7 +46,7 @@
   }
    
  </script>
-
+<link rel="icon" href="/images/travel.png"> 
  </head> 
   
   
@@ -73,7 +73,7 @@
      </div>
    </div> <!-- ---------- Modal END ---------- -->
   
-   <DIV class='title_line'>
+   <DIV class='title_line' style="font-size:1.5rem;">
      회원 패스워드 변경
   </DIV>
 
@@ -94,7 +94,7 @@
    
        <div class="form_input">
          <label>현재 패스워드</label>    
-         <input type='password' class="form-control" name='current_passwd' 
+         <input type='password' class="form-control" name='current_memberpasswd' 
                      id='current_passwd' value='' required="required" style='width: 70%;' placeholder="현재 패스워드">
        </div>   
                        

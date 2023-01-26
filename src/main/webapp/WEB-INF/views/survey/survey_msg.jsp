@@ -12,12 +12,12 @@
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+<link rel="icon" href="/images/travel.png">
 </head> 
 <body>
 <c:import url="/menu/top.do" />
 
-<DIV class='title_line'>알림</DIV>
+<DIV class='title_line' style="font-size:1.5rem;">알림</DIV>
 
  <c:set var="code" value="${param.code }" />
 <c:set var="cnt" value="${param.cnt }" />

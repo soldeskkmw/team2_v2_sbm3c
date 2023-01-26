@@ -7,27 +7,28 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Going Share</title>
+<title>GoingShare</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="icon" href="/images/travel.png">
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>전체 카테고리</DIV>
+<DIV class='title_line' style="font-size:1.5rem;">전체 카테고리</DIV>
 
 <DIV class='content_body'>
   <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
     <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
       <label>카테고리 이름</label>
-      <input type='text' name='catename' value='' required="required" style='width: 25%;' autofocus="autofocus">
+      <input type='text' name='catename' value='' required="required" style='width: 25%;' autofocus="autofocus" style="border:none;">
   
-      <button type="submit" id='submit'>등록</button>
-      <button type="button" onclick="cancel();">취소</button>
+      <button type="submit" id='submit' class="btn btn-secondary btn-sm">등록</button>
+      <button type="button" onclick="cancel();" class="btn btn-secondary btn-sm">취소</button>
     </FORM>
   </DIV>
 
@@ -64,9 +65,9 @@
         <TD class="td_bs">${rdate}</TD>
         <TD class="td_bs">${udate }</TD>
         <TD class="td_bs">
-          <A href="../post/create.do?cateno=${cateno}" title="등록"><IMG src="/cate/images/append.png" class="icon"></A>
-          <A href="./read_update.do?cateno=${cateno}" title="수정"><IMG src="/cate/images/update.png" class="icon"></A>
-          <A href="./read_delete.do?cateno=${cateno}" title="삭제"><IMG src="/cate/images/delete.png" class="icon"></A>
+          <A href="../post/create.do?cateno=${cateno}" title="등록"><IMG src="/images/add_red.png" class="icon"></A>
+          <A href="./read_update.do?cateno=${cateno}" title="수정"><IMG src="/images/file_rename.png" class="icon"></A>
+          <A href="./read_delete.do?cateno=${cateno}" title="삭제"><IMG src="/images/trash.png" class="icon"></A>
           <A href="./update_seqno_up.do?cateno=${cateno}" title="출력 순서 올림"><IMG src="/cate/images/up.png" class="icon"></A>
           <A href="./update_seqno_down.do?cateno=${cateno}" title="출력 순서 내림"><IMG src="/cate/images/down.png" class="icon"></A>
           

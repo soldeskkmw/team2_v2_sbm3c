@@ -22,12 +22,13 @@
  
   });
 </script>
+<link rel="icon" href="/images/travel.png"> 
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>
+  <DIV class='title_line' style="font-size:1.5rem;">
     sms 인증번호 목록
   </DIV>
 
@@ -46,15 +47,15 @@
    
     <table class="table table-striped" style='width: 100%;'>
     <colgroup>
-      <col style='width: 5%;'/>
+      <col style='width: 20%;'/>
       <col style='width: 10%;'/>
       <col style='width: 20%;'/>
-      <col style='width: 30%;'/>
       <col style='width: 20%;'/>
-      <col style='width: 25%;'/>
+      <col style='width: 20%;'/>
+      <col style='width: 10%;'/>
     </colgroup>
     <TR>
-      <TH class='th_bs'> </TH>
+      <TH class='th_bs'>찾기</TH>
       <TH class='th_bs'>순서</TH>
       <TH class='th_bs'>회원 번호</TH>
       <TH class='th_bs'>아이피</TH>
@@ -64,6 +65,7 @@
     </TR>
    
     <c:forEach var="smsVO" items="${sms_list }">
+      <c:set var="search" value ="${smsVO.search}" />
       <c:set var="smsno" value ="${smsVO.smsno}" />
       <c:set var="memberno" value ="${smsVO.memberno}" />
       <c:set var="ip" value ="${smsVO.ip}" />
@@ -71,13 +73,15 @@
       <c:set var="mdate" value ="${smsVO.mdate}" />
        
     <TR>
-      <TD class='td_left'></TD>
-      <TD class='td_basic'>${smsno}</TD>
-      <TD class='td_basic'>${memberno}</TD>
-      <TD class='td_basic'>${ip}</TD>
-      <TD class='td_basic'>${authno}</TD>
-      <TD class='td_basic'>${mdate.substring(0, 10)}</TD> <%-- 년월일 --%>
-      <TD class='td_basic'>
+    
+      <TD class='td_basic' style="vertical-align:middle;">${search}</TD>
+      <TD class='td_basic' style="vertical-align:middle;">${smsno}</TD>
+      <TD class='td_basic' style="vertical-align:middle;">${memberno}</TD>
+      <TD class='td_basic' style="vertical-align:middle;">${ip}</TD>
+      <TD class='td_basic' style="vertical-align:middle;">${authno}</TD>
+      <TD class='td_basic' style="vertical-align:middle;">${mdate.substring(0, 10)}</TD> <%-- 년월일 --%>
+      <TD class='td_basic' style="vertical-align:middle;" style="vertical-align:middle;">
+      <A href="./delete.do?smsno=${smsno}" ><IMG src='/images/trash.png' title='삭제' class="icon"></A>
      
       </TD>
       

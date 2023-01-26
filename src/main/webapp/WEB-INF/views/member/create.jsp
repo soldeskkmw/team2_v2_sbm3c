@@ -28,7 +28,7 @@
 	  let params = '';
 	  let msg = '';
 	
-	  if ($.trim(memberid).length == 0) { // id를 입력받지 않은 경우
+	  if ($.trim (memberid).length == 0) { // id를 입력받지 않은 경우
 	    msg = '· ID를 입력하세요. <br>· ID 입력은 필수 입니다.<br>· ID는 3자이상 권장합니다.';
 	    
 	    $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
@@ -97,43 +97,58 @@
   }
   
   function send() { // 회원 가입 처리
-    let memberid = $('#memberid').val(); // 태그의 아이디가 'id'인 태그의 값
-	  if ($.trim(memberid).length == 0) { // id를 입력받지 않은 경우
-	    msg = '· ID를 입력하세요.<br>· ID 입력은 필수 입니다.<br>· ID는 3자이상 권장합니다.';
-	    
-	    $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
-	    $('#modal_title').html('ID 중복 확인'); // 제목 
-	    $('#modal_content').html(msg);        // 내용
-	    $('#btn_close').attr("data-focus", "memberid");  // 닫기 버튼 클릭시 id 입력으로 focus 이동
-	    $('#modal_panel').modal();               // 다이얼로그 출력
-	    return false;
-		} 
-		 
-    // 패스워드를 정상적으로 2번 입력했는지 확인
-    if ($('#memberpasswd').val() != $('#memberpasswd2').val()) {
-      msg = '입력된 패스워드가 일치하지 않습니다.<br>';
-      msg += "패스워드를 다시 입력해주세요.<br>"; 
-      
-      $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
-      $('#modal_title').html('패스워드 일치 여부  확인'); // 제목 
-      $('#modal_content').html(msg);  // 내용
-      $('#btn_close').attr('data-focus', 'memberpasswd');
-      $('#modal_panel').modal();         // 다이얼로그 출력
-      
-      return false; // submit 중지
-    }
+	  
+	   let memberid = $('#memberid').val(); // 태그의 아이디가 'id'인 태그의 값
+	    if ($.trim(memberid).length == 0) { // id를 입력받지 않은 경우
+	      msg = '· ID를 입력하세요.<br>· ID 입력은 필수 입니다.<br>· ID는 3자이상 권장합니다.';
+	      
+	      $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
+	      $('#modal_title').html('ID 중복 확인'); // 제목 
+	      $('#modal_content').html(msg);        // 내용
+	      $('#btn_close').attr("data-focus", "memberid");  // 닫기 버튼 클릭시 id 입력으로 focus 이동
+	      $('#modal_panel').modal();               // 다이얼로그 출력
+	      return false;
+	    } 
+	   
+	    // 패스워드를 정상적으로 2번 입력했는지 확인
+	    if ($('#memberpasswd').val() != $('#memberpasswd2').val()) {
+	      msg = '입력된 패스워드가 일치하지 않습니다.<br>';
+	      msg += "패스워드를 다시 입력해주세요.<br>"; 
+	      
+	      $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
+	      $('#modal_title').html('패스워드 일치 여부  확인'); // 제목 
+	      $('#modal_content').html(msg);  // 내용
+	      $('#btn_close').attr('data-focus', 'memberpasswd');
+	      $('#modal_panel').modal();         // 다이얼로그 출력
+	      
+	      return false; // submit 중지
+	    }
 
-    let  = $('#membername').val(); // 태그의 아이디가 'id'인 태그의 값
-	  if ($.trim(membername).length == 0) { // id를 입력받지 않은 경우
-	    msg = '· 이름을 입력하세요.<br>· 이름 입력은 필수입니다.';
+	    let membername = $('#membername').val(); // 태그의 아이디가 'id'인 태그의 값
+	    if ($.trim(membername).length == 0) { // id를 입력받지 않은 경우
+	      msg = '· 이름을 입력하세요.<br>· 이름 입력은 필수입니다.';
+	      
+	      $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
+	      $('#modal_title').html('이름 입력 누락'); // 제목 
+	      $('#modal_content').html(msg);        // 내용
+	      $('#btn_close').attr("data-focus", "membername");  // 닫기 버튼 클릭시 mname 입력으로 focus 이동
+	      $('#modal_panel').modal();               // 다이얼로그 출력
+	      return false;
+	    } 
 	    
-	    $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
-	    $('#modal_title').html('이름 입력 누락'); // 제목 
-	    $('#modal_content').html(msg);        // 내용
-	    $('#btn_close').attr("data-focus", "membername");  // 닫기 버튼 클릭시 mname 입력으로 focus 이동
-	    $('#modal_panel').modal();               // 다이얼로그 출력
-	    return false;
-		} 
+
+	  let age = $('#age').val(); // 태그의 아이디가 'id'인 태그의 값
+	    if ($.trim(age).length == 0) { // id를 입력받지 않은 경우
+	      msg = '· 나이를 입력하세요.<br>· 나이 입력은 필수입니다.';
+	      
+	      $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
+	      $('#modal_title').html('나이 입력 누락'); // 제목 
+	      $('#modal_content').html(msg);        // 내용
+	      $('#btn_close').attr("data-focus", "age");  // 닫기 버튼 클릭시 mname 입력으로 focus 이동
+	      $('#modal_panel').modal();               // 다이얼로그 출력
+	      return false;
+	    } 
+
 
     let tel = $('#tel').val().trim(); // 태그의 아이디가 'id'인 태그의 값
 	  if (tel.length == 0) { // id를 입력받지 않은 경우
@@ -146,10 +161,23 @@
 	    $('#modal_panel').modal();               // 다이얼로그 출력
 	    return false;
 		} 
+		
+	    let receiver = $('#receiver').val().trim(); // 태그의 아이디가 'id'인 태그의 값
+	    if (receiver.length == 0) { // id를 입력받지 않은 경우
+	      msg = '· 이메일을 입력하세요.<br>· 이메일 입력은 필수입니다.';
+	      
+	      $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
+	      $('#modal_title').html('이메일 입력 누락'); // 제목 
+	      $('#modal_content').html(msg);        // 내용
+	      $('#btn_close').attr("data-focus", "receiver");  // 닫기 버튼 클릭시 tel 입력으로 focus 이동
+	      $('#modal_panel').modal();               // 다이얼로그 출력
+	      return false;
+	    } 
 
     $('#frm').submit(); // required="required" 작동 안됨.
   }  
 </script>
+<link rel="icon" href="/images/travel.png">
 </head> 
 
 
@@ -177,7 +205,7 @@
   </div>
   <!-- ******************** Modal 알림창 종료 ******************** -->
 
-  <DIV class='title_line'>회원 가입</DIV>
+  <DIV class='title_line' style="font-size:1.5rem;">회원 가입</DIV>
 
   <DIV class='content_body'>
 
@@ -194,29 +222,44 @@
   <div style="width: 60%; margin: 0px auto ">
   <FORM name='frm' id='frm' method='POST' action='./create.do'>
   
-    <div class="form_input">
-      <input type='text' class="form-control" name='memberid' id='memberid' value='' required="required" style='width: 30%;' placeholder="아이디" autofocus="autofocus">
-      <button type='button' id="btn_checkID" onclick="checkID()" class="btn btn-secondary">중복확인</button>
+   
+    
+    <div class="form_input" style="text-align:left;">
+      <input type='text' class="form-control" name='memberid' id='memberid' value='' required="required" style="width:35%; display:inline-block; margin-right:7px;"placeholder="아이디" autofocus="autofocus">
+      <button type='button' id="btn_checkID" onclick="checkID()" style="display:inline-block;" class="btn btn-secondary">중복확인</button>
     </div>   
-                
+         
     <div class="form_input">
-      <input type='password' class="form-control" name='memberpasswd' id='memberpasswd' value='' required="required" style='width: 30%;' placeholder="패스워드">
+      <input type='password' class="form-control" name='memberpasswd' id='memberpasswd' value='' required="required" style='width: 35%;' placeholder="패스워드">
     </div>   
 
     <div class="form_input">
-      <input type='password' class="form-control" name='memberpasswd2' id='memberpasswd2' value='' required="required" style='width: 30%;' placeholder="패스워드 확인">
+      <input type='password' class="form-control" name='memberpasswd2' id='memberpasswd2' value='' required="required" style='width: 35%;' placeholder="패스워드 확인">
     </div>   
     
     <div class="form_input">
       <input type='text' class="form-control" name='membername' id='membername' 
-                value='' required="required" style='width: 30%;' placeholder="성명">
-    </div>   
+                value='' required="required" style='width: 35%;' placeholder="성명">
+    </div> 
+    
+    <div class="form_input">
+      성별 
+      <input type="radio" id = "M" name="gender" value="M" required="required" style="margin-left:15px;"> 남
+      <input type="radio" id = "W" name="gender" value="W" required="required" style="margin-left:5px;"> 여<br>
+      
+      <input type='text' class="form-control" name='age' id='age' value='' required="required" style='width:15%; margin-top:7px;' placeholder="나이">
+    </div>  
 
     <div class="form_input">
       <input type='text' class="form-control" name='tel' id='tel' 
-                value='' required="required" style='width: 30%;' placeholder="전화번호"> 예) 010-0000-0000
+                value='' required="required" style='width: 35%;' placeholder="전화번호"> 예) 010-0000-0000
     </div>
     
+    <div class="form_input">
+      <input type='text' class="form-control" name='receiver' id='receiver' 
+                value='' required="required" style='width: 35%; margin-bottom:20px;' placeholder="이메일">
+    </div> 
+
     <div class="form_input">
       <button type="button" id='btn_send' onclick="send()" class="btn btn-secondary">가입</button>
       <button type="button" onclick="history.back()" class="btn btn-secondary">취소</button>

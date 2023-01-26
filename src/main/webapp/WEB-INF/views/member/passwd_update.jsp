@@ -46,7 +46,7 @@
   }
   
 </script>
-
+<link rel="icon" href="/images/travel.png">
 </head> 
  
  
@@ -73,7 +73,7 @@
     </div>
   </div> <!-- ---------- Modal END ---------- -->
  
-  <DIV class='title_line'>
+  <DIV class='title_line' style="font-size:1.5rem;">
     회원 패스워드 변경
   </DIV>
 
@@ -110,7 +110,7 @@
       
       <div class="form_input">
         <button type="button" id='btn_send' class="btn btn-secondary">변경</button>
-        <button type="button" onclick="location.href='./list.do'" class="btn btn-secondary">취소</button>
+        <button type="button" onclick="location.href='../'" class="btn btn-secondary">취소</button>
       </div>   
 
     </FORM>

@@ -2,12 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="noticeno" value="${noticeVO.noticeno }" />
-<c:set var="adminno" value="${noticeVO.adminno }" />
-<c:set var="noticetitle" value="${noticeVO.noticetitle }" />
-<c:set var="noticecontent" value="${noticeVO.noticecontent }" />
-<c:set var="cnt" value="${noticeVO.cnt }" />
-<c:set var="noticeword" value="${noticeVO.noticeword }" />
+<c:set var="surveyno" value="${surveyVO.surveyno }" />
+<c:set var="surveyitemno" value="${surveyVO.surveyitemno }" />
+<c:set var="surveytopic" value="${surveyVO.surveytopic }" />
+<c:set var="surveyitem1" value="${surveyVO.surveyitem1 }" />
+<c:set var="surveyitem2" value="${surveyVO.surveyitem2 }" />
+<c:set var="surveyitem3" value="${surveyVO.surveyitem3 }" />
+<c:set var="surveyitem4" value="${surveyVO.surveyitem4 }" />
+<c:set var="surveyitem5" value="${surveyVO.surveyitem5 }" />
+<c:set var="surveyitem6" value="${surveyVO.surveyitem6 }" />
+<c:set var="surveyitem7" value="${surveyVO.surveyitem7 }" />
+<c:set var="etc" value="${surveyVO.etc }" />
+<c:set var="surveyanswer1" value="${surveyVO.surveyanswer1 }" />
+<c:set var="surveyanswer2" value="${surveyVO.surveyanswer2 }" />
+<c:set var="surveyanswer3" value="${surveyVO.surveyanswer3 }" />
+<c:set var="surveyanswer4" value="${surveyVO.surveyanswer4 }" />
+<c:set var="surveyanswer5" value="${surveyVO.surveyanswer5 }" />
+<c:set var="surveyanswer6" value="${surveyVO.surveyanswer6 }" />
+<c:set var="startdate" value="${surveyVO.startdate }" />
+<c:set var="enddate" value="${surveyVO.enddate }" />
+<c:set var="yn" value="${surveyVO.yn }" />
+<c:set var="adminno" value="${surveyVO.adminno }" />
+
+
 
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -22,59 +39,35 @@
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
 
-<script type="text/JavaScript">
-
-   $(function() {
-     CKEDITOR.replace('noticecontent');  // <TEXTAREA>태그 id 값
-  });
-   
 </script>
-    
+
+<link rel="icon" href="/images/travel.png">    
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./notice_list" class='title_link'>공지사항</A></DIV>
+<DIV class='title_line' style="font-size:1.5rem;"><A href="./survey_list" class='title_link'>설문조사</A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./notice_list.do">기본 목록형</A>    
+    <A href="./survey_list.do">기본 목록형</A>    
 
 
     <c:if test="${sessionScope.adminid != null }">
       <span class='menu_divide' >│</span>
-      <A href="./notice_create.do">등록</A>
+      <A href="./survey_create.do">등록</A>
       <span class='menu_divide' >│</span>
-      <A href="./notice_read_update.do?noticeno=${noticeno}">글 수정</A>
+      <A href="./survey_read_update.do?surveyno=${surveyno}">수정</A>
       <span class='menu_divide' >│</span>
-      <A href="./notice_read_delete.do?noticeno=${noticeno}">삭제</A>  
+      <A href="./survey_read_delete.do?surveyno=${surveyno}">삭제</A>  
     </c:if>
     
   </ASIDE> 
-  
-  <%-- 검색 --%>
-  <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./notice_list.do'>
- 
-      <c:choose>
-        <c:when test="${param.noticeword != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='noticeword' id='noticeword' value='${param.noticeword }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='noticeword' id='noticeword' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit' class="btn btn-secondary btn-sm">검색</button>
-      <c:if test="${param.noticeword.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./notice_read.do?noticeno=${noticeno}'" class="btn btn-secondary btn-sm">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
   
   <DIV class='menu_line'></DIV>
 
@@ -83,10 +76,77 @@
       <li class="li_none">
         
         <DIV style="width: 80%; height: auto; float: left; margin-right: 10px; margin-bottom: 30px;">
-          <span style="font-size: 1.5em; font-weight: bold;">${noticetitle }</span><br>
+          <span style="font-size: 1.5em; font-weight: bold;">${surveytopic }</span><br>
           <br>
-          <span style="font-size: 1.2em; " >${noticecontent }</span><br>
-          
+          <span style="font-size: 1.2em; " >기간 : ${startdate } ~ ${enddate }</span><br>
+          <br>
+          <br>
+          <span style="font-size: 1.2em; " >1. ${surveyitem1 }</span><br>
+          <br>
+          <div class="surveyanswer1">
+           <input type="radio" name="surveyanswer1" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer1" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer1" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer1" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer1" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >2. ${surveyitem2 }</span><br>
+          <br>
+          <div class="surveyanswer2">
+           <input type="radio" name="surveyanswer2" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer2" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer2" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer2" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer2" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >3. ${surveyitem3 }</span><br>
+          <br>
+          <div class="surveyanswer3">
+           <input type="radio" name="surveyanswer3" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer3" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer3" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer3" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer3" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >4. ${surveyitem4 }</span><br>
+          <br>
+          <div class="surveyanswer4">
+           <input type="radio" name="surveyanswer4" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer4" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer4" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer4" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer4" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >5. ${surveyitem5 }</span><br>
+          <br>
+          <div class="surveyanswer5">
+           <input type="radio" name="surveyanswer5" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer5" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer5" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer5" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer5" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >6. ${surveyitem6 }</span><br>
+          <br>
+          <div class="surveyanswer6">
+           <input type="radio" name="surveyanswer6" value='A'> <span style="font-size: 1.2em; " > 매우 만족</span><br>
+           <input type="radio" name="surveyanswer6" value='B'> <span style="font-size: 1.2em; " > 만족</span><br>
+           <input type="radio" name="surveyanswer6" value='C'> <span style="font-size: 1.2em; " > 보통</span><br>
+           <input type="radio" name="surveyanswer6" value='D'> <span style="font-size: 1.2em; " > 불만족</span><br>
+           <input type="radio" name="surveyanswer6" value='E'>  <span style="font-size: 1.2em; " > 매우 불만족</span><br><br><br>
+           </div>
+           
+          <span style="font-size: 1.2em; " >7. ${surveyitem7 }</span><br>
+          <br>
+          <div class="surveyanswer7">
+           <textarea name="etc" placeholder="개선점을 자유롭게 남겨주세요"  rows="4" cols="90" style="resize: both;"></textarea>
+           </div>
+           
         </DIV> 
        
       </li>
@@ -96,10 +156,13 @@
       </li>
      
     </ul>
-  </fieldset>
 
+  </fieldset>
+    <div class="content_body_bottom">
+      <button type="button" id='submit' onclick="location.href='../msurvey/msurvey_read.do'" class="btn btn-secondary">설문 참여하기</button>
+    </div>
 </DIV>
- 
+      
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
  

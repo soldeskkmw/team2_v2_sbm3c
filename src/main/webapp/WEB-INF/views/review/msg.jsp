@@ -6,12 +6,13 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
-<%-- /static/css/style.css --%> 
+<title>Going Share</title>
+ 
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="icon" href="/images/travel.png"> 
 </head> 
 <body>
 <c:import url="/menu/top.do" />
@@ -20,6 +21,7 @@
 
  <c:set var="code" value="${param.code }" />
 <c:set var="cnt" value="${param.cnt }" />
+<c:set var="cateno" value="${param.cateno }" />
 
 <DIV class='message'>
   <fieldset class='fieldset_basic'>
@@ -37,7 +39,7 @@
           </LI>                   
           <LI class='li_none'>                                                   
             <button type='button' 
-                         onclick="location.href='./product_update.do?cateno=${cateno}&contentsno=${contentsno }'"
+                         onclick="location.href='./product_update.do?cateno=${cateno}&postno=${postno }'"
                          class="btn btn-primary">관련 상품 정보 재등록</button>
           </LI>
         </c:when>
@@ -50,31 +52,31 @@
 
         <c:when test="${code == 'create_success'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_success">새로운 컨텐츠를 등록했습니다.</span>
+            <span class="span_success">새로운 리뷰를 등록했습니다.</span>
           </LI> 
         </c:when>
         
         <c:when test="${code == 'create_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">새로운 컨텐츠 등록에 실패했습니다.</span>
+            <span class="span_fail">새로운 리뷰 등록에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>
         
         <c:when test="${code == 'update_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">컨텐츠 수정에 실패했습니다.</span>
+            <span class="span_fail">리뷰 수정에 실패했습니다.</span>
           </LI>                                                                      
         </c:when>
         
         <c:when test="${code == 'delete_success'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_success">컨텐츠 삭제에 성공했습니다.</span>
+            <span class="span_success">리뷰 삭제에 성공했습니다.</span>
           </LI>                                                                      
         </c:when>        
         
         <c:when test="${code == 'delete_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">컨텐츠 삭제에 실패했습니다.</span>
+            <span class="span_fail">리뷰 삭제에 실패했습니다.</span>
           </LI>                                                                      
         </c:when> 
         
@@ -94,11 +96,9 @@
                 <button type='button' onclick="history.back()" class="btn btn-primary">다시 시도</button>    
             </c:when>
         </c:choose>
-        <A href="./create.do?postno=1">등록</A>
-        <span class='menu_divide' >│</span>
-    <A href="./list_all.do?postno=1<%--${postno } --%>">기본 목록형</A>    
         
-        <!--  버튼 2개 지움 목록과 등록 알아서 ㄱ -->
+        <button type='button' onclick="location.href='./create.do?cateno=${cateno}'" class="btn btn-primary">새로운 리뷰 등록</button>
+        <button type='button' onclick="location.href='./list_by_cateno_search_paging.do?cateno=${cateno}'" class="btn btn-primary">목록</button>
       </LI>
     </UL>
   </fieldset>

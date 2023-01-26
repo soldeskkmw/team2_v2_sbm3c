@@ -3,18 +3,160 @@
  
 <mapper namespace = "dev.mvc.admin.AdminDAOInter">
 
-  <!-- 로그인 -->
-  <select id="login" resultType="int" parameterType="HashMap">
-    SELECT COUNT(*) as cnt
+   <!-- 관리자 아이디 중복 확인 -->
+   <select id="checkID" resultType="int" parameterType="String">
+    SELECT COUNT(adminid) as cnt
     FROM admin
-    WHERE adminid=#{adminid} AND adminpasswd=#{adminpasswd}
+    WHERE adminid=#{adminid}
+  </select>
+  
+  <!-- 관리자 회원가입 -->
+  <insert id="create" parameterType="dev.mvc.admin.AdminVO">
+    INSERT INTO admin(adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, 
+    zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate)
+    VALUES (admin_seq.nextval, #{adminid}, #{adminpasswd}, #{adminname}, #{admintel}, #{adminreceiver}, 
+    #{zipcode}, #{address1}, #{address2}, #{admingrade}, #{admingender}, #{adminage}, #{permission}, sysdate)
+    
+  </insert>
+  
+  <!-- 관리자 리스트 -->
+  <select id="list" resultType="dev.mvc.admin.AdminVO">
+    SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE permission = 'O'
+    ORDER BY admingrade ASC, adminid ASC
   </select>
 
-  <!-- id로 관리자 정보 조회 -->
+  <!-- adminno로 관리자 정보 조회 -->
+  <select id="read" resultType="dev.mvc.admin.AdminVO" parameterType="int">
+    SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE adminno = #{adminno}
+  </select>  
+  
+  <!-- adminid로 관리자 정보 조회 -->
   <select id="readById" resultType="dev.mvc.admin.AdminVO" parameterType="String">
-		SELECT adminno, adminid, adminpasswd, adminname
+		SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
 		FROM admin
 		WHERE adminid=#{adminid}
+	</select> 
 		
+  <!-- adminno로 관리자 정보 수정 -->
+	<update id="update" parameterType="dev.mvc.admin.AdminVO">
+    UPDATE admin 
+    SET adminname=#{adminname}, admintel=#{admintel}, adminreceiver=#{adminreceiver}, adminage=#{adminage}, zipcode=#{zipcode}, address1=#{address1}, address2=#{address2}
+    WHERE adminno=#{adminno}
+  </update>
+
+  <!-- adminno로 관리자 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM admin
+    WHERE adminno=#{adminno}
+  </delete>
+		
+	<!--  현재 관리자 아이디와 패스워드 검사 -->
+  <select id="passwd_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(adminno) as cnt
+    FROM admin
+    WHERE adminno=#{adminno} AND adminpasswd=#{adminpasswd}
   </select>
+  
+  <!-- 관리자 패스워드 변경 -->
+  <update id="passwd_update" parameterType="HashMap">
+    UPDATE admin
+    SET adminpasswd=#{adminpasswd}
+    WHERE adminno=#{adminno}
+  </update>
+		
+	<!-- 관리자 로그인 (관리자 등급이 0보다 크고 20보다 작거나 같고, permission이 O일때)-->
+  <select id="login" resultType="int" parameterType="HashMap">
+    SELECT COUNT(adminno) as cnt
+    FROM admin
+    WHERE adminid=#{adminid} AND adminpasswd=#{adminpasswd} AND admingrade <![CDATA[> 0 ]]> AND admingrade <![CDATA[<= 20 ]]> AND permission = 'O'
+  </select>
+  
+  <!-- admintel로 회원 정보 조회 -->
+  <select id="readBytel" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminno, adminid, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE admintel = #{admintel}
+  </select>
+                   
+   <!-- 관리자 아이디 찾기
+          관리자 전화번호 or 관리자 이메일로 관리자 정보 조회 -->
+  <select id="id_search_result" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminid, adminname
+    FROM admin
+    WHERE admintel = #{admintel} OR adminreceiver = #{adminreceiver}
+  </select>                
+  
+    <!-- 관리자 아이디와 관리자 전화번호로 관리자 정보 조회 -->
+  <select id="readByIdTel" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminno, adminid, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE adminid=#{adminid} AND admintel=#{admintel} 
+  </select>
+  
+  <!--  현재 관리자 아이디와 전화번호 검사 -->
+  <select id="IdTel_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(adminno) as cnt
+    FROM admin
+    WHERE adminid=#{adminid} AND admintel=#{admintel} AND adminno=#{adminno}
+  </select>
+                   
+   <!-- 관리자 비밀번호 찾기 (새로운 비밀번호로 변경)
+          관리자 아이디와 관리자 전화번호 or 관리자 아이디와 관리자 이메일로 관리자 정보 조회 -->
+  <update id="passwd_search_result" parameterType="HashMap">
+    UPDATE admin 
+    SET adminpasswd=#{adminpasswd}
+    WHERE adminid=#{adminid} AND admintel=#{admintel} OR adminid=#{adminid} AND adminreceiver=#{adminreceiver}
+  </update>   
+                                   
+   <!-- 관리자 이메일로 관리자 정보 조회 -->
+  <select id="readByReceiver" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminno, adminid, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE adminreceiver = #{adminreceiver}
+  </select>      
+  
+  <!-- 관리자 아이디와 관리자 이메일로 관리자 정보 조회 -->
+  <select id="readByIdReceiver" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE adminid=#{adminid} AND adminreceiver=#{adminreceiver} 
+  </select>
+                  
+  <!--  현재 관리자 아이디와 이메일 검사 -->
+  <select id="IdReceiver_check" parameterType="HashMap" resultType="int">
+    SELECT COUNT(adminno) as cnt
+    FROM admin
+    WHERE adminid=#{adminid} AND adminreceiver=#{adminreceiver} AND adminno=#{adminno}
+  </select>
+
+  <!-- 관리자 탈퇴 
+         관리자 등급 수정-->                
+  <update id="unregister" parameterType="dev.mvc.admin.AdminVO">
+    UPDATE admin 
+    SET admingrade=#{admingrade}
+    WHERE adminno=#{adminno}
+  </update>
+  
+  <!-- 관리자 회원가입
+         메인관리자가 관리자 허가 : O로 변경
+  -->
+  <update id="update_permission" parameterType="int">
+    UPDATE admin
+    SET permission = 'O'
+    WHERE adminno=#{adminno}
+  </update>
+  
+    <!-- 관리자 회원가입한 관리자 리스트 
+            관리자 허가 : X-->
+  <select id="permission_list" resultType="dev.mvc.admin.AdminVO">
+    SELECT adminno, adminid, adminpasswd, adminname, admintel, adminreceiver, zipcode, address1, address2, admingrade, admingender, adminage, permission, mdate
+    FROM admin
+    WHERE permission = 'X'
+    ORDER BY admingrade ASC, adminid ASC
+  </select>
+  
 </mapper>

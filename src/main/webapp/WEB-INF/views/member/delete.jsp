@@ -13,12 +13,12 @@
 <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
- 
+ <link rel="icon" href="/images/travel.png">
 </head> 
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>
+  <DIV class='title_line' style="font-size:1.5rem;">
     회원 삭제(관리자 전용)
   </DIV>
 
@@ -41,7 +41,7 @@
         <input type='hidden' name='memberno' value='${memberVO.memberno}'>     
             
         <button type="submit" class="btn btn-secondary">삭제</button>
-        <button type="button" onclick="location.href='./list.do'" class="btn btn-secondary">취소(목록)</button>
+        <button type="button" onclick="location.href='./list.do'" class="btn btn-secondary">취소</button>
      
       </FORM>
     </DIV>

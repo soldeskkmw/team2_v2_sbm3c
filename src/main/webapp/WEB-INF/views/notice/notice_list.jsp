@@ -15,13 +15,13 @@
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
+<link rel="icon" href="/images/travel.png">     
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>공지사항</DIV>
+<DIV class='title_line'  style="font-size:1.5rem;">공지사항</DIV>
 
 <DIV class='content_body'>
      
@@ -76,8 +76,8 @@
         <TD class="td_bs"><div>${rdate }</div></TD>
         <c:if test="${sessionScope.adminid != null }">
         <TD class="td_bs">
-          <A href="./notice_read_update.do?noticeno=${noticeno}" title="수정"><IMG src="/notice/images/edit.png" class="icon"></A>
-          <A href="./notice_read_delete.do?noticeno=${noticeno}" title="삭제"><IMG src="/notice/images/delete.png" class="icon"></A>
+          <A href="./notice_read_update.do?noticeno=${noticeno}" title="수정"><IMG src="/images/file_rename.png" class="icon"></A>
+          <A href="./notice_read_delete.do?noticeno=${noticeno}" title="삭제"><IMG src="/images/trash.png" class="icon"></A>
         </TD>   
         </c:if>
       </TR> 

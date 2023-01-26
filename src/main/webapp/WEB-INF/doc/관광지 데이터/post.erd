@@ -51,8 +51,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>46</x>
-              <y>185</y>
+              <x>56</x>
+              <y>240</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -80,8 +80,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>573</x>
-                    <y>466</y>
+                    <x>764</x>
+                    <y>672</y>
                   </constraint>
                   <sourceConnections/>
                   <targetConnections>
@@ -109,8 +109,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>55</x>
-                          <y>624</y>
+                          <x>91</x>
+                          <y>844</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -309,8 +309,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>541</x>
-                    <y>47</y>
+                    <x>648</x>
+                    <y>50</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -337,8 +337,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>607</x>
-                          <y>303</y>
+                          <x>958</x>
+                          <y>395</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -607,14 +607,19 @@
               </net.java.amateras.db.visual.model.ColumnModel>
               <net.java.amateras.db.visual.model.ColumnModel>
                 <columnName>POSTSTAR</columnName>
-                <logicalName>별점</logicalName>
-                <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../sourceConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/target/targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/columns/net.java.amateras.db.visual.model.ColumnModel/columnType"/>
-                <size>2,1</size>
+                <logicalName>평점</logicalName>
+                <columnType class="net.java.amateras.db.dialect.ColumnType">
+                  <name>NUMBER</name>
+                  <logicalName>Numeric</logicalName>
+                  <supportSize>true</supportSize>
+                  <type>2</type>
+                </columnType>
+                <size>3,2</size>
                 <notNull>true</notNull>
                 <primaryKey>false</primaryKey>
                 <description></description>
                 <autoIncrement>false</autoIncrement>
-                <defaultValue></defaultValue>
+                <defaultValue>1</defaultValue>
               </net.java.amateras.db.visual.model.ColumnModel>
               <net.java.amateras.db.visual.model.ColumnModel>
                 <columnName>POSTCNT</columnName>
@@ -726,7 +731,7 @@
   </children>
   <dommains/>
   <dialectName>Oracle</dialectName>
-  <logicalMode>false</logicalMode>
+  <logicalMode>true</logicalMode>
   <jarFile></jarFile>
   <jdbcDriver>sun.jdbc.odbc.JdbcOdbc</jdbcDriver>
   <jdbcUrl></jdbcUrl>

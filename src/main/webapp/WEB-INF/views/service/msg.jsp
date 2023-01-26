@@ -51,12 +51,12 @@
         <br>
         <c:choose>
             <c:when test="${cnt == 0 }">
-                <button type='button' onclick="history.back()" class="btn btn-primary">다시 시도</button>    
+                <button type='button' onclick="history.back()" class="btn btn-secondary">다시 시도</button>    
             </c:when>
         </c:choose>
         
 <%--         <button type='button' onclick="location.href='./create.do?cateno=${cateno}'" class="btn btn-primary">새로운 컨텐츠 등록</button> --%>
-        <button type='button' onclick="location.href='/service/customer_post/list_all.do'" class="btn btn-primary">고객센터로</button>
+        <button type='button' onclick="location.href='/service/customer_post/list_all.do'" class="btn btn-secondary">고객센터로</button>
       </LI>
     </UL>
   </fieldset>

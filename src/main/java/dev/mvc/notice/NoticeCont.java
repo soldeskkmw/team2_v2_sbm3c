@@ -100,90 +100,7 @@ public class NoticeCont {
     
     return mav;
   }
-  
 
-//  /**
-//   * 모든 레코드 목록, http://localhost:9093/notice/notice_list.do
-//   * @return
-//   */
-//  @RequestMapping(value="/notice/notice_list.do", method=RequestMethod.GET)
-//  public ModelAndView list() {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    ArrayList<NoticeVO> list = this.noticeProc.notice_list();
-//    mav.addObject("list", list);
-//    // request.setAttribute("list", list);
-//    
-//    // System.out.println("-> list size: " + list.size());
-//    
-//    // mav.setViewName("/notice/notice_list"); // /webapp/WEB-INF/views/notice/notice_list.jsp
-//    mav.setViewName("/notice/notice_list_ajax"); // /webapp/WEB-INF/views/notice/notice_list_ajax.jsp
-//    
-//    return mav;
-//  }
-  
- 
-//  /**
-//   * Ajax, JSON 지원 읽기, http://localhost:9093/notice/read_ajax_json.do?cateno=1
-//   * {"visible":"Y","seqno":1,"name":"고전","cnt":100,"cateno":1}
-//   * @return
-//   */
-//  @ResponseBody
-//  @RequestMapping(value="/notice/read_ajax_json.do", method=RequestMethod.GET)
-//  public String read_ajax_json(int noticeno) {
-//    
-//    try {
-//      Thread.sleep(2000);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-//    
-//    NoticeVO noticeVO = this.noticeProc.read(noticeno);
-//    // noticeno, adminno, noticetitle, noticecontent, cnt, noticeword
-//    
-//    JSONObject json = new JSONObject();
-//    json.put("noticeno", noticeVO.getNoticeno());
-//    json.put("adminno", noticeVO.getAdminno());
-//    json.put("noticetitle", noticeVO.getNoticetitle());
-//    json.put("noticecontent", noticeVO.getNoticecontent());
-//    json.put("cnt", noticeVO.getcnt());
-//    json.put("noticeword", noticeVO.getNoticeword());
-//    
-//    return json.toString();
-//  }
-//  
-//  /**
-//   * noticeno를 FK로 사용하는 레코드 갯수 읽기, http://localhost:9093/notice/read_ajax_json_fk.do?noticeno=1
-//   * {"visible":"Y","seqno":1","noticetitle":"고전","cnt":100,"noticeno":1}
-//   * @return
-//   */
-//  @ResponseBody
-//  @RequestMapping(value="/notice/read_ajax_json_fk.do", method=RequestMethod.GET)
-//  public String read_ajax_json_fk(int noticeno) {
-//    
-//    try {
-//      Thread.sleep(2000);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-//    
-//    NoticeVO noticeVO = this.noticeProc.read(noticeno);
-// // noticeno, adminno, noticetitle, noticecontent, cnt, noticeword
-//    
-//    JSONObject json = new JSONObject();
-//    json.put("noticeno", noticeVO.getNoticeno());
-//    json.put("adminno", noticeVO.getAdminno());
-//    json.put("noticetitle", noticeVO.getNoticetitle());
-//    json.put("noticecontent", noticeVO.getNoticecontent());
-//    json.put("cnt", noticeVO.getcnt());
-//    json.put("noticeword", noticeVO.getNoticeword());
-//    
-////    int count_by_noticeno = this.contentsProc.count_by_noticeno(noticeno); // cateno가 사용되는 레코드 갯수 파악
-////    json.put("count_by_noticeno", count_by_noticeno);
-//    
-//    return json.toString();
-//  }
-  
   
   /**
    * 수정 폼
@@ -304,19 +221,6 @@ public class NoticeCont {
     
     return mav;
   }   
-  
-//  /**
-//   * cate + contents INNER JOIN 목록, http://localhost:9091/./notice_list.do
-//   * @return
-//   */
-//  @RequestMapping(value="/notice/notice_list.do", method=RequestMethod.GET)
-//  public ModelAndView notice_list() {
-//    ModelAndView mav = new ModelAndView();
-//
-//    mav.setViewName("/notice/notice_list"); // /webapp/WEB-INF/views/notice/notice_list.jsp
-//    
-//    return mav;
-//  }
   
   /**
    * 조회, http://localhost:9093/notice/notice_list.do

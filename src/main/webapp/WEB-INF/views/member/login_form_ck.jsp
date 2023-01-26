@@ -34,13 +34,13 @@
   }
     
 </script> 
-
+<link rel="icon" href="/images/travel.png">
 </head> 
  
 <body>
 <c:import url="/menu/top.do" />
  
-  <DIV class='title_line'>로그인</DIV>
+  <DIV class='title_line' style="font-size:1.5rem;">로그인</DIV>
 
   <DIV class='content_body'> 
     <DIV style='width: 40%; margin: 0px auto;'>
@@ -53,7 +53,7 @@
                     value="${ck_id }" required="required" 
                     style='width: 80%;' placeholder="아이디" autofocus="autofocus">
           <Label>   
-            <input type='checkbox' name='id_save' value='Y' ${ck_id_save == 'Y' ? "checked='checked'" : "" }> 저장
+            <input type='checkbox' style='accent-color:gray;'name='id_save' value='Y' ${ck_id_save == 'Y' ? "checked='checked'" : "" }> 저장
           </Label>    
         </div>   
      
@@ -61,7 +61,7 @@
           <input type='password' class="form-control" name='memberpasswd' id='memberpasswd' 
                     value='${ck_passwd }' required="required" style='width: 80%;' placeholder="패스워드">
           <Label>
-            <input type='checkbox' name='passwd_save' value='Y' ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
+            <input type='checkbox' name='passwd_save' style='accent-color:gray;' value='Y' ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
           </Label>                    
         </div>   
      

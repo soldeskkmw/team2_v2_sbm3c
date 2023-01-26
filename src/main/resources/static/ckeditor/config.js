@@ -15,28 +15,30 @@ CKEDITOR.editorConfig = function( config ) {
   config.font_names = '굴림체/Gulim;돋움체/Dotum;맑은 고딕/Malgun Gothic;';
   config.fontSize_defaultLabel = '14px';
   config.fontSize_sizes = '14/14px;16/16px;20/20px;24/24px;28/28px;36/36px;48/48px;72/72px;';
- 
+  config.extraPlugins =  'powrmultislider';
+   
   config.toolbarGroups = [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
     { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-    { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+    { name: 'editing', groups: [ 'find', 'spellchecker', 'selection', 'editing' ] },
     { name: 'forms', groups: [ 'forms' ] },
+    { name: 'colors', groups: [ 'colors' ] },
+    { name: 'tools', groups: [ 'tools' ] },
     '/',
+    { name: 'styles', groups: [ 'styles' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
     { name: 'links', groups: [ 'links' ] },
     { name: 'insert', groups: [ 'insert' ] },
     '/',
-    { name: 'styles', groups: [ 'styles' ] },
-    { name: 'colors', groups: [ 'colors' ] },
-    { name: 'tools', groups: [ 'tools' ] },
     { name: 'others', groups: [ 'others' ] },
     { name: 'about', groups: [ 'about' ] }
   ];
- 
+  
+
 // Remove some buttons provided by the standard plugins, which are
 // not needed in the Standard(s) toolbar.
-config.removeButtons = 'Underline,Subscript,Superscript';
+  config.removeButtons = 'CopyFormatting,RemoveFormat,Outdent,Indent,BidiLtr,BidiRtl,Language,Anchor,Unlink,Flash,PageBreak,Iframe,About,BulletedList,NumberedList';
  
 // Set the most common block elements.
 config.format_tags = 'p;h1;h2;h3;pre';

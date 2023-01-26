@@ -49,6 +49,7 @@ public class MemberProc implements MemberProcInter {
     return memberVO;
   }
   
+  
   @Override
   public int update(MemberVO memberVO) {
     int cnt = this.memberDAO.update(memberVO);
@@ -82,18 +83,21 @@ public class MemberProc implements MemberProcInter {
   @Override
   public boolean isMember(HttpSession session){
     boolean sw = false; // 로그인하지 않은 것으로 초기화
+    int grade = 0;         // 회원 등급 기본값 0
     
     // System.out.println("-> grade: " + session.getAttribute("grade"));
     if (session != null) {
       String memberid = (String)session.getAttribute("memberid");
-      if (memberid != null){ // 관리자 + 회원
+      if (session.getAttribute("grade") != null) {
+        grade = (int)session.getAttribute("grade");
+      }
+      if (memberid != null && grade <= 20 && grade > 0){ // 회원 등급이 0 < grade <= 20 인경우
         sw = true;  // 로그인 한 경우
       }
     }
-    
     return sw;
   }
-  
+ 
   @Override
   public MemberVO readBytel(String tel) {
     MemberVO memberVO = this.memberDAO.readBytel(tel);
@@ -101,11 +105,52 @@ public class MemberProc implements MemberProcInter {
   }
   
   @Override
-  public MemberVO id_search_read(int memberno) {
-    MemberVO memberVO = this.memberDAO.id_search_read(memberno);
+  public MemberVO id_search_result(String tel) {
+    MemberVO memberVO = this.memberDAO.id_search_result(tel);
+    return memberVO;
+  }
+ 
+  @Override
+  public MemberVO readByIdTel(String memberid, String tel) {
+    MemberVO memberVO = this.memberDAO.readByIdTel(memberid, tel);
     return memberVO;
   }
   
+  @Override
+  public int IdTel_check(HashMap<Object, Object> map) {
+    int cnt = this.memberDAO.IdTel_check(map);
+    return cnt;
+  }
+  
+  @Override
+  public int passwd_search_result(HashMap<Object, Object> map) {
+    int cnt = this.memberDAO.passwd_search_result(map);
+    return cnt;
+  }
+  
+  @Override
+  public MemberVO readByReceiver(String receiver) {
+    MemberVO memberVO = this.memberDAO.readByReceiver(receiver);
+    return memberVO;
+  }
+  
+  @Override
+  public MemberVO readByIdReceiver(String memberid, String receiver) {
+    MemberVO memberVO = this.memberDAO.readByIdReceiver(memberid, receiver);
+    return memberVO;
+  }
+  
+  @Override
+  public int IdReceiver_check(HashMap<Object, Object> map) {
+    int cnt = this.memberDAO.IdReceiver_check(map);
+    return cnt;
+  }
+  
+  @Override
+  public int unregister(MemberVO memberVO) {
+    int cnt = this.memberDAO.unregister(memberVO);
+    return cnt;
+  }
 }
  
 

@@ -46,10 +46,10 @@
           <input type='text' name='word' id='word' value='' style='width: 20%;'>
         </c:otherwise>
       </c:choose>
-      <button type='submit'>검색</button>
+      <button type='submit'  class="btn btn-secondary btn-sm">검색</button>
       <c:if test="${param.word.length() > 0 }">
         <button type='button' 
-                     onclick="location.href='./list_by_cateno_search.do?cateno=${cateVO.cateno}&word='">검색 취소</button>  
+                     onclick="location.href='./list_by_cateno_search.do?cateno=${cateVO.cateno}&word='"  class="btn btn-secondary btn-sm">검색 취소</button>  
       </c:if>    
     </form>
   </DIV>
@@ -62,8 +62,8 @@
     
     <div>
        <label>문의 유형 선택</label>
-          <select name="servicecateno">
-            <option value="-1" selected="selected">문의 유형을 선택해주세요</option>
+          <select name="servicecateno" required>
+            <option value="" selected="selected">문의 유형을 선택해주세요</option>
             <c:forEach var="ServiceCateVO" items="${serviceCateList }">
 	            <c:set var="servicecateno" value="${ServiceCateVO.servicecateno }" />
 	            <c:set var="servicetype_content" value="${ServiceCateVO.servicetype_content }" />
@@ -81,12 +81,13 @@
     
     <div>
        <label>문의 제목</label>
-       <input type='text' name='servicetitle' value='가을 영화' required="required" 
-                 autofocus="autofocus" class="form-control" style='width: 100%;'>
+       <input type='text' name='servicetitle' value='' required="required" 
+                 autofocus="autofocus" class="form-control" style='width: 100%;' 
+                 placeholder="글 제목을 입력해주세요.">
     </div>
     <div>
        <label>문의 내용</label>
-       <textarea name='servicecontents' required="required" class="form-control" rows="12" style='width: 100%;'>가을 단풍보며 멍때리기</textarea>
+       <textarea name='servicecontents' required="required" class="form-control" rows="12" style='width: 100%;' placeholder="내용을 입력해주세요."></textarea>
     </div>
        
     <div>
@@ -96,8 +97,8 @@
     </div>   
     
     <div class="content_body_bottom">
-      <button type="submit" class="btn btn-primary">등록</button>
-      <button type="button" onclick="location.href='/service/customer_post/list_all.do'" class="btn btn-primary">목록</button>
+      <button type="submit" class="btn btn-secondary">등록</button>
+      <button type="button" onclick="location.href='/service/customer_post/list_all.do'"  class="btn btn-secondary">목록</button>
     </div>
   
   </FORM>
